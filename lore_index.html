@@ -16,39 +16,45 @@
 </head>
 <body>
   <!-- Header -->
-  <header class="section header">
-    <div class="container header-container">
-      <a href="/" class="btn btn-ghost" data-event="nav-home" aria-label="Zur Startseite">
-        <img src="/assets/socials/web-logo.svg" alt="Cryptober logo" width="82" height="82" />
-        <span>Home</span>
-      </a>
-      <nav aria-label="Hauptnavigation" class="header-nav">
-        <a href="lore_index.html" class="text-neon-green" aria-current="page">Lore</a>
-        <a href="lore_mascot.html" class="btn btn-ghost" data-event="nav-mascot">Mascot</a>
-      </nav>
+  <header id="site-header" class="site-header">
+    <div class="site-header__inner">
+      <div class="header-left">
+        <button id="open-left-rail" class="site-header__toggle" aria-controls="left-rail-panel" aria-expanded="false" aria-label="Navigation öffnen">☰</button>
+        <a href="/" class="nav-card nav-card--brand" data-event="nav-home" aria-label="Zur Startseite">
+          <img src="/assets/socials/web-logo.svg" alt="Cryptober logo" width="48" height="48" />
+          <span>Home</span>
+        </a>
+      </div>
+      <div class="header-right">
+        <nav aria-label="Hauptnavigation" class="site-header__nav">
+          <a href="lore_index.html" class="nav-card" aria-current="page">Lore</a>
+          <a href="lore_mascot.html" class="nav-card" data-event="nav-mascot">Mascot</a>
+        </nav>
+        <button id="open-right-rail" class="site-header__toggle" aria-controls="right-rail-panel" aria-expanded="false" aria-label="Live-Stats öffnen">📈</button>
+      </div>
     </div>
   </header>
 
   <!-- PAGE GRID -->
   <div class="page" style="margin-top: 1em;">
     <!-- LEFT RAIL -->
-    <aside class="rail left-rail">
-      <div class="nav-card" aria-label="Kapitel-Navigation">
+    <aside id="left-rail-panel" class="left-rail" aria-label="Kapitel Navigation">
+      <nav class="rail-card" aria-label="Kapitel-Navigation">
         <h3 class="muted">Kapitel</h3>
-        <ul id="lore-nav-list">
-          <li><a href="#thesis">Thesis</a></li>
-          <li><a href="#catchphrases">Catchphrases</a></li>
-          <li><a href="#gallery-section">Gallery</a></li>
-          <li><a href="#cryptober">Cryptober</a></li>
-          <li><a href="#uptober">Uptober</a></li>
-          <li><a href="#moonvember">Moonvember</a></li>
-          <li><a href="#upcember">Upcember</a></li>
-          <li><a href="#faq">FAQ</a></li>
-          <li><a href="#glossary-panel">Glossary</a></li>
-          <li><a href="lore_mascot.html">Mascot</a></li>
+        <ul id="lore-nav-list" class="rail-list">
+          <li class="rail-item"><a href="#thesis" aria-controls="thesis">Thesis</a></li>
+          <li class="rail-item"><a href="#catch-phrase" aria-controls="catch-phrase">Catch a Phrase</a></li>
+          <li class="rail-item"><a href="#gallery-section" aria-controls="gallery-section">Gallery</a></li>
+          <li class="rail-item"><a href="#cryptober" aria-controls="cryptober">Cryptober</a></li>
+          <li class="rail-item"><a href="#uptober" aria-controls="uptober">Uptober</a></li>
+          <li class="rail-item"><a href="#moonvember" aria-controls="moonvember">Moonvember</a></li>
+          <li class="rail-item"><a href="#upcember" aria-controls="upcember">Upcember</a></li>
+          <li class="rail-item"><a href="#faq" aria-controls="faq">FAQ</a></li>
+          <li class="rail-item"><a href="#glossary-panel" aria-controls="glossary-panel">Glossary</a></li>
+          <li class="rail-item"><a href="lore_mascot.html">Mascot</a></li>
         </ul>
-      </div>
-      <div id="glossary-of-day" class="nav-card"></div>
+      </nav>
+      <div id="glossary-of-day" class="rail-card"></div>
     </aside>
 
     <!-- MAIN -->
@@ -79,23 +85,10 @@
       </section>
 
       <!-- Catchphrase Rotator (EN) -->
-      <section id="catchphrases" class="section" aria-labelledby="catchphrases-h">
-        <div class="glass card catchphrase-card" aria-live="polite" role="region" aria-label="Catchphrases">
-          <h3 id="catchphrases-h" class="text-neon-orange" style="margin-bottom:.4rem">Catchphrases - Bullish Hooks <span aria-hidden="true">👻</span></h3>
-            <!-- initial visible line for rotator -->
-            <div id="catch-box" class="catchphrase-container rotator" aria-live="polite" aria-atomic="true">
-              <p id="catch-line" class="text-neon-green" role="status" style="margin:0; cursor:pointer; font-weight:700; font-size:1rem;">
-                Sparkfiend ignites the flame – HODL through the cycles.
-              </p>
-            </div>
-
-            <!-- hidden list of rotator lines for boot script to pick up -->
-            <ul id="catch-phrases-list" style="display:none">
-              <li>Sparkfiend ignites the flame – HODL through the cycles.</li>
-              <li>Ride the Pump — join the Spooky Rally.</li>
-              <li>From the grave of trust shall rise the unyielding ledger.</li>
-              <li>To the moon we ascend, where fiat falls like autumn leaves.</li>
-            </ul>
+      <section id="catch-phrase" class="section" aria-labelledby="catch-phrase-heading">
+        <div id="catch-phrase-card" class="card catch-phrase" aria-live="polite" role="region" aria-label="Catch a Phrase">
+          <h3 id="catch-phrase-heading" class="text-neon-orange">Catch a Phrase <span aria-hidden="true">👻</span></h3>
+          <p class="muted">Bullish Hooks werden geladen …</p>
         </div>
       </section>
 
@@ -310,16 +303,15 @@
     </main>
 
     <!-- RIGHT RAIL -->
-     <aside class="rail right-rail">
-      <div class="utility" style="padding:1rem;">
-        <div class="tiny">Live Stats</div>
-        <div id="live-stats" style="margin-top:8px;font-size:13px;color:var(--muted)">Loading...</div>
+    <aside id="right-rail-panel" class="rail-card right-rail" aria-label="Live Stats">
+      <div id="dex-screener-placeholder" class="dex-placeholder" data-src="https://dexscreener.com/widget/dexscreener?pairId=solana_BBRQZBQ3Kr1qSsihGDK69UzC3zmpkX9174wxGPdvqANE">
+        <p class="muted">Live stats werden geladen …</p>
       </div>
     </aside>
   </div>
 
   <!-- Footer -->
-  <footer class="section" role="contentinfo">
+  <footer class="section site-footer" role="contentinfo">
     <div class="container card" style="text-align:center;padding:1rem;">
       <div style="display:flex;justify-content:center;margin-bottom:.5rem">
         <img src="/assets/socials/web-logo.svg" alt="Cryptober logo" width="40" height="40" />

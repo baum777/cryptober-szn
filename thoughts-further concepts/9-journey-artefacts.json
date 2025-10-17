@@ -1,0 +1,121 @@
+{
+  "thumbnails": [
+    {
+      "stage": "Start of the Journey (Redtember's Call to Adventure)",
+      "artifacts": [
+        {
+          "name": "The Frost Wick",
+          "description": "A frost-covered, dim wick as an NFT-amulet, symbolizing Redtember's -10% chill. It glows faintly Neon-Orange when the holder DYORs – a warning against the freeze. In the lore: The hero's initial call, sparking life in the cold; Crypto-connection: A wallet tool sending dip alerts."
+        },
+        {
+          "name": "The Shadow Key",
+          "description": "A shimmering, translucent glass key that unlocks Halving chains in Redtember's shadows, revealing hidden lore hints on hover. In the lore: The hero's first test to break the cold; Crypto-connection: A DeFi key unlocking liquidity pools in bear markets."
+        }
+      ]
+    },
+    {
+      "stage": "Awakening (Cryptober)",
+      "artifacts": [
+        {
+          "name": "The Ignition Pumpkin",
+          "description": "A pumpkin artifact with BTC-carving, emitting Neon-Green sparks when clicked, activating +28% pump rituals. In the lore: The hero's awakening where the spark ignites; Crypto-connection: A PFP-generator tool creating spooky avatars from keywords."
+        },
+        {
+          "name": "The Ghost Call",
+          "description": "A translucent horn key that awakens spirits and sends FOMO sparks. In the lore: The hero's transition from the ordinary world; Crypto-connection: An oracle alarm predicting Uptober trends (+3.22% 2025)."
+        }
+      ]
+    },
+    {
+      "stage": "Trials (Uptober)",
+      "artifacts": [
+        {
+          "name": "The Leverage Sword",
+          "description": "A flaming sword that slashes chains, generating 83% green momentum sparks. In the lore: The hero's tests to find allies; Crypto-connection: A candle carver tool simulating leverage ($130k)."
+        },
+        {
+          "name": "The FOMO Shield",
+          "description": "A translucent shield of Green sparks, deflecting rugs. In the lore: The hero's fight against the cold; Crypto-connection: A wallet scanner warning of rug pulls."
+        }
+      ]
+    },
+    {
+      "stage": "Abyss (Early Moonvember)",
+      "artifacts": [
+        {
+          "name": "The Chain Breaker",
+          "description": "A hammer artifact smashing Halving chains, releasing sparks. In the lore: The hero's deepest abyss; Crypto-connection: A DeFi unlocker for Moonvember yields ($130k)."
+        },
+        {
+          "name": "The Blood Moon Crystal",
+          "description": "A crystal glowing under moonlight, amplifying FOMO. In the lore: The hero's ordeal; Crypto-connection: An oracle crystal for Moonvember forecasts."
+        }
+      ]
+    },
+    {
+      "stage": "Revelation (Moonvember)",
+      "artifacts": [
+        {
+          "name": "The Supernova Orb",
+          "description": "An orb-shaped artifact exploding in Green sparks. In the lore: The hero's revelation; Crypto-connection: A tool visualizing $130–150k simulations."
+        },
+        {
+          "name": "The Wisdom Wick",
+          "description": "A wick holding eternal flames. In the lore: The hero's transformation; Crypto-connection: A HODL tracker for Moonvember gains."
+        }
+      ]
+    },
+    {
+      "stage": "Atonement (Late Moonvember)",
+      "artifacts": [
+        {
+          "name": "The Rune Shield",
+          "description": "A shield with runes, protecting chain ash. In the lore: The hero's integration; Crypto-connection: A staking shield for Moonvember rewards."
+        },
+        {
+          "name": "The Glowing Ash Amulet",
+          "description": "An amulet of glowing ash. In the lore: The hero's atonement; Crypto-connection: A yield farming amulet for $Cryptober."
+        }
+      ]
+    },
+    {
+      "stage": "Return (Pumpcember)",
+      "artifacts": [
+        {
+          "name": "The Seal Pumpkin",
+          "description": "A sealed pumpkin holding gains. In the lore: The hero's gift to the world; Crypto-connection: A vault tool for Pumpcember locks."
+        },
+        {
+          "name": "The Eternal Spark",
+          "description": "A spark reigniting the wick. In the lore: The hero's return; Crypto-connection: An airdrop trigger for Pumpcember."
+        }
+      ]
+    },
+    {
+      "stage": "Freedom (After Pumpcember)",
+      "artifacts": [
+        {
+          "name": "The Freedom Halo",
+          "description": "A halo shining under moonlight. In the lore: The hero's new life; Crypto-connection: An oracle halo for future cycles."
+        },
+        {
+          "name": "The Glowing Wick",
+          "description": "A wick that burns eternally. In the lore: The hero's freedom; Crypto-connection: A HODL amulet for eternal rituals."
+        }
+      ]
+    },
+    {
+      "stage": "Legacy (Future Cycles)",
+      "artifacts": [
+        {
+          "name": "The Legacy Runes",
+          "description": "Runes binding cycles. In the lore: The hero's enduring impact; Crypto-connection: A community rune tool for lore extensions."
+        },
+        {
+          "name": "The Immortal Spark",
+          "description": "A spark that reignites anew. In the lore: The hero's legacy; Crypto-connection: An NFT spark for $Cryptober holders."
+        }
+      ]
+    }
+  ]
+}

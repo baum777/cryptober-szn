@@ -1,0 +1,38 @@
+[
+  {
+    "id": "a11y-rotator",
+    "title": "A11y: Reduced motion across autoplay",
+    "desc": "Disable autoplay across components; add helper.",
+    "status": "done",
+    "quarter": "Q4",
+    "col": "now",
+    "deps": ["gallery-4x2"]
+  },
+  {
+    "id": "gallery-4x2",
+    "title": "Gallery 4×2 pagination",
+    "desc": "Pager with 8 items per view, adaptive preload.",
+    "status": "inprogress",
+    "quarter": "Q4",
+    "col": "now",
+    "deps": []
+  },
+  {
+    "id": "left-rail-accordion",
+    "title": "Left-rail accordion",
+    "desc": "Grouped navigation with keyboard toggle.",
+    "status": "inprogress",
+    "quarter": "Q4",
+    "col": "next",
+    "deps": []
+  },
+  {
+    "id": "lightbox",
+    "title": "Gallery lightbox preview",
+    "desc": "Accessible modal preview for gallery items.",
+    "status": "planned",
+    "quarter": "Q1",
+    "col": "later",
+    "deps": ["gallery-4x2"]
+  }
+]

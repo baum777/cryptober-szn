@@ -156,34 +156,60 @@
       </section>
 
       <!-- Roadmap -->
-      <section id="roadmap" class="section" aria-labelledby="roadmap-title" data-now="1">
-        <h2 id="roadmap-title" class="text-neon-orange" style="font-weight:800">Roadmap</h2>
-        <div class="grid grid-3" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:.75rem;">
-          <div class="card">
-            <h3 class="text-neon-green" style="margin-bottom:.25rem">Website & Community Takeover</h3>
-            <p class="muted">Shared hub for lore, memes, coordination. Claim roles, co-create the movement.</p>
+      <section id="roadmap" class="section roadmap" aria-labelledby="roadmap-title">
+        <header class="roadmap-header">
+          <h2 id="roadmap-title" class="text-neon-orange" style="font-weight:800">Roadmap</h2>
+          <div class="roadmap-controls">
+            <label>
+              <span class="sr-only">Filter Status</span>
+              <select id="rm-filter-status" aria-label="Filter by status">
+                <option value="all">All</option>
+                <option value="planned">Planned</option>
+                <option value="inprogress">In Progress</option>
+                <option value="risk">At Risk</option>
+                <option value="done">Done</option>
+              </select>
+            </label>
+            <label>
+              <span class="sr-only">Filter Quarter</span>
+              <select id="rm-filter-quarter" aria-label="Filter by quarter">
+                <option value="all">All Quarters</option>
+                <option value="Q4">Q4</option>
+                <option value="Q1">Q1</option>
+                <option value="Q2">Q2</option>
+                <option value="Q3">Q3</option>
+              </select>
+            </label>
+            <button id="rm-toggle-deps" aria-pressed="false" aria-label="Toggle dependencies">Show dependencies</button>
           </div>
-          <div class="card">
-            <h3 class="text-neon-green" style="margin-bottom:.25rem">DEX Vault → Community Barometer</h3>
-            <p class="muted">Heartbeat over hype. On-chain signal for genuine support and activity.</p>
-          </div>
-          <div class="card">
-            <h3 class="text-neon-green" style="margin-bottom:.25rem">Schill Phase → Pulse over Push</h3>
-            <p class="muted">Build quiet; vibe loud. No new drops yet to keep curiosity and incentives alive.</p>
-          </div>
-          <div class="card">
-            <h3 class="text-neon-green" style="margin-bottom:.25rem">Creator Fee Distribution → V2</h3>
-            <p class="muted">50% Locks+Burn · 30–35% Growth/Market · 15–20% Dev Ops (staged locks; unlocks burn).</p>
-          </div>
-          <div class="card">
-            <h3 class="text-neon-green" style="margin-bottom:.25rem">Tool Development → Controlled Fire</h3>
-            <p class="muted">Spark releases: Pumpkin Patch first; Oracle & Candle Carver follow.</p>
-          </div>
-          <div class="card">
-            <h3 class="text-neon-green" style="margin-bottom:.25rem">Community-First Tool Vision</h3>
-            <p class="muted">Co-create real utility + fun; iterate with real user feedback.</p>
-          </div>
+        </header>
+
+        <div class="roadmap-timeline" role="region" aria-label="Milestone timeline">
+          <ol class="rm-timeline" id="rm-timeline">
+            <li><button class="rm-dot" data-quarter="Q4" aria-current="true">Q4</button></li>
+            <li><button class="rm-dot" data-quarter="Q1">Q1</button></li>
+            <li><button class="rm-dot" data-quarter="Q2">Q2</button></li>
+            <li><button class="rm-dot" data-quarter="Q3">Q3</button></li>
+          </ol>
+          <div class="rm-progress" aria-hidden="true"></div>
         </div>
+
+        <div class="roadmap-board" role="region" aria-label="Now Next Later board">
+          <section class="rm-column" aria-labelledby="rm-now-title">
+            <h3 id="rm-now-title">Now</h3>
+            <div class="rm-stack" id="rm-col-now" role="list"></div>
+          </section>
+          <section class="rm-column" aria-labelledby="rm-next-title">
+            <h3 id="rm-next-title">Next</h3>
+            <div class="rm-stack" id="rm-col-next" role="list"></div>
+          </section>
+          <section class="rm-column" aria-labelledby="rm-later-title">
+            <h3 id="rm-later-title">Later</h3>
+            <div class="rm-stack" id="rm-col-later" role="list"></div>
+          </section>
+        </div>
+
+        <div id="rm-live" class="sr-only" aria-live="polite"></div>
       </section>
 
       <!-- Tools -->
@@ -269,6 +295,7 @@
 
   <!-- Scripts -->
   <script type="module" src="/js/boot-home.js"></script>
+  <script type="module" src="/js/roadmap.js"></script>
   <script type="module" src="/js/main.js"></script>
 </body>
 </html>

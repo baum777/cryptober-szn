@@ -18,18 +18,11 @@
   <!-- Header -->
   <header id="site-header" role="banner">
     <div class="header-left">
-      <button id="open-left-rail" class="site-header__toggle rail-toggle" aria-controls="left-rail" aria-expanded="false" aria-label="Navigation öffnen">☰</button>
-      <a href="/" class="nav-card nav-card--brand" data-event="nav-home" aria-label="Zur Startseite">
-        <img src="/assets/socials/web-logo.svg" alt="Cryptober logo" width="48" height="48" />
-        <span>Home</span>
-      </a>
+      <a class="nav-card" href="/">Home</a>
     </div>
     <div class="header-right">
-      <nav aria-label="Hauptnavigation" class="header-nav">
-        <a href="lore_index.html" class="nav-card" aria-current="page">Lore</a>
-        <a href="lore_mascot.html" class="nav-card" data-event="nav-mascot">Mascot</a>
-      </nav>
-      <button id="open-right-rail" class="site-header__toggle rail-toggle" aria-controls="right-rail" aria-expanded="false" aria-label="Live-Stats öffnen">📈</button>
+      <a class="nav-card" href="/lore_index.html" aria-current="page">Lore</a>
+      <a class="nav-card" href="/lore_mascot.html">Mascot</a>
     </div>
   </header>
 
@@ -40,7 +33,7 @@
       <div class="rail-scroll-wrap">
         <nav aria-label="Kapitel-Navigation">
           <section class="rail-group">
-            <button class="group-toggle" aria-expanded="true">Chronik</button>
+            <button type="button" class="group-toggle" aria-expanded="true">Chronik</button>
             <ul class="group-list" role="list">
               <li class="rail-item"><a href="#thesis" aria-controls="thesis">Thesis</a></li>
               <li class="rail-item"><a href="#catch-phrase-section" aria-controls="catch-phrase-section">Catch a Phrase</a></li>
@@ -49,7 +42,7 @@
           </section>
 
           <section class="rail-group">
-            <button class="group-toggle" aria-expanded="false">Seasons</button>
+            <button type="button" class="group-toggle" aria-expanded="false">Seasons</button>
             <ul class="group-list" role="list" hidden>
               <li class="rail-item"><a href="#cryptober" aria-controls="cryptober">Cryptober</a></li>
               <li class="rail-item"><a href="#uptober" aria-controls="uptober">Uptober</a></li>
@@ -59,7 +52,7 @@
           </section>
 
           <section class="rail-group">
-            <button class="group-toggle" aria-expanded="false">Specials</button>
+            <button type="button" class="group-toggle" aria-expanded="false">Specials</button>
             <ul class="group-list" role="list" hidden>
               <li class="rail-item"><a href="#faq" aria-controls="faq">FAQ</a></li>
               <li class="rail-item"><a href="#glossary-panel" aria-controls="glossary-panel">Glossary</a></li>
@@ -84,10 +77,10 @@
         </p>
 
         <div class="flex-gap-wrap" style="margin-top:.5rem;">
-          <a href="#cryptober" class="tag">Cryptober</a>
-          <a href="#uptober" class="tag">Uptober</a>
-          <a href="#moonvember" class="tag">Moonvember</a>
-          <a href="#upcember" class="tag">Upcember</a>
+          <a href="#cryptober" class="tag tag-pill">Cryptober</a>
+          <a href="#uptober" class="tag tag-pill">Uptober</a>
+          <a href="#moonvember" class="tag tag-pill">Moonvember</a>
+          <a href="#upcember" class="tag tag-pill">Upcember</a>
         </div>
       </section>
 
@@ -102,7 +95,10 @@
       <!-- Catchphrase Rotator (EN) -->
       <section id="catch-phrase-section" class="section" aria-labelledby="catch-phrase-heading">
         <h3 id="catch-phrase-heading" class="text-neon-orange">Catch a Phrase <span aria-hidden="true">👻</span></h3>
-        <section id="catch-phrase" class="card catch-phrase" aria-live="polite"></section>
+        <section id="catch-phrase" class="card catch-phrase" aria-live="polite" aria-atomic="true">
+          <h4 id="catch-phrase-text" class="catch-phrase__text" tabindex="0"></h4>
+          <button id="catchplay" class="catch-play" type="button" aria-pressed="false" aria-label="Pause rotation">Pause</button>
+        </section>
       </section>
 
       <!-- FAQ (EN) -->
@@ -111,46 +107,71 @@
           <h3 id="faq-h" class="text-neon-orange" style="margin-bottom:.4rem">
             🧠 Education / DYOR Zone - FAQ (EN)
           </h3>
+          <div class="faq-list" id="faq-list">
+            <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-1">
+              What's the 'meta' behind Cryptober as a Bullrun trigger?
+              <span class="faq-arrow" aria-hidden="true">▸</span>
+            </button>
+            <div id="faq-a-1" class="faq-a" hidden>
+              <p class="muted">Cryptober is the October vibe - a meme + sentiment push that helps markets flip from summer slow to winter hype. Tip: Check past Oct moves and line them up with current macro news before acting.</p>
+            </div>
 
-          <details>
-            <summary>What's the 'meta' behind Cryptober as a Bullrun trigger?</summary>
-            <p class="muted">Cryptober is the October vibe - a meme + sentiment push that helps markets flip from summer slow to winter hype. Tip: Check past Oct moves and line them up with current macro news before acting.</p>
-          </details>
+            <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-2">
+              How do Bullruns fit into cycles?
+              <span class="faq-arrow" aria-hidden="true">▸</span>
+            </button>
+            <div id="faq-a-2" class="faq-a" hidden>
+              <p class="muted">Bullruns often match halvings and macro events - recurring seasons. Tip: study 4-year cycles and use on-chain tools (dominance, volume) to time entries.</p>
+            </div>
 
-          <details>
-            <summary>How do Bullruns fit into cycles?</summary>
-            <p class="muted">Bullruns often match halvings and macro events - recurring seasons. Tip: study 4-year cycles and use on-chain tools (dominance, volume) to time entries.</p>
-          </details>
+            <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-3">
+              What's different about Altseason in 2025?
+              <span class="faq-arrow" aria-hidden="true">▸</span>
+            </button>
+            <div id="faq-a-3" class="faq-a" hidden>
+              <p class="muted">2025 alt moves are pushed by AI hype + regulatory shifts - alts can surge when BTC dominance drops. Tip: watch dominance charts and whale flows on-chain.</p>
+            </div>
 
-          <details>
-            <summary>What's different about Altseason in 2025?</summary>
-            <p class="muted">2025 alt moves are pushed by AI hype + regulatory shifts - alts can surge when BTC dominance drops. Tip: watch dominance charts and whale flows on-chain.</p>
-          </details>
+            <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-4">
+              Why is DYOR essential during a Bullrun?
+              <span class="faq-arrow" aria-hidden="true">▸</span>
+            </button>
+            <div id="faq-a-4" class="faq-a" hidden>
+              <p class="muted">Hype blinds. Most alts fail long-term - DYOR protects you from FOMO. Tip: pair social buzz with on-chain metrics (holders, concentration) and audits.</p>
+            </div>
 
-          <details>
-            <summary>Why is DYOR essential during a Bullrun?</summary>
-            <p class="muted">Hype blinds. Most alts fail long-term - DYOR protects you from FOMO. Tip: pair social buzz with on-chain metrics (holders, concentration) and audits.</p>
-          </details>
+            <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-5">
+              How do I spot the peak of an Altseason?
+              <span class="faq-arrow" aria-hidden="true">▸</span>
+            </button>
+            <div id="faq-a-5" class="faq-a" hidden>
+              <p class="muted">If random alts pump hard and BTC stalls, retail is probably late - that can signal a peak. Tip: track volume spikes and sentiment indexes; prefer selling discipline over greed.</p>
+            </div>
 
-          <details>
-            <summary>How do I spot the peak of an Altseason?</summary>
-            <p class="muted">If random alts pump hard and BTC stalls, retail is probably late - that can signal a peak. Tip: track volume spikes and sentiment indexes; prefer selling discipline over greed.</p>
-          </details>
+            <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-6">
+              What risks come with the 'always up' Bullrun narrative?
+              <span class="faq-arrow" aria-hidden="true">▸</span>
+            </button>
+            <div id="faq-a-6" class="faq-a" hidden>
+              <p class="muted">That story ignores bear markets, regs and liquidity shocks. Tip: diversify, size positions, use stop-loss/take-profit rules.</p>
+            </div>
 
-          <details>
-            <summary>What risks come with the 'always up' Bullrun narrative?</summary>
-            <p class="muted">That story ignores bear markets, regs and liquidity shocks. Tip: diversify, size positions, use stop-loss/take-profit rules.</p>
-          </details>
+            <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-7">
+              How does community power affect Cryptober runs?
+              <span class="faq-arrow" aria-hidden="true">▸</span>
+            </button>
+            <div id="faq-a-7" class="faq-a" hidden>
+              <p class="muted">For memecoins, narrative equals power - active communities can revive tokens or fuel pumps. Tip: check real engagement (not bot activity) before trusting hype.</p>
+            </div>
 
-          <details>
-            <summary>How does community power affect Cryptober runs?</summary>
-            <p class="muted">For memecoins, narrative equals power - active communities can revive tokens or fuel pumps. Tip: check real engagement (not bot activity) before trusting hype.</p>
-          </details>
-
-          <details>
-            <summary>What long-term lessons do Altseason cycles teach?</summary>
-            <p class="muted">Every run tests patience - fundamentals beat hype long-term. Tip: focus on utility, read whitepapers and audits to prep for the next cycle.</p>
-          </details>
+            <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-8">
+              What long-term lessons do Altseason cycles teach?
+              <span class="faq-arrow" aria-hidden="true">▸</span>
+            </button>
+            <div id="faq-a-8" class="faq-a" hidden>
+              <p class="muted">Every run tests patience - fundamentals beat hype long-term. Tip: focus on utility, read whitepapers and audits to prep for the next cycle.</p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -158,11 +179,9 @@
       <section id="gallery-section" class="section" aria-labelledby="gallery-title">
         <h2 id="gallery-title" class="text-neon-orange" style="font-weight:800">Gallery</h2>
         <section id="gallery" class="gallery-wrapper" aria-label="Gallery">
+          <button class="gallery-btn prev" id="gallery-prev" type="button" aria-label="Previous images">‹</button>
           <div class="gallery-grid" id="gallery-grid" role="list"></div>
-          <div class="gallery-controls" id="gallery-controls">
-            <button id="gallery-prev" class="btn btn-ghost" type="button" aria-label="Previous images">‹ Prev</button>
-            <button id="gallery-next" class="btn btn-ghost" type="button" aria-label="Next images">Next ›</button>
-          </div>
+          <button class="gallery-btn next" id="gallery-next" type="button" aria-label="Next images">›</button>
         </section>
       </section>
 
@@ -254,7 +273,7 @@
       <!-- Glossary (toggleable) -->
       <section class="section" aria-labelledby="glossary-toggle">
         <button id="toggle-gloss" class="btn-block" aria-expanded="false" aria-controls="glossary-panel">Glossary / Degen Dictionary 🕯️</button>
-        <div id="glossary-panel" class="glass glossary-card hidden" aria-hidden="true">
+        <div id="glossary-panel" class="glass card glossary-card hidden" aria-hidden="true">
           <h3 class="text-neon-orange">Glossary</h3>
           <dl class="glossary">
             <dt class="text-neon-green">Yearly cycle</dt>
@@ -314,12 +333,6 @@
       </section>
     </main>
 
-    <!-- RIGHT RAIL -->
-    <aside id="right-rail" class="rail-card right-rail offcanvas right" aria-label="Live Stats">
-      <div id="dex-screener-placeholder" class="dex-placeholder" data-src="https://dexscreener.com/widget/dexscreener?pairId=solana_BBRQZBQ3Kr1qSsihGDK69UzC3zmpkX9174wxGPdvqANE">
-        <p class="muted">Live stats werden geladen …</p>
-      </div>
-    </aside>
   </div>
 
   <!-- Footer -->
@@ -340,6 +353,7 @@
 
   <!-- Scripts -->
   <script type="module" src="/js/lore-rail.js"></script>
+  <script type="module" src="/js/faq.js"></script>
   <script type="module" src="/js/boot-lore.js"></script>
   <script type="module" src="/js/main.js"></script>
   <script type="module" src="/js/gallery.js"></script>
@@ -357,25 +371,6 @@
       }
     });
 
-    // simple rotator seed (scripts can replace this)
-    (function seedRotator(){
-      const list = Array.from(document.querySelectorAll('#catch-phrases-list li')).map(n => n.textContent.trim()).filter(Boolean);
-      if (!list.length) return;
-      let idx = 0;
-      const line = document.getElementById('catch-line');
-      if (!line) return;
-      setInterval(() => {
-        idx = (idx + 1) % list.length;
-        line.textContent = list[idx];
-      }, 4500);
-      // click to copy quick UX
-      line.addEventListener('click', () => {
-        navigator.clipboard?.writeText(line.textContent || '').then(()=> {
-          const hint = document.querySelector('.catchphrase-card .hint');
-          if (hint) { hint.textContent = 'Copied!'; setTimeout(()=> hint.textContent = 'Click the line to copy or to trigger the rotator (JS).', 1600); }
-        }).catch(()=>{/* ignore */});
-      });
-    })();
   </script>
 </body>
 </html>

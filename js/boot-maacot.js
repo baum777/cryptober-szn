@@ -74,10 +74,9 @@ function initGalleryProgressBar() {
   if (!gallery) return;
   const progress = document.createElement("div");
   progress.className = "carousel-progress";
-  progress.style.height = "4px";
-  progress.style.background = "var(--glass-bg)";
-  progress.style.position = "relative";
-  progress.innerHTML = `<div class="progress-bar" style="width:0%;height:100%;background:var(--neon-green);transition:width 5000ms linear;"></div>`;
+  const bar = document.createElement("div");
+  bar.className = "carousel-progress__bar";
+  progress.appendChild(bar);
   gallery.appendChild(progress);
 }
 initGalleryProgressBar();
@@ -88,8 +87,9 @@ function initQuestProgress() {
   if (!questGrid) return;
   const progress = document.createElement("div");
   progress.className = "quest-progress";
-  progress.style.marginTop = "1rem";
-  progress.innerHTML = `<div class="progress-bar" style="width:0%;height:4px;background:var(--neon-orange);"></div>`;
+  const bar = document.createElement("div");
+  bar.className = "quest-progress__bar";
+  progress.appendChild(bar);
   questGrid.appendChild(progress);
 }
 initQuestProgress();

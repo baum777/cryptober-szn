@@ -4,7 +4,6 @@
 import {
   bindClipboard,
   bindEventWire,
-  initRotator,
   bindGlossary,
   setFooterYear,
   initCandleBG,
@@ -13,96 +12,111 @@ import {
 } from "/js/main.js";
 import { initGallery } from "/js/gallery.js";
 import { initMobileRails } from "/js/mobile-rail.js";
+import { prefersReducedMotion } from "/utils/a11y.js";
 
-function renderCatchPhrases({ containerId = "catch-phrase", phrases = [], collapsedCount = 3 } = {}) {
-  const container = document.getElementById(containerId);
-  if (!container || !phrases.length) {
+function initCatchPhraseRotation({ phrases = [], interval = 5000 } = {}) {
+  const textNode = document.getElementById("catch-phrase-text");
+  const toggle = document.getElementById("catchplay");
+  if (!textNode || !toggle || phrases.length === 0) {
     return { destroy() {} };
   }
 
-  container.innerHTML = "";
+  let index = 0;
+  let timerId = null;
+  let shouldResume = false;
+  const reducedMotion = prefersReducedMotion();
+  let playing = !reducedMotion;
+  let manualPause = reducedMotion;
 
-  const lead = document.createElement("h4");
-  lead.id = "catch-line";
-  lead.className = "catch-phrase__text text-neon-green";
-  lead.setAttribute("role", "status");
-  lead.textContent = `"${phrases[0]}"`;
-  lead.tabIndex = 0;
-  container.appendChild(lead);
+  const render = () => {
+    textNode.textContent = phrases[index] || "";
+  };
 
-  const copyCurrentPhrase = () => {
-    const text = lead.textContent ? lead.textContent.replace(/^"|"$/g, "").trim() : "";
-    if (!text) return;
-    if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
-      navigator.clipboard.writeText(text).catch(() => {});
+  const clearTimer = () => {
+    if (timerId) {
+      clearInterval(timerId);
+      timerId = null;
     }
   };
-  const onLeadKey = (event) => {
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      copyCurrentPhrase();
+
+  const updateToggle = () => {
+    toggle.textContent = playing ? "Pause" : "Play";
+    toggle.setAttribute("aria-pressed", playing ? "false" : "true");
+    toggle.setAttribute("aria-label", playing ? "Pause rotation" : "Resume rotation");
+  };
+
+  const start = (force = false) => {
+    if (!force && prefersReducedMotion()) {
+      clearTimer();
+      playing = false;
+      manualPause = true;
+      updateToggle();
+      return;
+    }
+    clearTimer();
+    timerId = window.setInterval(() => {
+      index = (index + 1) % phrases.length;
+      render();
+    }, interval);
+    playing = true;
+    updateToggle();
+  };
+
+  const stop = () => {
+    clearTimer();
+    playing = false;
+    updateToggle();
+  };
+
+  const handleToggle = () => {
+    if (playing) {
+      manualPause = true;
+      shouldResume = false;
+      stop();
+    } else {
+      manualPause = false;
+      start(true);
     }
   };
-  lead.addEventListener("click", copyCurrentPhrase);
-  lead.addEventListener("keydown", onLeadKey);
 
-  const hint = document.createElement("p");
-  hint.className = "muted catch-phrase__hint";
-  hint.textContent = "Hover pausiert, Klick kopiert.";
-  container.appendChild(hint);
+  const pauseForInteraction = () => {
+    if (!playing) return;
+    shouldResume = true;
+    stop();
+  };
 
-  const list = document.createElement("ul");
-  list.className = "catch-phrase__list";
-  list.setAttribute("aria-label", "Weitere Catchphrases");
-  phrases.forEach((phrase, index) => {
-    const li = document.createElement("li");
-    li.className = "catch-phrase__item";
-    li.textContent = phrase;
-    li.dataset.index = String(index);
-    list.appendChild(li);
-  });
+  const resumeAfterInteraction = () => {
+    if (!manualPause && shouldResume) {
+      start();
+    }
+    shouldResume = false;
+  };
 
-  if (phrases.length > collapsedCount) {
-    list.classList.add("is-collapsed");
+  toggle.addEventListener("click", handleToggle);
+  textNode.addEventListener("mouseenter", pauseForInteraction);
+  textNode.addEventListener("focus", pauseForInteraction);
+  textNode.addEventListener("mouseleave", resumeAfterInteraction);
+  textNode.addEventListener("blur", resumeAfterInteraction);
+
+  render();
+  if (playing) {
+    start();
+  } else {
+    updateToggle();
   }
 
-  container.appendChild(list);
-
-  let expanded = false;
-  const toggle = document.createElement("button");
-  toggle.type = "button";
-  toggle.className = "catch-phrase__toggle nav-card";
-  toggle.setAttribute("aria-expanded", "false");
-  toggle.textContent = "Mehr Hooks anzeigen";
-  const updateView = () => {
-    list.classList.toggle("is-collapsed", !expanded && phrases.length > collapsedCount);
-    toggle.setAttribute("aria-expanded", expanded ? "true" : "false");
-    toggle.textContent = expanded ? "Weniger Hooks anzeigen" : "Mehr Hooks anzeigen";
+  const destroy = () => {
+    clearTimer();
+    toggle.removeEventListener("click", handleToggle);
+    textNode.removeEventListener("mouseenter", pauseForInteraction);
+    textNode.removeEventListener("focus", pauseForInteraction);
+    textNode.removeEventListener("mouseleave", resumeAfterInteraction);
+    textNode.removeEventListener("blur", resumeAfterInteraction);
   };
-  const onToggle = () => {
-    expanded = !expanded;
-    updateView();
-  };
-  toggle.addEventListener("click", onToggle);
-  container.appendChild(toggle);
-  updateView();
 
-  const resizeObserver = new ResizeObserver((entries) => {
-    entries.forEach(({ target, contentRect }) => {
-      target.style.setProperty("--catch-phrase-height", `${Math.round(contentRect.height)}px`);
-      target.classList.toggle("is-scrollable", contentRect.height > 320);
-    });
-  });
-  resizeObserver.observe(container);
+  window.addEventListener("beforeunload", destroy, { once: true });
 
-  return {
-    destroy() {
-      resizeObserver.disconnect();
-      toggle.removeEventListener("click", onToggle);
-      lead.removeEventListener("click", copyCurrentPhrase);
-      lead.removeEventListener("keydown", onLeadKey);
-    },
-  };
+  return { destroy };
 }
 
 /* Core */
@@ -137,13 +151,7 @@ const catchPhrases = [
   "From Cryptober's haunt to Bullrun's hunt - Altseason's the feast. Eat or get eaten.",
 ];
 
-renderCatchPhrases({ phrases: catchPhrases });
-initRotator({
-  targetId: "catch-line",
-  hoverBoxId: "catch-phrase",
-  lines: catchPhrases,
-  intervalMs: 5000,
-});
+initCatchPhraseRotation({ phrases: catchPhrases, interval: 5000 });
 
 /* Gallery Pager (4x2 grid) */
 initGallery({ rootId: "gallery" });

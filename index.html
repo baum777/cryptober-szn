@@ -42,23 +42,16 @@
   <link rel="stylesheet" href="styles.css" />
   <link rel="canonical" href="https://yourdomain.example/" />
 </head>
-<body>
+<body class="landing">
   <!-- Header -->
   <header id="site-header" role="banner">
     <div class="header-left">
-      <button id="open-left-rail" class="site-header__toggle rail-toggle" aria-controls="left-rail" aria-expanded="false" aria-label="Navigation öffnen">☰</button>
-      <a href="/" class="nav-card nav-card--brand" data-event="nav-home" aria-label="Zur Startseite">
-        <img src="/assets/socials/web-logo.svg" alt="Cryptober logo" width="32" height="32" />
-        <span>$Cryptober</span>
-      </a>
+      <a class="nav-card" href="/">Home</a>
     </div>
 
     <div class="header-right">
-      <nav aria-label="Hauptnavigation" class="header-nav">
-        <a href="lore_index.html" class="nav-card" data-event="nav-lore">Lore</a>
-        <a href="lore_mascot.html" class="nav-card" data-event="nav-mascot">Mascot</a>
-      </nav>
-      <button id="open-right-rail" class="site-header__toggle rail-toggle" aria-controls="right-rail" aria-expanded="false" aria-label="Live-Stats öffnen">📈</button>
+      <a class="nav-card" href="/lore_index.html">Lore</a>
+      <a class="nav-card" href="/lore_mascot.html">Mascot</a>
     </div>
   </header>
 
@@ -94,7 +87,15 @@
               Ride the Pump - <span aria-hidden="true">$Cryptober</span>
             </h1>
 
-            <div id="ca-display" class="contract-address muted" role="button" aria-label="Copy contract address" tabindex="0" aria-describedby="copy-status" style="font-size:0.95rem; margin-top:.5rem;">
+            <div
+              id="ca-display"
+              class="contract-address muted ca-full"
+              role="button"
+              aria-label="Copy contract address"
+              tabindex="0"
+              data-copy="BBRQZBQ3Kr1qSsihGDK69UzC3zmpkX9174wxGPdvqANE"
+              style="font-size:0.95rem; margin-top:.5rem;"
+            >
               BBRQZBQ3Kr1qSsihGDK69UzC3zmpkX9174wxGPdvqANE
             </div>
 
@@ -111,20 +112,10 @@
 
             <div class="flex-gap" style="align-items:center;margin-top:.75rem;display:flex;gap:.5rem">
               <a href="lore_index.html" class="btn" data-event="cta-lore">Join the Spooky Rally</a>
-              <button
-                id="copy-ca"
-                class="btn"
-                data-event="cta-copy"
-                data-copy="BBRQZBQ3Kr1qSsihGDK69UzC3zmpkX9174wxGPdvqANE"
-                aria-label="Kopiere Contract Address"
-              >
-                CA: BBRQZ…ANE
-              </button>
-              <span id="copy-status" role="status" aria-live="polite" class="muted" style="margin-left:.5rem"></span>
             </div>
           </div>
 
-          <div class="ph-box logo-frame" style="aspect-ratio:1/1; max-width:320px; margin:0 auto;" aria-hidden="true">
+          <div class="ph-box logo-frame" aria-hidden="true">
             <img class="logo-frame__img" src="/assets/socials/web-logo.png" alt="" width="240" height="240" loading="lazy" decoding="async" />
           </div>
         </div>
@@ -271,12 +262,6 @@
       </footer>
     </main>
 
-    <!-- RIGHT RAIL -->
-    <aside id="right-rail" class="rail-card right-rail offcanvas right" aria-label="Live Stats">
-      <div id="dex-screener-placeholder" class="dex-placeholder" data-src="https://dexscreener.com/widget/dexscreener?pairId=solana_BBRQZBQ3Kr1qSsihGDK69UzC3zmpkX9174wxGPdvqANE">
-        <p class="muted">Live stats werden geladen …</p>
-      </div>
-    </aside>
   </div>
 
   <!-- Toast -->

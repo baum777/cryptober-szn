@@ -7,11 +7,13 @@ import {
   bindComingSoon,
   setFooterYear,
   initCandleBG,
+  initDexScreenerLazy,
   upgradeRoadmapToQuest,
   toast,
   initStickyRail,
 } from "/js/main.js";
 import { initSharedRail } from "/js/shared-rail.js";
+import { initMobileRails } from "/js/mobile-rail.js";
 
 /* Core */
 bindClipboard();
@@ -19,6 +21,8 @@ bindEventWire();
 bindComingSoon();
 setFooterYear("year");
 initCandleBG({ selector: ".ph-box", intervalMs: 8500 });
+const dexController = initDexScreenerLazy();
+initMobileRails({ onRightOpen: () => dexController.load?.() });
 
 /* Autoplay Progress-Bar für Gallery (additiv) */
 function initGalleryProgressBar() {

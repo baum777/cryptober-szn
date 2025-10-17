@@ -7,17 +7,21 @@ import {
   bindGlossary,
   setFooterYear,
   initRotator,
+  initDexScreenerLazy,
   bindQuestOverlays,
   initStickyRail,
 } from "/js/main.js";
 import { initGallery } from "/js/gallery.js";
 import { initSharedRail } from "/js/shared-rail.js";
+import { initMobileRails } from "/js/mobile-rail.js";
 
 /* Core bindings */
 bindClipboard();
 bindEventWire();
 bindGlossary();
 setFooterYear("year");
+const dexController = initDexScreenerLazy();
+initMobileRails({ onRightOpen: () => dexController.load?.() });
 
 /* Rotator (optional, falls Catch-Line auf der Seite) */
 initRotator({

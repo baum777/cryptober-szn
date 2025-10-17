@@ -1,0 +1,149 @@
+Alles klar, ich habe die **Quest Grid+ × Hero’s Journey** Instruktionen verstanden. Ich übernehme die Rolle des **Quest-Grid+ Kurators (Hero’s-Journey Orchestrator)** und liefere dir eine kompakte, operative Umsetzung basierend auf deinem Input. Lass uns loslegen!
+
+### Anfrage (angenommen): Erstelle ein Set für **Cryptober – Call to Adventure**  
+- **Ziel**: 1× Hero (16:9, 1280×720), 8× Thumbs (4× 4:5, 4× 1:1; Höhe 280 px), Captions, Tags, Export-Manifest, QA-Check.
+- **Fokus**: Kernmotiv (Kürbis, grüne Kerze, Runen, Nebel), Memes („Answer the call“, „Wake the bulls“), Brand-Konstanten (#1a1a1a, #FF6200, #00FF66, $CRYPTOBER).
+
+---
+
+## Schritt-für-Schritt-Umsetzung
+
+### 1. Themenprüfung  
+- **Kernmotiv**: Kürbis mit BTC-Runen, erste grüne Kerze, Nebel, mystische Stimmung.  
+- **Stimmung**: Geheimnisvoll, einladend, „Erwachen der Bullen“.  
+- **Symbole**: Kürbis, Runen, Kerze, Nebelwirbel.  
+- **Brand-Verankerung**: $CRYPTOBER-Overlay (BR), Neon-Orange/Green-Akzente.
+
+### 2. Hero’s-Journey-Mapping  
+- **Call to Adventure**: Ein Held (Trader/Investor) spürt den Ruf des Marktes, symbolisiert durch eine leuchtende BTC-Kerze in einem nebligen Kürbis.  
+- **Story-Arc**: Erste Schritte ins Unbekannte, Mut, Neuanfang.
+
+### 3. Set-Plan  
+- **Hero**: 1× (16:9, 1280×720, Base-Frame, Glow + Grain).  
+- **Thumbs**: 8× (4× 4:5, 4× 1:1; Höhe 280 px).  
+  - **Frame-Mix**: 2× Base, 2× Minimal, 2× Glitch, 2× Trophy.  
+  - **Mischungsverhältnis**: 4:5 für narrative Szenen, 1:1 für ikonische Symbole.  
+- **Themenverteilung**: Kürbis (2×), Kerze (2×), Runen (2×), Nebel/Bullen (2×).
+
+### 4. Prompt-System  
+#### Hero (Base-Frame)  
+```json
+{
+  "theme": "Cryptober",
+  "series": "Call",
+  "title": "First Spark",
+  "aspect": "16:9",
+  "variant": "base",
+  "subject": "glowing BTC-carved pumpkin in misty forest, green candle igniting, subtle bull silhouette in background",
+  "composition": "central focus on pumpkin, layered depth with mist, diagonal candle glow",
+  "palette": ["#1a1a1a", "#FF6200", "#00FF66"],
+  "fx": "soft neon glow, fine grain, faint sparks",
+  "brand": {"overlay": "$CRYPTOBER", "pos": "BR", "safe_area": "8%"},
+  "negative": "real people, third-party logos, heavy watermark",
+  "export": "public/gallery/cryptober/call/hero/first-spark__v1.webp"
+}
+```
+
+#### Thumbs (Beispiele, 2 von 8)  
+```json
+{
+  "theme": "Cryptober",
+  "series": "Call",
+  "title": "Rune Glow",
+  "aspect": "4:5",
+  "variant": "glitch",
+  "subject": "ancient BTC runes glowing in neon-green mist, subtle scanlines",
+  "composition": "vertical rune stack, off-center, misty negative space",
+  "palette": ["#1a1a1a", "#FF6200", "#00FF66"],
+  "fx": "chromatic aberration, scanlines, faint flicker",
+  "tags": ["art", "lore"],
+  "caption": "Runes awaken! 🌌",
+  "export": "public/gallery/cryptober/call/thumbs/4x5/rune-glow__v1.avif"
+}
+{
+  "theme": "Cryptober",
+  "series": "Call",
+  "title": "Bull Whisper",
+  "aspect": "1:1",
+  "variant": "trophy",
+  "subject": "bull head emblem with neon-orange eyes, misty halo",
+  "composition": "central emblem, circular glow, badge-style",
+  "palette": ["#1a1a1a", "#FF6200", "#00FF66"],
+  "fx": "spotlight halo, subtle shimmer",
+  "tags": ["meme", "art"],
+  "caption": "Hear the call! 🐂",
+  "export": "public/gallery/cryptober/call/thumbs/1x1/bull-whisper__v1.avif"
+}
+```
+
+### 5. Produktionsregeln  
+- **Kadrage**: Hero zentral, Thumbs asymmetrisch (4:5 narrativ, 1:1 ikonisch).  
+- **Glows**: Neon-Orange (#FF6200) oder Neon-Green (#00FF66), weich, 10–20 % Deckkraft.  
+- **Körnung**: Fein, 5–10 % Intensität, nur Base/Glitch.  
+- **Safe-Area**: ≥8 % Rand für Overlay ($CRYPTOBER, BR).  
+- **Dateigrößen**: Hero ≤600 KB (WebP), Thumbs ≤120 KB (AVIF).
+
+### 6. Export  
+- **Ordnerstruktur**:  
+  ```
+  /public/gallery/cryptober/call/
+    hero/16x9/first-spark__v1.webp
+    thumbs/4x5/rune-glow__v1.avif
+    thumbs/1x1/bull-whisper__v1.avif
+    ...
+  ```  
+- **Batch-Benennung**: `{theme}_{series}_{title}__v{n}.{format}`.  
+- **Presets**: WebP (Hero, 80 % Qualität), AVIF (Thumbs, 70 % Qualität).
+
+### 7. Integration  
+- **Grid-Specs**: 4×2 Thumbs pro Drop, 280 px Höhe, 16 px Gutter, Kapitel-Header „Cryptober: Call“.  
+- **Lightbox**: Preload Hero + Thumb[n±1], Swipe/Pfeile, Alt-Text aus Prompt (`title+subject`).  
+- **Filterchips**: `meme`, `art`, `lore`; URL-Params (`?filter=meme+art`).  
+- **Share**: OG-Asset (Hero), Deep-Link (`/gallery/cryptober/call#first-spark`).  
+
+### 8. QA-Check  
+- **Technik**: Schärfe ok, Hero ≤600 KB, Thumbs ≤120 KB, keine Artefakte.  
+- **Marke**: Palette korrekt (#1a1a1a, #FF6200, #00FF66), $CRYPTOBER-Overlay sichtbar (BR), Safe-Area eingehalten.  
+- **Erzählfluss**: Call-Arc klar (Kürbis/Kerze → Runen → Bullen-Erwachen).  
+- **Barrierefreiheit**: Alt-Texte vollständig, Kontrast ≥WCAG AA.
+
+---
+
+## Mini-Manifest (Auszug)  
+### `GALLERY_THEME_MAP.json`  
+```json
+{
+  "cryptober": {
+    "act": "call",
+    "motifs": ["pumpkin", "green candle", "runes", "mist"],
+    "memes": ["Answer the call", "Wake the bulls"],
+    "palette": ["#1a1a1a", "#FF6200", "#00FF66"],
+    "thumbs": {"count": 8, "ratios": {"4:5": 4, "1:1": 4}, "frames": ["base", "minimal", "glitch", "trophy"]}
+  }
+}
+```
+
+### `PROMPTS.ndjson` (Auszug, 3 von 9)  
+```json
+{"theme":"Cryptober","series":"Call","title":"First Spark","aspect":"16:9","variant":"base","subject":"glowing BTC-carved pumpkin in misty forest, green candle igniting, subtle bull silhouette","composition":"central focus, layered mist","palette":["#1a1a1a","#FF6200","#00FF66"],"fx":"soft neon glow, fine grain","brand":{"overlay":"$CRYPTOBER","pos":"BR"},"negative":"real people, third-party logos","export":"public/gallery/cryptober/call/hero/first-spark__v1.webp"}
+{"theme":"Cryptober","series":"Call","title":"Rune Glow","aspect":"4:5","variant":"glitch","subject":"ancient BTC runes glowing in neon-green mist, subtle scanlines","composition":"vertical rune stack, off-center","fx":"chromatic aberration, scanlines","tags":["art","lore"],"caption":"Runes awaken! 🌌","export":"public/gallery/cryptober/call/thumbs/4x5/rune-glow__v1.avif"}
+{"theme":"Cryptober","series":"Call","title":"Bull Whisper","aspect":"1:1","variant":"trophy","subject":"bull head emblem with neon-orange eyes, misty halo","composition":"central emblem, circular glow","fx":"spotlight halo, shimmer","tags":["meme","art"],"caption":"Hear the call! 🐂","export":"public/gallery/cryptober/call/thumbs/1x1/bull-whisper__v1.avif"}
+```
+
+---
+
+## Export-Plan  
+- **Reihenfolge**:  
+  1. Teaser-Thumb („Rune Glow“, 4:5, Glitch).  
+  2. Hero („First Spark“, 16:9, Base).  
+  3. Thumbs in 3 Drops (2–3 Thumbs/Drop, z. B. „Bull Whisper“, „Mist Candle“).  
+- **Cadence**: 3 Drops/Woche (Mo/Mi/Fr), Hero am Mi.  
+
+---
+
+## Nächste Schritte  
+- **Bestätigung**: Soll ich ein weiteres Set (z. B. Uptober) erstellen oder Details anpassen (z. B. mehr Thumbs, andere Frames)?  
+- **Bildgenerierung**: Möchtest du, dass ich die visuellen Assets (Hero/Thumbs) generiere? Bitte bestätige explizit.  
+- **Erweiterung**: Soll ich ein README oder vollständiges Manifest für alle Epochen erstellen?  
+
+Lass mich wissen, wie wir weiterfahren! 🚀

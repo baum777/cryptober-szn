@@ -14,21 +14,17 @@ import {
 import { initGallery } from "/js/gallery.js";
 import { initMobileRails } from "/js/mobile-rail.js";
 
-function renderCatchPhrases({ containerId = "catch-phrase-card", phrases = [], collapsedCount = 3 } = {}) {
+function renderCatchPhrases({ containerId = "catch-phrase", phrases = [], collapsedCount = 3 } = {}) {
   const container = document.getElementById(containerId);
   if (!container || !phrases.length) {
     return { destroy() {} };
   }
 
-  const heading = container.querySelector("h3");
   container.innerHTML = "";
-  if (heading) {
-    container.appendChild(heading);
-  }
 
-  const lead = document.createElement("p");
+  const lead = document.createElement("h4");
   lead.id = "catch-line";
-  lead.className = "catch-phrase__lead text-neon-green";
+  lead.className = "catch-phrase__text text-neon-green";
   lead.setAttribute("role", "status");
   lead.textContent = `"${phrases[0]}"`;
   lead.tabIndex = 0;
@@ -144,20 +140,13 @@ const catchPhrases = [
 renderCatchPhrases({ phrases: catchPhrases });
 initRotator({
   targetId: "catch-line",
-  hoverBoxId: "catch-phrase-card",
+  hoverBoxId: "catch-phrase",
   lines: catchPhrases,
   intervalMs: 5000,
 });
 
-/* Carousel-Gallery (Autoplay 5s, Swipe, Lightbox) */
-initGallery({
-  rootId: "gallery",
-  basePath: "/assets/gallery/",
-  autoplayMs: 5000,
-  pauseOnHover: true,
-  enableSwipe: true,
-  enableLightbox: true,
-});
+/* Gallery Pager (4x2 grid) */
+initGallery({ rootId: "gallery" });
 
 /* Kapitel-Navigation (links) — erzeugt aus vorhandenen Epochen + Sub-H3 */
 (function initLoreNav() {
@@ -244,14 +233,12 @@ initGallery({
   const host = document.getElementById("glossary-of-day");
   const panel = document.getElementById("glossary-panel");
   if (!host || !panel) return;
-  const items = Array.from(panel.querySelectorAll("dl > div"));
-  const pairs = items
-    .map((div) => {
-      const dt = div.querySelector("dt");
-      const dd = div.querySelector("dd");
-      return dt && dd
-        ? { term: (dt.textContent || "").trim(), def: (dd.textContent || "").trim() }
-        : null;
+  const terms = Array.from(panel.querySelectorAll("dl > dt"));
+  const pairs = terms
+    .map((dt) => {
+      const dd = dt.nextElementSibling;
+      if (!dd || dd.tagName !== "DD") return null;
+      return { term: (dt.textContent || "").trim(), def: (dd.textContent || "").trim() };
     })
     .filter(Boolean);
   if (pairs.length === 0) return;
@@ -269,6 +256,5 @@ initGallery({
 initStickyRail({
   railSelector: ".left-rail",
   sentinelId: "lore-sentinel-end",
-  sentinelContainerSelector: ".page",
-  topSticky: "var(--header-height)",
+  sentinelContainerSelector: ".layout-grid",
 });

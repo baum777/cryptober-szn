@@ -49,16 +49,20 @@ initGallery({
 const toggle = document.getElementById("rail-toggle");
 const railList = document.getElementById("lore-nav-list");
 if (toggle && railList) {
+  const setOpen = (open) => {
+    toggle.setAttribute("aria-expanded", String(open));
+    railList.setAttribute("aria-expanded", String(open));
+    railList.classList.toggle("hidden", !open);
+  };
+  setOpen(true);
   toggle.addEventListener("click", () => {
     const isOpen = toggle.getAttribute("aria-expanded") === "true";
-    toggle.setAttribute("aria-expanded", String(!isOpen));
-    railList.setAttribute("aria-expanded", String(!isOpen));
-    railList.style.display = isOpen ? "none" : "block";
+    setOpen(!isOpen);
   });
 }
 // No-JS-Fallback: Liste sichtbar machen
-if (railList) {
-  railList.style.display = "";
+if (!toggle && railList) {
+  railList.classList.remove("hidden");
 }
 
 /* Quest Grid Overlays binden */
@@ -94,6 +98,5 @@ initQuestProgress();
 initStickyRail({
   railSelector: ".left-rail",
   sentinelId: "mascot-sentinel-end",
-  sentinelContainerSelector: ".page",
-  topSticky: "var(--header-height)",
+  sentinelContainerSelector: ".layout-grid",
 });

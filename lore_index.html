@@ -16,49 +16,64 @@
 </head>
 <body>
   <!-- Header -->
-  <header id="site-header" class="site-header">
-    <div class="site-header__inner">
-      <div class="header-left">
-        <button id="open-left-rail" class="site-header__toggle" aria-controls="left-rail-panel" aria-expanded="false" aria-label="Navigation öffnen">☰</button>
-        <a href="/" class="nav-card nav-card--brand" data-event="nav-home" aria-label="Zur Startseite">
-          <img src="/assets/socials/web-logo.svg" alt="Cryptober logo" width="48" height="48" />
-          <span>Home</span>
-        </a>
-      </div>
-      <div class="header-right">
-        <nav aria-label="Hauptnavigation" class="site-header__nav">
-          <a href="lore_index.html" class="nav-card" aria-current="page">Lore</a>
-          <a href="lore_mascot.html" class="nav-card" data-event="nav-mascot">Mascot</a>
-        </nav>
-        <button id="open-right-rail" class="site-header__toggle" aria-controls="right-rail-panel" aria-expanded="false" aria-label="Live-Stats öffnen">📈</button>
-      </div>
+  <header id="site-header" role="banner">
+    <div class="header-left">
+      <button id="open-left-rail" class="site-header__toggle rail-toggle" aria-controls="left-rail" aria-expanded="false" aria-label="Navigation öffnen">☰</button>
+      <a href="/" class="nav-card nav-card--brand" data-event="nav-home" aria-label="Zur Startseite">
+        <img src="/assets/socials/web-logo.svg" alt="Cryptober logo" width="48" height="48" />
+        <span>Home</span>
+      </a>
+    </div>
+    <div class="header-right">
+      <nav aria-label="Hauptnavigation" class="header-nav">
+        <a href="lore_index.html" class="nav-card" aria-current="page">Lore</a>
+        <a href="lore_mascot.html" class="nav-card" data-event="nav-mascot">Mascot</a>
+      </nav>
+      <button id="open-right-rail" class="site-header__toggle rail-toggle" aria-controls="right-rail" aria-expanded="false" aria-label="Live-Stats öffnen">📈</button>
     </div>
   </header>
 
   <!-- PAGE GRID -->
-  <div class="page" style="margin-top: 1em;">
+  <div class="layout-grid">
     <!-- LEFT RAIL -->
-    <aside id="left-rail-panel" class="left-rail" aria-label="Kapitel Navigation">
-      <nav class="rail-card" aria-label="Kapitel-Navigation">
-        <h3 class="muted">Kapitel</h3>
-        <ul id="lore-nav-list" class="rail-list">
-          <li class="rail-item"><a href="#thesis" aria-controls="thesis">Thesis</a></li>
-          <li class="rail-item"><a href="#catch-phrase" aria-controls="catch-phrase">Catch a Phrase</a></li>
-          <li class="rail-item"><a href="#gallery-section" aria-controls="gallery-section">Gallery</a></li>
-          <li class="rail-item"><a href="#cryptober" aria-controls="cryptober">Cryptober</a></li>
-          <li class="rail-item"><a href="#uptober" aria-controls="uptober">Uptober</a></li>
-          <li class="rail-item"><a href="#moonvember" aria-controls="moonvember">Moonvember</a></li>
-          <li class="rail-item"><a href="#upcember" aria-controls="upcember">Upcember</a></li>
-          <li class="rail-item"><a href="#faq" aria-controls="faq">FAQ</a></li>
-          <li class="rail-item"><a href="#glossary-panel" aria-controls="glossary-panel">Glossary</a></li>
-          <li class="rail-item"><a href="lore_mascot.html">Mascot</a></li>
-        </ul>
-      </nav>
-      <div id="glossary-of-day" class="rail-card"></div>
+    <aside id="left-rail" class="rail-card left-rail offcanvas" aria-label="Kapitel Navigation">
+      <div class="rail-scroll-wrap">
+        <nav aria-label="Kapitel-Navigation">
+          <section class="rail-group">
+            <button class="group-toggle" aria-expanded="true">Chronik</button>
+            <ul class="group-list" role="list">
+              <li class="rail-item"><a href="#thesis" aria-controls="thesis">Thesis</a></li>
+              <li class="rail-item"><a href="#catch-phrase-section" aria-controls="catch-phrase-section">Catch a Phrase</a></li>
+              <li class="rail-item"><a href="#gallery-section" aria-controls="gallery-section">Gallery</a></li>
+            </ul>
+          </section>
+
+          <section class="rail-group">
+            <button class="group-toggle" aria-expanded="false">Seasons</button>
+            <ul class="group-list" role="list" hidden>
+              <li class="rail-item"><a href="#cryptober" aria-controls="cryptober">Cryptober</a></li>
+              <li class="rail-item"><a href="#uptober" aria-controls="uptober">Uptober</a></li>
+              <li class="rail-item"><a href="#moonvember" aria-controls="moonvember">Moonvember</a></li>
+              <li class="rail-item"><a href="#upcember" aria-controls="upcember">Upcember</a></li>
+            </ul>
+          </section>
+
+          <section class="rail-group">
+            <button class="group-toggle" aria-expanded="false">Specials</button>
+            <ul class="group-list" role="list" hidden>
+              <li class="rail-item"><a href="#faq" aria-controls="faq">FAQ</a></li>
+              <li class="rail-item"><a href="#glossary-panel" aria-controls="glossary-panel">Glossary</a></li>
+              <li class="rail-item"><a href="lore_mascot.html">Mascot</a></li>
+            </ul>
+          </section>
+        </nav>
+
+        <div id="glossary-of-day" class="rail-card"></div>
+      </div>
     </aside>
 
     <!-- MAIN -->
-    <main id="content">
+    <main id="site-main" role="main">
       <!-- Lore Header (Hero) -->
       <section class="section" aria-labelledby="lore-heading">
         <h1 id="lore-heading" class="text-neon-orange" style="font-weight:800;font-size:clamp(2rem,3.5vw,3rem)">
@@ -85,11 +100,9 @@
       </section>
 
       <!-- Catchphrase Rotator (EN) -->
-      <section id="catch-phrase" class="section" aria-labelledby="catch-phrase-heading">
-        <div id="catch-phrase-card" class="card catch-phrase" aria-live="polite" role="region" aria-label="Catch a Phrase">
-          <h3 id="catch-phrase-heading" class="text-neon-orange">Catch a Phrase <span aria-hidden="true">👻</span></h3>
-          <p class="muted">Bullish Hooks werden geladen …</p>
-        </div>
+      <section id="catch-phrase-section" class="section" aria-labelledby="catch-phrase-heading">
+        <h3 id="catch-phrase-heading" class="text-neon-orange">Catch a Phrase <span aria-hidden="true">👻</span></h3>
+        <section id="catch-phrase" class="card catch-phrase" aria-live="polite"></section>
       </section>
 
       <!-- FAQ (EN) -->
@@ -144,40 +157,13 @@
       <!-- Gallery -->
       <section id="gallery-section" class="section" aria-labelledby="gallery-title">
         <h2 id="gallery-title" class="text-neon-orange" style="font-weight:800">Gallery</h2>
-        <div class="grid grid-4" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-top:.75rem;">
-          <figure class="card">
-            <img class="gallery-img" src="placeholder-thumb1.jpg" alt="Gallery Image 1" loading="lazy" decoding="async" style="width:100%;height:auto;object-fit:cover"/>
-            <figcaption class="muted">Base Frame</figcaption>
-          </figure>
-          <figure class="card">
-            <img class="gallery-img" src="placeholder-thumb2.jpg" alt="Gallery Image 2" loading="lazy" decoding="async" style="width:100%;height:auto;object-fit:cover"/>
-            <figcaption class="muted">Glitch Frame</figcaption>
-          </figure>
-          <figure class="card">
-            <img class="gallery-img" src="placeholder-thumb3.jpg" alt="Gallery Image 3" loading="lazy" decoding="async" style="width:100%;height:auto;object-fit:cover"/>
-            <figcaption class="muted">Trophy Frame</figcaption>
-          </figure>
-          <figure class="card">
-            <img class="gallery-img" src="placeholder-thumb4.jpg" alt="Gallery Image 4" loading="lazy" decoding="async" style="width:100%;height:auto;object-fit:cover"/>
-            <figcaption class="muted">Minimal Frame</figcaption>
-          </figure>
-          <figure class="card">
-            <img class="gallery-img" src="placeholder-thumb5.jpg" alt="Gallery Image 5" loading="lazy" decoding="async" style="width:100%;height:auto;object-fit:cover"/>
-            <figcaption class="muted">Base Frame</figcaption>
-          </figure>
-          <figure class="card">
-            <img class="gallery-img" src="placeholder-thumb6.jpg" alt="Gallery Image 6" loading="lazy" decoding="async" style="width:100%;height:auto;object-fit:cover"/>
-            <figcaption class="muted">Glitch Frame</figcaption>
-          </figure>
-          <figure class="card">
-            <img class="gallery-img" src="placeholder-thumb7.jpg" alt="Gallery Image 7" loading="lazy" decoding="async" style="width:100%;height:auto;object-fit:cover"/>
-            <figcaption class="muted">Trophy Frame</figcaption>
-          </figure>
-          <figure class="card">
-            <img class="gallery-img" src="placeholder-thumb8.jpg" alt="Gallery Image 8" loading="lazy" decoding="async" style="width:100%;height:auto;object-fit:cover"/>
-            <figcaption class="muted">Minimal Frame</figcaption>
-          </figure>
-        </div>
+        <section id="gallery" class="gallery-wrapper" aria-label="Gallery">
+          <div class="gallery-grid" id="gallery-grid" role="list"></div>
+          <div class="gallery-controls" id="gallery-controls">
+            <button id="gallery-prev" class="btn btn-ghost" type="button" aria-label="Previous images">‹ Prev</button>
+            <button id="gallery-next" class="btn btn-ghost" type="button" aria-label="Next images">Next ›</button>
+          </div>
+        </section>
       </section>
 
       <!-- Cryptober -->
@@ -268,42 +254,68 @@
       <!-- Glossary (toggleable) -->
       <section class="section" aria-labelledby="glossary-toggle">
         <button id="toggle-gloss" class="btn-block" aria-expanded="false" aria-controls="glossary-panel">Glossary / Degen Dictionary 🕯️</button>
-        <div id="glossary-panel" class="glass glossary-card" style="display:none; padding:1rem" aria-hidden="true">
+        <div id="glossary-panel" class="glass glossary-card hidden" aria-hidden="true">
           <h3 class="text-neon-orange">Glossary</h3>
-          <dl>
-            <div><dt class="text-neon-green">Yearly cycle</dt><dd class="muted">Redtember → Uptober → Moonvember → Pumpcember – the ritual dance of the eternal wick.</dd></div>
-            <div><dt class="text-neon-green">4-year cycle (bullrun)</dt><dd class="muted">Bitcoin halving rhythm (2012, 2016, 2020, 2024), where Sparkfiend shatters chains.</dd></div>
-            <div><dt class="text-neon-green">Uptober</dt><dd class="muted">October’s green tilt – the lever Sparkfiend pulls to ignite FOMO.</dd></div>
-            <div><dt class="text-neon-green">Moonvember</dt><dd class="muted">November’s follow-through – where the wick blazes into a $130k supernova.</dd></div>
-            <div><dt class="text-neon-green">Pumpcember</dt><dd class="muted">December’s seal – gains locked, the spark glows on.</dd></div>
-            <div><dt class="text-neon-green">Altseason</dt><dd class="muted">The season where alts rise like ghosts from BTC’s shadow, led by Sparkfiend.</dd></div>
-            <div><dt class="text-neon-green">DYOR</dt><dd class="muted">Do Your Own Research – decipher the runes before joining the coven.</dd></div>
-            <div><dt class="text-neon-green">NFA</dt><dd class="muted">Not Financial Advice – just the wick’s whisper, no promises.</dd></div>
-            <div><dt class="text-neon-green">Solana</dt><dd class="muted">The blazing blockchain where $Cryptober’s flames roar at 65k TPS.</dd></div>
-            <div><dt class="text-neon-green">DeFi</dt><dd class="muted">Decentralized Finance – the realm where Sparkfiend’s rituals harvest yield.</dd></div>
-            <div><dt class="text-neon-green">HODL</dt><dd class="muted">Hold On for Dear Life – the degen oath to clutch the wick.</dd></div>
-            <div><dt class="text-neon-green">Rug Pull</dt><dd class="muted">Sneaky ghosts draining bags – Sparkfiend’s flame burns them away.</dd></div>
-            <div><dt class="text-neon-green">Liquidity Pool</dt><dd class="muted">The cauldron where $Cryptober’s magic brews, $7K deep (Oct 2025).</dd></div>
-            <div><dt class="text-neon-green">Airdrop</dt><dd class="muted">Gifts from the coven – $Cryptober’s green sparks for loyalty.</dd></div>
-            <div><dt class="text-neon-green">Gas Fees</dt><dd class="muted">Tribute to the blockchain gods – a whisper on Solana’s speed.</dd></div>
-            <div><dt class="text-neon-green">Whale</dt><dd class="muted">Mighty sea beasts feeding Sparkfiend’s flames with their hoards.</dd></div>
-            <div><dt class="text-neon-green">FOMO</dt><dd class="muted">Fear Of Missing Out – the werewolf howl driving degens into Uptober’s blaze.</dd></div>
-            <div><dt class="text-neon-green">REKT</dt><dd class="muted">The loser’s curse – Sparkfiend saves those who hold the wick.</dd></div>
-            <div><dt class="text-neon-green">Smart Contract</dt><dd class="muted">Magical runes binding $Cryptober’s rituals on Solana’s ledger.</dd></div>
-            <div><dt class="text-neon-green">PFP</dt><dd class="muted">Profile Pic – your Sparkfiend avatar, forged by the coven’s spark.</dd></div>
-            <div><dt class="text-neon-green">Staking</dt><dd class="muted">Locking your $Cryptober bags to feed the eternal flame, earning rewards.</dd></div>
-            <div><dt class="text-neon-green">Yield Farming</dt><dd class="muted">Harvesting crops from DeFi fields, guided by Sparkfiend’s green sparks.</dd></div>
-            <div><dt class="text-neon-green">Wallet</dt><dd class="muted">Your enchanted pouch holding $Cryptober’s magical tokens.</dd></div>
-            <div><dt class="text-neon-green">DEX</dt><dd class="muted">Decentralized Exchange – the coven’s marketplace, like DexScreener’s altar.</dd></div>
-            <div><dt class="text-neon-green">Slippage</dt><dd class="muted">The ghostly drift when trading – Sparkfiend steadies the wick.</dd></div>
-            <div><dt class="text-neon-green">Ape In</dt><dd class="muted">Degen’s wild leap into $Cryptober, fueled by FOMO and faith.</dd></div>
+          <dl class="glossary">
+            <dt class="text-neon-green">Yearly cycle</dt>
+            <dd class="muted">Redtember → Uptober → Moonvember → Pumpcember – the ritual dance of the eternal wick.</dd>
+            <dt class="text-neon-green">4-year cycle (bullrun)</dt>
+            <dd class="muted">Bitcoin halving rhythm (2012, 2016, 2020, 2024), where Sparkfiend shatters chains.</dd>
+            <dt class="text-neon-green">Uptober</dt>
+            <dd class="muted">October’s green tilt – the lever Sparkfiend pulls to ignite FOMO.</dd>
+            <dt class="text-neon-green">Moonvember</dt>
+            <dd class="muted">November’s follow-through – where the wick blazes into a $130k supernova.</dd>
+            <dt class="text-neon-green">Pumpcember</dt>
+            <dd class="muted">December’s seal – gains locked, the spark glows on.</dd>
+            <dt class="text-neon-green">Altseason</dt>
+            <dd class="muted">The season where alts rise like ghosts from BTC’s shadow, led by Sparkfiend.</dd>
+            <dt class="text-neon-green">DYOR</dt>
+            <dd class="muted">Do Your Own Research – decipher the runes before joining the coven.</dd>
+            <dt class="text-neon-green">NFA</dt>
+            <dd class="muted">Not Financial Advice – just the wick’s whisper, no promises.</dd>
+            <dt class="text-neon-green">Solana</dt>
+            <dd class="muted">The blazing blockchain where $Cryptober’s flames roar at 65k TPS.</dd>
+            <dt class="text-neon-green">DeFi</dt>
+            <dd class="muted">Decentralized Finance – the realm where Sparkfiend’s rituals harvest yield.</dd>
+            <dt class="text-neon-green">HODL</dt>
+            <dd class="muted">Hold On for Dear Life – the degen oath to clutch the wick.</dd>
+            <dt class="text-neon-green">Rug Pull</dt>
+            <dd class="muted">Sneaky ghosts draining bags – Sparkfiend’s flame burns them away.</dd>
+            <dt class="text-neon-green">Liquidity Pool</dt>
+            <dd class="muted">The cauldron where $Cryptober’s magic brews, $7K deep (Oct 2025).</dd>
+            <dt class="text-neon-green">Airdrop</dt>
+            <dd class="muted">Gifts from the coven – $Cryptober’s green sparks for loyalty.</dd>
+            <dt class="text-neon-green">Gas Fees</dt>
+            <dd class="muted">Tribute to the blockchain gods – a whisper on Solana’s speed.</dd>
+            <dt class="text-neon-green">Whale</dt>
+            <dd class="muted">Mighty sea beasts feeding Sparkfiend’s flames with their hoards.</dd>
+            <dt class="text-neon-green">FOMO</dt>
+            <dd class="muted">Fear Of Missing Out – the werewolf howl driving degens into Uptober’s blaze.</dd>
+            <dt class="text-neon-green">REKT</dt>
+            <dd class="muted">The loser’s curse – Sparkfiend saves those who hold the wick.</dd>
+            <dt class="text-neon-green">Smart Contract</dt>
+            <dd class="muted">Magical runes binding $Cryptober’s rituals on Solana’s ledger.</dd>
+            <dt class="text-neon-green">PFP</dt>
+            <dd class="muted">Profile Pic – your Sparkfiend avatar, forged by the coven’s spark.</dd>
+            <dt class="text-neon-green">Staking</dt>
+            <dd class="muted">Locking your $Cryptober bags to feed the eternal flame, earning rewards.</dd>
+            <dt class="text-neon-green">Yield Farming</dt>
+            <dd class="muted">Harvesting crops from DeFi fields, guided by Sparkfiend’s green sparks.</dd>
+            <dt class="text-neon-green">Wallet</dt>
+            <dd class="muted">Your enchanted pouch holding $Cryptober’s magical tokens.</dd>
+            <dt class="text-neon-green">DEX</dt>
+            <dd class="muted">Decentralized Exchange – the coven’s marketplace, like DexScreener’s altar.</dd>
+            <dt class="text-neon-green">Slippage</dt>
+            <dd class="muted">The ghostly drift when trading – Sparkfiend steadies the wick.</dd>
+            <dt class="text-neon-green">Ape In</dt>
+            <dd class="muted">Degen’s wild leap into $Cryptober, fueled by FOMO and faith.</dd>
           </dl>
         </div>
       </section>
     </main>
 
     <!-- RIGHT RAIL -->
-    <aside id="right-rail-panel" class="rail-card right-rail" aria-label="Live Stats">
+    <aside id="right-rail" class="rail-card right-rail offcanvas right" aria-label="Live Stats">
       <div id="dex-screener-placeholder" class="dex-placeholder" data-src="https://dexscreener.com/widget/dexscreener?pairId=solana_BBRQZBQ3Kr1qSsihGDK69UzC3zmpkX9174wxGPdvqANE">
         <p class="muted">Live stats werden geladen …</p>
       </div>
@@ -327,6 +339,7 @@
   <div id="toast" class="toast" aria-live="polite"></div>
 
   <!-- Scripts -->
+  <script type="module" src="/js/lore-rail.js"></script>
   <script type="module" src="/js/boot-lore.js"></script>
   <script type="module" src="/js/main.js"></script>
   <script type="module" src="/js/gallery.js"></script>

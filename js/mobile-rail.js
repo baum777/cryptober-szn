@@ -15,8 +15,8 @@ function getFocusableElements(root) {
 export function initMobileRails({
   leftToggleId = 'open-left-rail',
   rightToggleId = 'open-right-rail',
-  leftPanelId = 'left-rail-panel',
-  rightPanelId = 'right-rail-panel',
+  leftPanelId = 'left-rail',
+  rightPanelId = 'right-rail',
   onRightOpen,
 } = {}) {
   const leftToggle = document.getElementById(leftToggleId);
@@ -110,8 +110,14 @@ export function initMobileRails({
     active = entry;
     document.addEventListener('keydown', handleKeyDown, true);
 
-    if (entry.panel === rightPanel && typeof onRightOpen === 'function') {
-      onRightOpen(entry.panel);
+    if (entry.panel === rightPanel) {
+      const placeholder = document.getElementById('dex-screener-placeholder');
+      if (placeholder && !placeholder.querySelector('iframe')) {
+        placeholder.dispatchEvent(new Event('dex-load-now'));
+      }
+      if (typeof onRightOpen === 'function') {
+        onRightOpen(entry.panel);
+      }
     }
   }
 

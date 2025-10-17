@@ -171,6 +171,81 @@ export function bindComingSoon() {
 }
 
 /**
+ * Lazy-load DexScreener iframe when placeholder is visible.
+ * @param {{ placeholderId?: string, title?: string }} opts
+ * @returns {{ destroy(): void }} cleanup API
+ */
+export function initDexScreenerLazy({ placeholderId = "dex-screener-placeholder", title = "DexScreener Live Chart" } = {}) {
+  const placeholder = document.getElementById(placeholderId);
+  if (!placeholder) {
+    return { load() {}, destroy() {} };
+  }
+
+  const src = placeholder.dataset.src;
+  if (!src) {
+    return { load() {}, destroy() {} };
+  }
+
+  let hasLoaded = false;
+  let observer = null;
+
+  const load = () => {
+    if (hasLoaded) return;
+    const iframe = document.createElement("iframe");
+    iframe.src = src;
+    iframe.loading = "lazy";
+    iframe.title = title;
+    iframe.setAttribute("aria-label", title);
+    iframe.setAttribute("sandbox", "allow-scripts allow-same-origin allow-popups");
+    placeholder.innerHTML = "";
+    placeholder.appendChild(iframe);
+    placeholder.dataset.loaded = "true";
+    hasLoaded = true;
+    if (observer) {
+      observer.disconnect();
+      observer = null;
+    }
+  };
+
+  if ("IntersectionObserver" in window) {
+    observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            load();
+          }
+        });
+      },
+      { rootMargin: "0px 0px 200px 0px" }
+    );
+    observer.observe(placeholder);
+  } else {
+    load();
+  }
+
+  return {
+    load() {
+      load();
+    },
+    destroy() {
+      if (observer) {
+        observer.disconnect();
+        observer = null;
+      }
+      if (hasLoaded) {
+        const iframe = placeholder.querySelector("iframe");
+        if (iframe) {
+          iframe.remove();
+        }
+        placeholder.innerHTML = `<p class="muted">Live stats deaktiviert.</p>`;
+        delete placeholder.dataset.loaded;
+        hasLoaded = false;
+      }
+    },
+  };
+}
+
+/**
  * Hintergrund mit wechselnden Kerzenbildern.
  * @param {{selector:string, intervalMs?:number}} opts
  */

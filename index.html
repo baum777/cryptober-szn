@@ -44,40 +44,44 @@
 </head>
 <body>
   <!-- Header -->
-  <header class="section header" style="background:linear-gradient(180deg, rgba(0,0,0,.35), transparent)">
-    <div class="container header-container" style="display:flex;align-items:center;gap:12px;justify-content:space-between">
-      <a href="/" class="btn btn-ghost" data-event="nav-home" aria-label="Zur Startseite">
-        <img src="/assets/socials/web-logo.svg" alt="Cryptober logo" width="32" height="32" />
-        <span style="margin-left:.5rem">$Cryptober</span>
-      </a>
+  <header id="site-header" class="site-header">
+    <div class="site-header__inner">
+      <div class="header-left">
+        <button id="open-left-rail" class="site-header__toggle" aria-controls="left-rail-panel" aria-expanded="false" aria-label="Navigation öffnen">☰</button>
+        <a href="/" class="nav-card nav-card--brand" data-event="nav-home" aria-label="Zur Startseite">
+          <img src="/assets/socials/web-logo.svg" alt="Cryptober logo" width="32" height="32" />
+          <span>$Cryptober</span>
+        </a>
+      </div>
 
-      <nav aria-label="Hauptnavigation" class="header-nav" style="display:flex;gap:.75rem">
-        <a href="lore_index.html" class="btn btn-ghost" data-event="nav-lore">Lore</a>
-        <a href="lore_mascot.html" class="btn btn-ghost" data-event="nav-mascot">Mascot</a>
-      </nav>
+      <div class="header-right">
+        <nav aria-label="Hauptnavigation" class="site-header__nav">
+          <a href="lore_index.html" class="nav-card" data-event="nav-lore">Lore</a>
+          <a href="lore_mascot.html" class="nav-card" data-event="nav-mascot">Mascot</a>
+        </nav>
+        <button id="open-right-rail" class="site-header__toggle" aria-controls="right-rail-panel" aria-expanded="false" aria-label="Live-Stats öffnen">📈</button>
+      </div>
     </div>
   </header>
 
   <!-- PAGE GRID -->
   <div class="page" role="layout">
     <!-- LEFT RAIL -->
-    <aside class="rail left-rail">
-            <div class="nav-card" aria-label="Seitennavigation">
-        <ul id="nav-list">
-          <li><a href="#hero" data-target>Hero</a></li>
-          <li><a href="#intro" data-target>Intro</a></li>
-          <li><a href="#roadmap" data-target>Roadmap</a></li>
-          <li><a href="#tools" data-target>Tools</a></li>
-          <li><a href="#social-pyramid" data-target>Social</a></li>
-        </ul>
-      </div>
+    <aside id="left-rail-panel" class="rail-card left-rail" aria-label="Seiten Navigation">
+      <ul id="nav-list" class="rail-list">
+        <li class="rail-item"><a href="#hero" data-target aria-controls="hero">Hero</a></li>
+        <li class="rail-item"><a href="#intro" data-target aria-controls="intro">Intro</a></li>
+        <li class="rail-item"><a href="#roadmap" data-target aria-controls="roadmap">Roadmap</a></li>
+        <li class="rail-item"><a href="#tools" data-target aria-controls="tools">Tools</a></li>
+        <li class="rail-item"><a href="#social-pyramid" data-target aria-controls="social-pyramid">Social</a></li>
+      </ul>
       <noscript>
-        <ul id="nav-noscript">
-          <li><a href="#hero">Hero</a></li>
-          <li><a href="#intro">Intro</a></li>
-          <li><a href="#roadmap">Roadmap</a></li>
-          <li><a href="#tools">Tools</a></li>
-          <li><a href="#social-pyramid">Social</a></li>
+        <ul id="nav-noscript" class="rail-list">
+          <li class="rail-item"><a href="#hero">Hero</a></li>
+          <li class="rail-item"><a href="#intro">Intro</a></li>
+          <li class="rail-item"><a href="#roadmap">Roadmap</a></li>
+          <li class="rail-item"><a href="#tools">Tools</a></li>
+          <li class="rail-item"><a href="#social-pyramid">Social</a></li>
         </ul>
       </noscript>
     </aside>
@@ -256,7 +260,7 @@
       </section>
 
       <!-- Footer -->
-      <footer class="section" style="margin-top:1.5rem;">
+      <footer class="section site-footer">
         <div class="container card" style="text-align:center;padding:1rem;">
           <div style="display:flex;justify-content:center;margin-bottom:.5rem">
             <img src="/assets/socials/web-logo.png" alt="Cryptober logo" width="40" height="40" />
@@ -270,10 +274,9 @@
     </main>
 
     <!-- RIGHT RAIL -->
-    <aside class="rail right-rail">
-      <div class="utility" style="padding:1rem;">
-        <div class="tiny">Live Stats</div>
-        <div id="live-stats" style="margin-top:8px;font-size:13px;color:var(--muted)">Loading...</div>
+    <aside id="right-rail-panel" class="rail-card right-rail" aria-label="Live Stats">
+      <div id="dex-screener-placeholder" class="dex-placeholder" data-src="https://dexscreener.com/widget/dexscreener?pairId=solana_BBRQZBQ3Kr1qSsihGDK69UzC3zmpkX9174wxGPdvqANE">
+        <p class="muted">Live stats werden geladen …</p>
       </div>
     </aside>
   </div>

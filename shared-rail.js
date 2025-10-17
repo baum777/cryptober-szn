@@ -4,12 +4,20 @@ export function initSharedRail({ railId = "index-rail", listId = "index-rail-lis
   const railList = document.getElementById(listId);
   if (!rail || !railList) return;
 
+  const docStyle = getComputedStyle(document.documentElement);
+  const headerVar = parseInt(docStyle.getPropertyValue("--header-height"), 10);
+  const headerEl = document.getElementById("site-header");
+  const fallbackHeight = headerEl ? Math.round(headerEl.getBoundingClientRect().height) : 0;
+  const headerHeight = Number.isFinite(headerVar) && headerVar > 0 ? headerVar : fallbackHeight;
+  const offset = headerHeight + 8;
+  document.documentElement.style.setProperty("--rail-top", `${offset}px`);
+
   // IntersectionObserver für Active-State
   const sections = Array.from(railList.querySelectorAll("a")).map(a => ({
     id: a.getAttribute("href")?.slice(1) || "",
     label: a.textContent || ""
   })).filter(s => s.id);
-  
+
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((en) => {
@@ -42,11 +50,19 @@ export function initSharedRail({ railId = "index-rail", listId = "index-rail-lis
         rail.style.bottom = "0";
       } else {
         rail.style.position = "sticky";
-        rail.style.top = "88px";
+        rail.style.top = "var(--rail-top)";
         rail.style.bottom = "auto";
       }
     },
     { threshold: 0, rootMargin: "0px 0px -50% 0px" }
   );
   ioEnd.observe(sentinel);
+
+  return {
+    destroy() {
+      observer.disconnect();
+      ioEnd.disconnect();
+      sentinel.remove();
+    },
+  };
 }

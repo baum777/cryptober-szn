@@ -8,9 +8,106 @@ import {
   bindGlossary,
   setFooterYear,
   initCandleBG,
+  initDexScreenerLazy,
   initStickyRail,
 } from "/js/main.js";
 import { initGallery } from "/js/gallery.js";
+import { initMobileRails } from "/js/mobile-rail.js";
+
+function renderCatchPhrases({ containerId = "catch-phrase-card", phrases = [], collapsedCount = 3 } = {}) {
+  const container = document.getElementById(containerId);
+  if (!container || !phrases.length) {
+    return { destroy() {} };
+  }
+
+  const heading = container.querySelector("h3");
+  container.innerHTML = "";
+  if (heading) {
+    container.appendChild(heading);
+  }
+
+  const lead = document.createElement("p");
+  lead.id = "catch-line";
+  lead.className = "catch-phrase__lead text-neon-green";
+  lead.setAttribute("role", "status");
+  lead.textContent = `"${phrases[0]}"`;
+  lead.tabIndex = 0;
+  container.appendChild(lead);
+
+  const copyCurrentPhrase = () => {
+    const text = lead.textContent ? lead.textContent.replace(/^"|"$/g, "").trim() : "";
+    if (!text) return;
+    if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+      navigator.clipboard.writeText(text).catch(() => {});
+    }
+  };
+  const onLeadKey = (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      copyCurrentPhrase();
+    }
+  };
+  lead.addEventListener("click", copyCurrentPhrase);
+  lead.addEventListener("keydown", onLeadKey);
+
+  const hint = document.createElement("p");
+  hint.className = "muted catch-phrase__hint";
+  hint.textContent = "Hover pausiert, Klick kopiert.";
+  container.appendChild(hint);
+
+  const list = document.createElement("ul");
+  list.className = "catch-phrase__list";
+  list.setAttribute("aria-label", "Weitere Catchphrases");
+  phrases.forEach((phrase, index) => {
+    const li = document.createElement("li");
+    li.className = "catch-phrase__item";
+    li.textContent = phrase;
+    li.dataset.index = String(index);
+    list.appendChild(li);
+  });
+
+  if (phrases.length > collapsedCount) {
+    list.classList.add("is-collapsed");
+  }
+
+  container.appendChild(list);
+
+  let expanded = false;
+  const toggle = document.createElement("button");
+  toggle.type = "button";
+  toggle.className = "catch-phrase__toggle nav-card";
+  toggle.setAttribute("aria-expanded", "false");
+  toggle.textContent = "Mehr Hooks anzeigen";
+  const updateView = () => {
+    list.classList.toggle("is-collapsed", !expanded && phrases.length > collapsedCount);
+    toggle.setAttribute("aria-expanded", expanded ? "true" : "false");
+    toggle.textContent = expanded ? "Weniger Hooks anzeigen" : "Mehr Hooks anzeigen";
+  };
+  const onToggle = () => {
+    expanded = !expanded;
+    updateView();
+  };
+  toggle.addEventListener("click", onToggle);
+  container.appendChild(toggle);
+  updateView();
+
+  const resizeObserver = new ResizeObserver((entries) => {
+    entries.forEach(({ target, contentRect }) => {
+      target.style.setProperty("--catch-phrase-height", `${Math.round(contentRect.height)}px`);
+      target.classList.toggle("is-scrollable", contentRect.height > 320);
+    });
+  });
+  resizeObserver.observe(container);
+
+  return {
+    destroy() {
+      resizeObserver.disconnect();
+      toggle.removeEventListener("click", onToggle);
+      lead.removeEventListener("click", copyCurrentPhrase);
+      lead.removeEventListener("keydown", onLeadKey);
+    },
+  };
+}
 
 /* Core */
 bindClipboard();
@@ -18,32 +115,37 @@ bindEventWire();
 bindGlossary();
 setFooterYear("year");
 initCandleBG({ selector: ".ph-box", intervalMs: 8500 });
+const dexController = initDexScreenerLazy();
+initMobileRails({ onRightOpen: () => dexController.load?.() });
 
 /* Catchphrase-Rotator (pausiert bei Hover) */
+const catchPhrases = [
+  "Cryptober's the spark - Bullrun's the fire, Altseason's the blast. Light up your bags!",
+  "In Cryptober, bears nap - bulls run. Altseason's incoming: 100x vibes (DYOR)!",
+  "Bullrun whispers: 'Buy low.' Altseason screams: 'Sell high.' Cryptober says: 'HODL.'",
+  "From Bitcoin's throne to Altcoin's crown - Cryptober kicks off the Bullrun meta.",
+  "Altseason isn't luck - it's the community roaring. Get on the wave.",
+  "Cryptober: where memes start moon missions. Bullrun fuels it; Altseason harvests it.",
+  "In market meta, Bullrun builds empires - Altseason crowns the kings. DYOR to rule.",
+  "Bullrun starts the party; Altseason is the afterparty. Cryptober's the VIP invite.",
+  "Altseason meta: whales pump, communities dump fear. Bullrun stays until the halving.",
+  "Cryptober's chill? Nope - that's the Bullrun thrill. Altseason steals the spotlight.",
+  "From rug to revival: Bullrun heals wounds, Altseason rewards the brave.",
+  "Bullrun is the climb; Altseason is the summit. Cryptober is base camp.",
+  "In Altseason, every dip's a setup. Bullrun shouts: 'To the moon - no brakes!'",
+  "Cryptober wakes the bulls; Bullrun unleashes them. Altseason = pure euphoria.",
+  "Meta tip: Bullrun tests patience; Altseason rewards vision. DYOR is your compass.",
+  "Altseason secret: community > code. Bullrun mantra: hype, hold, harvest.",
+  "Cryptober's glow = Bullrun's golden hour. Altseason flips the script - alts lead.",
+  "Bullrun meta: cycles repeat, winners evolve. Altseason: winners level up.",
+  "From Cryptober's haunt to Bullrun's hunt - Altseason's the feast. Eat or get eaten.",
+];
+
+renderCatchPhrases({ phrases: catchPhrases });
 initRotator({
   targetId: "catch-line",
-  hoverBoxId: "catch-box",
-  lines: [
-    "Cryptober's the spark - Bullrun's the fire, Altseason's the blast. Light up your bags!",
-    "In Cryptober, bears nap - bulls run. Altseason's incoming: 100x vibes (DYOR)!",
-    "Bullrun whispers: 'Buy low.' Altseason screams: 'Sell high.' Cryptober says: 'HODL.'",
-    "From Bitcoin's throne to Altcoin's crown - Cryptober kicks off the Bullrun meta.",
-    "Altseason isn't luck - it's the community roaring. Get on the wave.",
-    "Cryptober: where memes start moon missions. Bullrun fuels it; Altseason harvests it.",
-    "In market meta, Bullrun builds empires - Altseason crowns the kings. DYOR to rule.",
-    "Bullrun starts the party; Altseason is the afterparty. Cryptober's the VIP invite.",
-    "Altseason meta: whales pump, communities dump fear. Bullrun stays until the halving.",
-    "Cryptober's chill? Nope - that's the Bullrun thrill. Altseason steals the spotlight.",
-    "From rug to revival: Bullrun heals wounds, Altseason rewards the brave.",
-    "Bullrun is the climb; Altseason is the summit. Cryptober is base camp.",
-    "In Altseason, every dip's a setup. Bullrun shouts: 'To the moon - no brakes!'",
-    "Cryptober wakes the bulls; Bullrun unleashes them. Altseason = pure euphoria.",
-    "Meta tip: Bullrun tests patience; Altseason rewards vision. DYOR is your compass.",
-    "Altseason secret: community > code. Bullrun mantra: hype, hold, harvest.",
-    "Cryptober's glow = Bullrun's golden hour. Altseason flips the script - alts lead.",
-    "Bullrun meta: cycles repeat, winners evolve. Altseason: winners level up.",
-    "From Cryptober's haunt to Bullrun's hunt - Altseason's the feast. Eat or get eaten.",
-  ],
+  hoverBoxId: "catch-phrase-card",
+  lines: catchPhrases,
   intervalMs: 5000,
 });
 

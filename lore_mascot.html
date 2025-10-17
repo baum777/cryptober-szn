@@ -1,4 +1,3 @@
-```html
 <!doctype html>
 <html lang="de">
 <head>
@@ -19,18 +18,11 @@
   <!-- Header -->
   <header id="site-header" role="banner">
     <div class="header-left">
-      <button id="open-left-rail" class="site-header__toggle rail-toggle" aria-controls="left-rail" aria-expanded="false" aria-label="Navigation öffnen">☰</button>
-      <a href="/" class="nav-card nav-card--brand" data-event="nav-home" aria-label="Zur Startseite">
-        <img src="/assets/socials/web-logo.svg" alt="Cryptober logo" width="48" height="48" />
-        <span>Home</span>
-      </a>
+      <a class="nav-card" href="/">Home</a>
     </div>
     <div class="header-right">
-      <nav aria-label="Hauptnavigation" class="header-nav">
-        <a href="lore_index.html" class="nav-card" data-event="nav-lore">Lore</a>
-        <a href="lore_mascot.html" class="nav-card" aria-current="page">Mascot</a>
-      </nav>
-      <button id="open-right-rail" class="site-header__toggle rail-toggle" aria-controls="right-rail" aria-expanded="false" aria-label="Live-Stats öffnen">📈</button>
+      <a class="nav-card" href="/lore_index.html">Lore</a>
+      <a class="nav-card" href="/lore_mascot.html" aria-current="page">Mascot</a>
     </div>
   </header>
 
@@ -54,24 +46,35 @@
     <main id="site-main" role="main">
       <!-- Hero Section -->
       <section id="hero" class="section">
-        <img src="placeholder-hero.jpg" alt="Sparkfiend Portrait Placeholder" style="aspect-ratio:16/9; max-width:100%; border-radius:var(--radius);" />
-        <h1 class="text-neon-orange">
-          Sparkfiend – The Flame Keeper
-        </h1>
-        <p class="muted">
-          Guardian of the Bullrun — Igniting the first green candle in $Cryptober before the OG-Bullrun.
-        </p>
+        <div class="glass card card-lg mascot-hero">
+          <img
+            class="mascot-hero__image"
+            src="placeholder-hero.jpg"
+            alt="Sparkfiend Portrait Placeholder"
+            width="1280"
+            height="720"
+            loading="lazy"
+            decoding="async"
+          />
+          <h1 class="text-neon-orange">
+            Sparkfiend – The Flame Keeper
+          </h1>
+          <p class="muted">
+            Guardian of the Bullrun — Igniting the first green candle in $Cryptober before the OG-Bullrun.
+          </p>
+        </div>
       </section>
 
       <!-- Origin & Traits -->
       <section id="traits" class="section">
-        <h2 class="text-neon-orange">Origin &amp; Traits</h2>
-        <p class="muted">
-          In the shadowed realms of crypto, where markets roar like ancient gods, Sparkfiend rises — a deathless ghost-bull, guardian of the eternal wick. For degens and normies alike, he’s the spark that ignites $Cryptober’s rituals: a mythic being born from the 2013 bullrun’s chaos, forging cycles into legends. His flame doesn’t just burn in charts but in the hearts of the community — a call to HODL, stoking FOMO, and shattering halving chains. Whether you’re a hardened trader or new to crypto’s wilds, Sparkfiend makes the yearly phases tangible: from Redtember’s frost to Pumpcember’s ashes. Dive into his origin, the traits that make him unforgettable, and the sacred rules guiding the ritual — an epic of sparks, spirits, and endless glow.
-        </p>
+        <div class="glass card card-lg">
+          <h2 class="text-neon-orange">Origin &amp; Traits</h2>
+          <p class="muted">
+            In the shadowed realms of crypto, where markets roar like ancient gods, Sparkfiend rises — a deathless ghost-bull, guardian of the eternal wick. For degens and normies alike, he’s the spark that ignites $Cryptober’s rituals: a mythic being born from the 2013 bullrun’s chaos, forging cycles into legends. His flame doesn’t just burn in charts but in the hearts of the community — a call to HODL, stoking FOMO, and shattering halving chains. Whether you’re a hardened trader or new to crypto’s wilds, Sparkfiend makes the yearly phases tangible: from Redtember’s frost to Pumpcember’s ashes. Dive into his origin, the traits that make him unforgettable, and the sacred rules guiding the ritual — an epic of sparks, spirits, and endless glow.
+          </p>
 
-        <div class="grid grid-3" style="gap:1rem">
-          <div class="card inner-gap">
+          <div class="grid grid-3 traits-grid">
+            <div class="card inner-gap">
             <h3 class="text-neon-green">Origin</h3>
             <p class="muted">
               Sparkfiend’s genesis blazes in the fiery depths of 2013, when Bitcoin surged in October — fueled by post-Silk Road chaos and the first true bullrun.
@@ -79,9 +82,9 @@
               born from Bitcoin’s OG spark, he haunts the shadows, ignites Cryptober’s rally, leverages Uptober’s momentum, fans Moonvember’s supernova, and seals Pumpcember’s gains.
               He is the mythic guardian forging memes into runes, binding the community into an unbreakable coven — born from ashes to keep the flame eternal.
             </p>
-          </div>
+            </div>
 
-          <div class="card inner-gap">
+            <div class="card inner-gap">
             <h3 class="text-neon-green">Traits</h3>
             <ul class="muted" style="padding-left:1rem; margin:0;">
               <li>Ghost-bull body: shadowy, dark-mode mist with bull-horn strength.</li>
@@ -93,9 +96,9 @@
               <li>Snarl under blood-moon: grins, whispering FOMO to the coven.</li>
               <li>Minimalist vector: dark-mode ready for memes and avatars.</li>
             </ul>
-          </div>
+            </div>
 
-          <div class="card inner-gap">
+            <div class="card inner-gap">
             <h3 class="text-neon-green">Ritual Rules</h3>
             <ol class="muted" style="padding-left:1rem; margin:0;">
               <li>In Redtember’s frost: gather strength in dips to spark the wick and break the chill.</li>
@@ -109,105 +112,103 @@
               <li>Beware shadows: stay vigilant against false sparks and bot-driven noise.</li>
               <li>Spread the lore: forge memes into legends so Sparkfiend’s spark lives forever.</li>
             </ol>
+            </div>
           </div>
         </div>
       </section>
 
       <!-- Mini-Gallery -->
       <section id="mini-gallery" class="section">
-        <h2 class="text-neon-orange">Mini-Gallery</h2>
-        <div class="grid grid-4" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-top:.5rem;">
-          <figure class="card">
-            <img class="gallery-img" src="placeholder-thumb1.jpg" alt="Mascot Variant 1" loading="lazy" decoding="async" style="width:100%;height:auto;object-fit:cover" />
-            <figcaption class="muted">Base Frame</figcaption>
-          </figure>
-          <figure class="card">
-            <img class="gallery-img" src="placeholder-thumb2.jpg" alt="Mascot Variant 2" loading="lazy" decoding="async" style="width:100%;height:auto;object-fit:cover" />
-            <figcaption class="muted">Glitch Frame</figcaption>
-          </figure>
-          <figure class="card">
-            <img class="gallery-img" src="placeholder-thumb3.jpg" alt="Mascot Variant 3" loading="lazy" decoding="async" style="width:100%;height:auto;object-fit:cover" />
-            <figcaption class="muted">Trophy Frame</figcaption>
-          </figure>
-          <figure class="card">
-            <img class="gallery-img" src="placeholder-thumb4.jpg" alt="Mascot Variant 4" loading="lazy" decoding="async" style="width:100%;height:auto;object-fit:cover" />
-            <figcaption class="muted">Minimal Frame</figcaption>
-          </figure>
-          <figure class="card">
-            <img class="gallery-img" src="placeholder-thumb5.jpg" alt="Mascot Variant 5" loading="lazy" decoding="async" style="width:100%;height:auto;object-fit:cover" />
-            <figcaption class="muted">Base Frame</figcaption>
-          </figure>
-          <figure class="card">
-            <img class="gallery-img" src="placeholder-thumb6.jpg" alt="Mascot Variant 6" loading="lazy" decoding="async" style="width:100%;height:auto;object-fit:cover" />
-            <figcaption class="muted">Glitch Frame</figcaption>
-          </figure>
-          <figure class="card">
-            <img class="gallery-img" src="placeholder-thumb7.jpg" alt="Mascot Variant 7" loading="lazy" decoding="async" style="width:100%;height:auto;object-fit:cover" />
-            <figcaption class="muted">Trophy Frame</figcaption>
-          </figure>
-          <figure class="card">
-            <img class="gallery-img" src="placeholder-thumb8.jpg" alt="Mascot Variant 8" loading="lazy" decoding="async" style="width:100%;height:auto;object-fit:cover" />
-            <figcaption class="muted">Minimal Frame</figcaption>
-          </figure>
-        </div>
+        <div class="glass card card-lg">
+          <h2 class="text-neon-orange">Mini-Gallery</h2>
+          <div class="gallery-grid mini-gallery-grid">
+            <figure class="card mini-gallery-item">
+              <img class="mini-gallery-item__img" src="placeholder-thumb1.jpg" alt="Mascot Variant 1" loading="lazy" decoding="async" width="320" height="320" />
+              <figcaption class="muted mini-gallery-caption">Base Frame</figcaption>
+            </figure>
+            <figure class="card mini-gallery-item">
+              <img class="mini-gallery-item__img" src="placeholder-thumb2.jpg" alt="Mascot Variant 2" loading="lazy" decoding="async" width="320" height="320" />
+              <figcaption class="muted mini-gallery-caption">Glitch Frame</figcaption>
+            </figure>
+            <figure class="card mini-gallery-item">
+              <img class="mini-gallery-item__img" src="placeholder-thumb3.jpg" alt="Mascot Variant 3" loading="lazy" decoding="async" width="320" height="320" />
+              <figcaption class="muted mini-gallery-caption">Trophy Frame</figcaption>
+            </figure>
+            <figure class="card mini-gallery-item">
+              <img class="mini-gallery-item__img" src="placeholder-thumb4.jpg" alt="Mascot Variant 4" loading="lazy" decoding="async" width="320" height="320" />
+              <figcaption class="muted mini-gallery-caption">Minimal Frame</figcaption>
+            </figure>
+            <figure class="card mini-gallery-item">
+              <img class="mini-gallery-item__img" src="placeholder-thumb5.jpg" alt="Mascot Variant 5" loading="lazy" decoding="async" width="320" height="320" />
+              <figcaption class="muted mini-gallery-caption">Base Frame</figcaption>
+            </figure>
+            <figure class="card mini-gallery-item">
+              <img class="mini-gallery-item__img" src="placeholder-thumb6.jpg" alt="Mascot Variant 6" loading="lazy" decoding="async" width="320" height="320" />
+              <figcaption class="muted mini-gallery-caption">Glitch Frame</figcaption>
+            </figure>
+            <figure class="card mini-gallery-item">
+              <img class="mini-gallery-item__img" src="placeholder-thumb7.jpg" alt="Mascot Variant 7" loading="lazy" decoding="async" width="320" height="320" />
+              <figcaption class="muted mini-gallery-caption">Trophy Frame</figcaption>
+            </figure>
+            <figure class="card mini-gallery-item">
+              <img class="mini-gallery-item__img" src="placeholder-thumb8.jpg" alt="Mascot Variant 8" loading="lazy" decoding="async" width="320" height="320" />
+              <figcaption class="muted mini-gallery-caption">Minimal Frame</figcaption>
+            </figure>
+          </div>
 
-        <div style="margin-top:.75rem;">
-          <button id="gallery-load-more" class="btn btn-ghost" aria-label="Mehr anzeigen">Mehr anzeigen</button>
+          <div class="mini-gallery-actions">
+            <button id="gallery-load-more" class="btn btn-ghost" aria-label="Mehr anzeigen">Mehr anzeigen</button>
+          </div>
         </div>
       </section>
 
       <!-- Quest Grid S1 -->
       <section id="quest-grid" class="section">
-        <h2 class="text-neon-orange">Quest Grid Season 1</h2>
-        <div class="grid grid-4" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin-top:.5rem;">
-          <figure class="card quest-tile" role="button" tabindex="0" aria-label="Reveal soon">
-            <img class="gallery-img" src="placeholder-quest.jpg" alt="Quest Tile 1 Placeholder" loading="lazy" decoding="async" style="width:100%;height:auto;object-fit:cover" />
-            <div class="overlay text-neon-green" aria-hidden="true">Reveal soon</div>
-          </figure>
-          <figure class="card quest-tile" role="button" tabindex="0" aria-label="Reveal soon">
-            <img class="gallery-img" src="placeholder-quest.jpg" alt="Quest Tile 2 Placeholder" loading="lazy" decoding="async" style="width:100%;height:auto;object-fit:cover" />
-            <div class="overlay text-neon-green" aria-hidden="true">Reveal soon</div>
-          </figure>
-          <figure class="card quest-tile" role="button" tabindex="0" aria-label="Reveal soon">
-            <img class="gallery-img" src="placeholder-quest.jpg" alt="Quest Tile 3 Placeholder" loading="lazy" decoding="async" style="width:100%;height:auto;object-fit:cover" />
-            <div class="overlay text-neon-green" aria-hidden="true">Reveal soon</div>
-          </figure>
-          <figure class="card quest-tile" role="button" tabindex="0" aria-label="Reveal soon">
-            <img class="gallery-img" src="placeholder-quest.jpg" alt="Quest Tile 4 Placeholder" loading="lazy" decoding="async" style="width:100%;height:auto;object-fit:cover" />
-            <div class="overlay text-neon-green" aria-hidden="true">Reveal soon</div>
-          </figure>
+        <div class="glass card card-lg">
+          <h2 class="text-neon-orange">Quest Grid Season 1</h2>
+          <div class="quest-grid-list">
+            <figure class="card quest-tile" role="button" tabindex="0" aria-label="Reveal soon">
+              <img class="quest-tile__img" src="placeholder-quest.jpg" alt="Quest Tile 1 Placeholder" loading="lazy" decoding="async" width="280" height="280" />
+              <div class="overlay text-neon-green" aria-hidden="true">Reveal soon</div>
+            </figure>
+            <figure class="card quest-tile" role="button" tabindex="0" aria-label="Reveal soon">
+              <img class="quest-tile__img" src="placeholder-quest.jpg" alt="Quest Tile 2 Placeholder" loading="lazy" decoding="async" width="280" height="280" />
+              <div class="overlay text-neon-green" aria-hidden="true">Reveal soon</div>
+            </figure>
+            <figure class="card quest-tile" role="button" tabindex="0" aria-label="Reveal soon">
+              <img class="quest-tile__img" src="placeholder-quest.jpg" alt="Quest Tile 3 Placeholder" loading="lazy" decoding="async" width="280" height="280" />
+              <div class="overlay text-neon-green" aria-hidden="true">Reveal soon</div>
+            </figure>
+            <figure class="card quest-tile" role="button" tabindex="0" aria-label="Reveal soon">
+              <img class="quest-tile__img" src="placeholder-quest.jpg" alt="Quest Tile 4 Placeholder" loading="lazy" decoding="async" width="280" height="280" />
+              <div class="overlay text-neon-green" aria-hidden="true">Reveal soon</div>
+            </figure>
+            <figure class="card quest-tile" role="button" tabindex="0" aria-label="Reveal soon">
+              <img class="quest-tile__img" src="placeholder-quest.jpg" alt="Quest Tile 5 Placeholder" loading="lazy" decoding="async" width="280" height="280" />
+              <div class="overlay text-neon-green" aria-hidden="true">Reveal soon</div>
+            </figure>
+            <figure class="card quest-tile" role="button" tabindex="0" aria-label="Reveal soon">
+              <img class="quest-tile__img" src="placeholder-quest.jpg" alt="Quest Tile 6 Placeholder" loading="lazy" decoding="async" width="280" height="280" />
+              <div class="overlay text-neon-green" aria-hidden="true">Reveal soon</div>
+            </figure>
+            <figure class="card quest-tile" role="button" tabindex="0" aria-label="Reveal soon">
+              <img class="quest-tile__img" src="placeholder-quest.jpg" alt="Quest Tile 7 Placeholder" loading="lazy" decoding="async" width="280" height="280" />
+              <div class="overlay text-neon-green" aria-hidden="true">Reveal soon</div>
+            </figure>
+            <figure class="card quest-tile" role="button" tabindex="0" aria-label="Reveal soon">
+              <img class="quest-tile__img" src="placeholder-quest.jpg" alt="Quest Tile 8 Placeholder" loading="lazy" decoding="async" width="280" height="280" />
+              <div class="overlay text-neon-green" aria-hidden="true">Reveal soon</div>
+            </figure>
+          </div>
 
-          <figure class="card quest-tile" role="button" tabindex="0" aria-label="Reveal soon">
-            <img class="gallery-img" src="placeholder-quest.jpg" alt="Quest Tile 5 Placeholder" loading="lazy" decoding="async" style="width:100%;height:auto;object-fit:cover" />
-            <div class="overlay text-neon-green" aria-hidden="true">Reveal soon</div>
-          </figure>
-          <figure class="card quest-tile" role="button" tabindex="0" aria-label="Reveal soon">
-            <img class="gallery-img" src="placeholder-quest.jpg" alt="Quest Tile 6 Placeholder" loading="lazy" decoding="async" style="width:100%;height:auto;object-fit:cover" />
-            <div class="overlay text-neon-green" aria-hidden="true">Reveal soon</div>
-          </figure>
-          <figure class="card quest-tile" role="button" tabindex="0" aria-label="Reveal soon">
-            <img class="gallery-img" src="placeholder-quest.jpg" alt="Quest Tile 7 Placeholder" loading="lazy" decoding="async" style="width:100%;height:auto;object-fit:cover" />
-            <div class="overlay text-neon-green" aria-hidden="true">Reveal soon</div>
-          </figure>
-          <figure class="card quest-tile" role="button" tabindex="0" aria-label="Reveal soon">
-            <img class="gallery-img" src="placeholder-quest.jpg" alt="Quest Tile 8 Placeholder" loading="lazy" decoding="async" style="width:100%;height:auto;object-fit:cover" />
-            <div class="overlay text-neon-green" aria-hidden="true">Reveal soon</div>
-          </figure>
-        </div>
-
-        <div class="quest-controls" style="margin-top:.75rem;display:flex;gap:.5rem;">
-          <button class="btn btn-ghost" data-quest-action="prev" aria-label="Vorherige Quest-Seite">‹ Prev</button>
-          <button class="btn btn-ghost" data-quest-action="next" aria-label="Nächste Quest-Seite">Next ›</button>
+          <div class="quest-controls">
+            <button class="btn btn-ghost" data-quest-action="prev" aria-label="Vorherige Quest-Seite">‹ Prev</button>
+            <button class="btn btn-ghost" data-quest-action="next" aria-label="Nächste Quest-Seite">Next ›</button>
+          </div>
         </div>
       </section>
     </main>
 
-    <!-- RIGHT RAIL -->
-    <aside id="right-rail" class="rail-card right-rail offcanvas right" aria-label="Live Stats">
-      <div id="dex-screener-placeholder" class="dex-placeholder" data-src="https://dexscreener.com/widget/dexscreener?pairId=solana_BBRQZBQ3Kr1qSsihGDK69UzC3zmpkX9174wxGPdvqANE">
-        <p class="muted">Live stats werden geladen …</p>
-      </div>
-    </aside>
   </div>
 
   <!-- Footer -->
@@ -227,9 +228,8 @@
   <div id="toast" class="toast" aria-live="polite"></div>
 
   <!-- Scripts -->
-  <script type="module" src="/js/boot-mascot.js"></script>
+  <script type="module" src="/js/boot-maacot.js"></script>
   <script type="module" src="/js/main.js"></script>
   <script type="module" src="/js/gallery.js"></script>
 </body>
 </html>
-```

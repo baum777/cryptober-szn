@@ -30,10 +30,9 @@ function initGalleryProgressBar() {
   if (!gallery) return;
   const progress = document.createElement("div");
   progress.className = "carousel-progress";
-  progress.style.height = "4px";
-  progress.style.background = "var(--glass-bg)";
-  progress.style.position = "relative";
-  progress.innerHTML = `<div class="progress-bar" style="width:0%;height:100%;background:var(--neon-green);transition:width 5000ms linear;"></div>`;
+  const bar = document.createElement("div");
+  bar.className = "carousel-progress__bar";
+  progress.appendChild(bar);
   gallery.appendChild(progress);
 }
 initGalleryProgressBar();
@@ -50,11 +49,12 @@ upgradeRoadmapToQuest();
 
 /* Contract Address: unter H1 anzeigen + kopieren bei Click/Enter */
 (function showAndCopyContract() {
-  const srcBtn = document.getElementById("copy-ca");
   const show = document.getElementById("ca-display");
-  if (!srcBtn || !show) return;
-  const ca = srcBtn.getAttribute("data-copy") || "";
-  if (ca) show.textContent = ca;
+  if (!show) return;
+  const ca = show.dataset.copy || show.textContent.trim();
+  if (ca) {
+    show.textContent = ca;
+  }
 
   function copyCA() {
     if (!ca) return;

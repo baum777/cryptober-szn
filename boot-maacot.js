@@ -1,0 +1,95 @@
+// =========================
+// /js/boot-mascot.js
+// =========================
+import {
+  bindClipboard,
+  bindEventWire,
+  bindGlossary,
+  setFooterYear,
+  initRotator,
+  bindQuestOverlays,
+  initStickyRail,
+} from "/js/main.js";
+import { initGallery } from "/js/gallery.js";
+import { initSharedRail } from "/js/shared-rail.js";
+
+/* Core bindings */
+bindClipboard();
+bindEventWire();
+bindGlossary();
+setFooterYear("year");
+
+/* Rotator (optional, falls Catch-Line auf der Seite) */
+initRotator({
+  targetId: "catch-line",
+  hoverBoxId: "catch-box",
+  lines: [
+    "Sparkfiend ignites the flame – HODL through the cycles!",
+    "From crypts to moon: The mascot's eternal watch.",
+  ],
+  intervalMs: 5000,
+});
+
+/* Shared Rail Initialisierung für Mascot */
+initSharedRail({ railId: "lore-nav", listId: "lore-nav-list" });
+
+/* Mini-Gallery Init (angepasst für Mascot-Seite) */
+initGallery({
+  gridId: "gallery",
+  fadeId: "gallery-fade",
+  api: "/api/mascot-gallery.json",
+  maxVisible: 9,
+});
+
+/* Additive Mobil-Toggle für Rail */
+const toggle = document.getElementById("rail-toggle");
+const railList = document.getElementById("lore-nav-list");
+if (toggle && railList) {
+  toggle.addEventListener("click", () => {
+    const isOpen = toggle.getAttribute("aria-expanded") === "true";
+    toggle.setAttribute("aria-expanded", String(!isOpen));
+    railList.setAttribute("aria-expanded", String(!isOpen));
+    railList.style.display = isOpen ? "none" : "block";
+  });
+}
+// No-JS-Fallback: Liste sichtbar machen
+if (railList) {
+  railList.style.display = "";
+}
+
+/* Quest Grid Overlays binden */
+bindQuestOverlays();
+
+/* Autoplay Progress-Bar für Mini-Gallery (additiv) */
+function initGalleryProgressBar() {
+  const gallery = document.getElementById("mini-gallery");
+  if (!gallery) return;
+  const progress = document.createElement("div");
+  progress.className = "carousel-progress";
+  progress.style.height = "4px";
+  progress.style.background = "var(--glass-bg)";
+  progress.style.position = "relative";
+  progress.innerHTML = `<div class="progress-bar" style="width:0%;height:100%;background:var(--neon-green);transition:width 5000ms linear;"></div>`;
+  gallery.appendChild(progress);
+}
+initGalleryProgressBar();
+
+/* Erweiterte Quest-Overlays mit Progress-Bar-Ähnlichem (z.B. für Pagination) */
+function initQuestProgress() {
+  const questGrid = document.getElementById("quest-grid");
+  if (!questGrid) return;
+  const progress = document.createElement("div");
+  progress.className = "quest-progress";
+  progress.style.marginTop = "1rem";
+  progress.innerHTML = `<div class="progress-bar" style="width:0%;height:4px;background:var(--neon-orange);"></div>`;
+  questGrid.appendChild(progress);
+}
+initQuestProgress();
+
+/* Initialisiere Sticky-Rail für Mascot */
+initStickyRail({
+  railSelector: ".left-rail",
+  sentinelId: "mascot-sentinel-end",
+  sentinelContainerSelector: ".page",
+  topSticky: "var(--header-height)",
+});

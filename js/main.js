@@ -3,6 +3,8 @@
 // NEUES LAYOUT + LIVE DEX-STATS!
 // =========================
 
+import { prefersReducedMotion } from "/utils/a11y.js";
+
 let __toastTimer = null;
 
 /**
@@ -103,16 +105,19 @@ export function bindGlossary({ toggleId = "toggle-gloss", panelId = "glossary-pa
   if (!btn || !panel) return;
 
   btn.setAttribute("aria-controls", panelId);
-  btn.setAttribute("aria-expanded", "false");
+  const applyState = (expanded) => {
+    btn.setAttribute("aria-expanded", expanded ? "true" : "false");
+    panel.classList.toggle("hidden", !expanded);
+    panel.classList.toggle("is-open", expanded);
+    panel.setAttribute("aria-hidden", expanded ? "false" : "true");
+  };
 
   let open = false;
+  applyState(open);
   btn.addEventListener("click", () => {
     open = !open;
-    panel.style.display = open ? "" : "none";
-    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    applyState(open);
   });
-
-  panel.style.display = "none";
 }
 
 /**
@@ -131,15 +136,19 @@ export function initRotator({
 
   let i = 0;
   let timer = null;
+  const reduceMotion = prefersReducedMotion();
 
   function show() {
     target.textContent = `"${lines[i]}"`;
     target.classList.remove("animate-fade");
-    void target.offsetWidth; // Trigger reflow
-    target.classList.add("animate-fade");
+    if (!reduceMotion) {
+      void target.offsetWidth; // Trigger reflow
+      target.classList.add("animate-fade");
+    }
   }
 
   function start() {
+    if (reduceMotion) return;
     if (timer) clearInterval(timer);
     timer = setInterval(() => {
       i = (i + 1) % lines.length;
@@ -189,6 +198,10 @@ export function initDexScreenerLazy({ placeholderId = "dex-screener-placeholder"
   let hasLoaded = false;
   let observer = null;
 
+  const handleImmediateLoad = () => {
+    load();
+  };
+
   const load = () => {
     if (hasLoaded) return;
     const iframe = document.createElement("iframe");
@@ -201,6 +214,7 @@ export function initDexScreenerLazy({ placeholderId = "dex-screener-placeholder"
     placeholder.appendChild(iframe);
     placeholder.dataset.loaded = "true";
     hasLoaded = true;
+    placeholder.removeEventListener("dex-load-now", handleImmediateLoad);
     if (observer) {
       observer.disconnect();
       observer = null;
@@ -223,25 +237,32 @@ export function initDexScreenerLazy({ placeholderId = "dex-screener-placeholder"
     load();
   }
 
+  placeholder.addEventListener("dex-load-now", handleImmediateLoad);
+
+  const destroy = () => {
+    if (observer) {
+      observer.disconnect();
+      observer = null;
+    }
+    if (hasLoaded) {
+      const iframe = placeholder.querySelector("iframe");
+      if (iframe) {
+        iframe.remove();
+      }
+      placeholder.innerHTML = `<p class="muted">Live stats deaktiviert.</p>`;
+      delete placeholder.dataset.loaded;
+      hasLoaded = false;
+    }
+    placeholder.removeEventListener("dex-load-now", handleImmediateLoad);
+  };
+
+  window.addEventListener("beforeunload", destroy, { once: true });
+
   return {
     load() {
       load();
     },
-    destroy() {
-      if (observer) {
-        observer.disconnect();
-        observer = null;
-      }
-      if (hasLoaded) {
-        const iframe = placeholder.querySelector("iframe");
-        if (iframe) {
-          iframe.remove();
-        }
-        placeholder.innerHTML = `<p class="muted">Live stats deaktiviert.</p>`;
-        delete placeholder.dataset.loaded;
-        hasLoaded = false;
-      }
-    },
+    destroy,
   };
 }
 
@@ -259,15 +280,32 @@ export function initCandleBG({ selector = ".ph-box", intervalMs = 9000 } = {}) {
     "/assets/candles/candle3.png",
   ];
 
+  const reduceMotion = prefersReducedMotion();
+  const timers = [];
+
   els.forEach((el) => {
     let i = 0;
     const initial = images[Math.floor(Math.random() * images.length)];
     el.style.backgroundImage = `url(${initial})`;
-    setInterval(() => {
+    if (reduceMotion) return;
+    const timer = setInterval(() => {
       i = (i + 1) % images.length;
       el.style.backgroundImage = `url(${images[i]})`;
     }, intervalMs);
+    timers.push(timer);
   });
+
+  const destroy = () => {
+    while (timers.length) {
+      clearInterval(timers.pop());
+    }
+  };
+
+  if (!reduceMotion) {
+    window.addEventListener("beforeunload", destroy, { once: true });
+  }
+
+  return { destroy };
 }
 
 /**
@@ -284,7 +322,7 @@ export function setFooterYear(id) {
  */
 export function initScrollSpy() {
   const links = document.querySelectorAll('[data-target]');
-  if (links.length === 0) return;
+  if (links.length === 0) return { destroy() {} };
 
   const observer = new IntersectionObserver(
     (entries) => {
@@ -311,6 +349,14 @@ export function initScrollSpy() {
     const target = document.getElementById(id);
     if (target) observer.observe(target);
   });
+
+  const destroy = () => {
+    observer.disconnect();
+  };
+
+  window.addEventListener("beforeunload", destroy, { once: true });
+
+  return { destroy };
 }
 
 /**
@@ -320,8 +366,7 @@ export function initScrollSpy() {
 export function initStickyRail({
   railSelector = ".left-rail",
   sentinelId = "sentinel-end",
-  sentinelContainerSelector = ".page",
-  topSticky = "var(--header-height)",
+  sentinelContainerSelector = ".layout-grid",
 } = {}) {
   const rail = document.querySelector(railSelector);
   const container = document.querySelector(sentinelContainerSelector);
@@ -329,35 +374,50 @@ export function initStickyRail({
 
   // Sentinel erstellen, falls nicht vorhanden
   let sentinel = document.getElementById(sentinelId);
+  const createdSentinel = !sentinel;
   if (!sentinel) {
     sentinel = document.createElement("div");
     sentinel.id = sentinelId;
-    sentinel.style.width = "1px";
-    sentinel.style.height = "1px";
     container.appendChild(sentinel);
   }
+  sentinel.classList.add("rail-sentinel");
 
   // Container relativ machen
-  if (getComputedStyle(container).position === "static") {
-    container.style.position = "relative";
+  const addedRelativeClass = getComputedStyle(container).position === "static";
+  if (addedRelativeClass) {
+    container.classList.add("rail-container-relative");
   }
+
+  rail.classList.add("is-sticky");
+  rail.classList.remove("is-at-end");
 
   // IntersectionObserver für Sticky-End (optional, da CSS sticky ist)
   const io = new IntersectionObserver(
     ([en]) => {
-      if (en && en.isIntersecting) {
-        rail.style.position = "absolute";
-        rail.style.top = "auto";
-        rail.style.bottom = "0";
-      } else {
-        rail.style.position = "sticky";
-        rail.style.top = topSticky;
-        rail.style.bottom = "auto";
-      }
+      const atEnd = Boolean(en && en.isIntersecting);
+      rail.classList.toggle("is-at-end", atEnd);
     },
     { root: null, threshold: 0, rootMargin: "0px 0px -50% 0px" }
   );
   io.observe(sentinel);
+
+  const destroy = () => {
+    io.disconnect();
+    rail.classList.remove("is-at-end");
+    rail.classList.remove("is-sticky");
+    if (createdSentinel) {
+      sentinel.remove();
+    } else {
+      sentinel.classList.remove("rail-sentinel");
+    }
+    if (addedRelativeClass) {
+      container.classList.remove("rail-container-relative");
+    }
+  };
+
+  window.addEventListener("beforeunload", destroy, { once: true });
+
+  return { destroy };
 }
 
 /**
@@ -409,7 +469,7 @@ export function upgradeRoadmapToQuest() {
   } else {
     sec.appendChild(qm);
   }
-  grid.style.display = "none";
+  grid.classList.add("hidden");
 }
 
 /**
@@ -435,10 +495,10 @@ export function bindQuestOverlays() {
     });
 
     tile.addEventListener("mouseenter", () => {
-      overlay.style.opacity = "0.9";
+      overlay.classList.add("is-active");
     });
     tile.addEventListener("mouseleave", () => {
-      overlay.style.opacity = "";
+      overlay.classList.remove("is-active");
     });
   });
 }

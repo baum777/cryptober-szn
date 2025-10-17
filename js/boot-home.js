@@ -103,20 +103,21 @@ upgradeRoadmapToQuest();
   });
   rail.appendChild(ul);
 
-  ul.style.display = "";
-
   const toggle = document.getElementById("rail-toggle");
   const railList = document.getElementById("index-rail-list");
   if (toggle && railList) {
+    const setOpen = (open) => {
+      toggle.setAttribute("aria-expanded", String(open));
+      railList.setAttribute("aria-expanded", String(open));
+      railList.classList.toggle("hidden", !open);
+    };
+    setOpen(true);
     toggle.addEventListener("click", () => {
       const isOpen = toggle.getAttribute("aria-expanded") === "true";
-      toggle.setAttribute("aria-expanded", String(!isOpen));
-      railList.setAttribute("aria-expanded", String(!isOpen));
-      railList.style.display = isOpen ? "none" : "block";
+      setOpen(!isOpen);
     });
-  }
-  if (railList) {
-    railList.style.display = "";
+  } else if (railList) {
+    railList.classList.remove("hidden");
   }
 
   const io = new IntersectionObserver(
@@ -144,6 +145,5 @@ initSharedRail({ railId: "index-rail", listId: "index-rail-list" });
 initStickyRail({
   railSelector: ".left-rail",
   sentinelId: "home-sentinel-end",
-  sentinelContainerSelector: ".page",
-  topSticky: "var(--header-height)",
+  sentinelContainerSelector: ".layout-grid",
 });

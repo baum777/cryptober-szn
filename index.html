@@ -44,30 +44,28 @@
 </head>
 <body>
   <!-- Header -->
-  <header id="site-header" class="site-header">
-    <div class="site-header__inner">
-      <div class="header-left">
-        <button id="open-left-rail" class="site-header__toggle" aria-controls="left-rail-panel" aria-expanded="false" aria-label="Navigation öffnen">☰</button>
-        <a href="/" class="nav-card nav-card--brand" data-event="nav-home" aria-label="Zur Startseite">
-          <img src="/assets/socials/web-logo.svg" alt="Cryptober logo" width="32" height="32" />
-          <span>$Cryptober</span>
-        </a>
-      </div>
+  <header id="site-header" role="banner">
+    <div class="header-left">
+      <button id="open-left-rail" class="site-header__toggle rail-toggle" aria-controls="left-rail" aria-expanded="false" aria-label="Navigation öffnen">☰</button>
+      <a href="/" class="nav-card nav-card--brand" data-event="nav-home" aria-label="Zur Startseite">
+        <img src="/assets/socials/web-logo.svg" alt="Cryptober logo" width="32" height="32" />
+        <span>$Cryptober</span>
+      </a>
+    </div>
 
-      <div class="header-right">
-        <nav aria-label="Hauptnavigation" class="site-header__nav">
-          <a href="lore_index.html" class="nav-card" data-event="nav-lore">Lore</a>
-          <a href="lore_mascot.html" class="nav-card" data-event="nav-mascot">Mascot</a>
-        </nav>
-        <button id="open-right-rail" class="site-header__toggle" aria-controls="right-rail-panel" aria-expanded="false" aria-label="Live-Stats öffnen">📈</button>
-      </div>
+    <div class="header-right">
+      <nav aria-label="Hauptnavigation" class="header-nav">
+        <a href="lore_index.html" class="nav-card" data-event="nav-lore">Lore</a>
+        <a href="lore_mascot.html" class="nav-card" data-event="nav-mascot">Mascot</a>
+      </nav>
+      <button id="open-right-rail" class="site-header__toggle rail-toggle" aria-controls="right-rail" aria-expanded="false" aria-label="Live-Stats öffnen">📈</button>
     </div>
   </header>
 
   <!-- PAGE GRID -->
-  <div class="page" role="layout">
+  <div class="layout-grid">
     <!-- LEFT RAIL -->
-    <aside id="left-rail-panel" class="rail-card left-rail" aria-label="Seiten Navigation">
+    <aside id="left-rail" class="rail-card left-rail offcanvas" aria-label="Seiten Navigation">
       <ul id="nav-list" class="rail-list">
         <li class="rail-item"><a href="#hero" data-target aria-controls="hero">Hero</a></li>
         <li class="rail-item"><a href="#intro" data-target aria-controls="intro">Intro</a></li>
@@ -87,7 +85,7 @@
     </aside>
 
     <!-- MAIN -->
-    <main id="content" tabindex="-1">
+    <main id="site-main" role="main" tabindex="-1">
       <!-- Hero -->
       <section id="hero" class="section" aria-label="Hero">
         <div class="grid grid-2" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem;align-items:center">
@@ -274,7 +272,7 @@
     </main>
 
     <!-- RIGHT RAIL -->
-    <aside id="right-rail-panel" class="rail-card right-rail" aria-label="Live Stats">
+    <aside id="right-rail" class="rail-card right-rail offcanvas right" aria-label="Live Stats">
       <div id="dex-screener-placeholder" class="dex-placeholder" data-src="https://dexscreener.com/widget/dexscreener?pairId=solana_BBRQZBQ3Kr1qSsihGDK69UzC3zmpkX9174wxGPdvqANE">
         <p class="muted">Live stats werden geladen …</p>
       </div>

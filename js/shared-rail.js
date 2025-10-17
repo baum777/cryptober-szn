@@ -1,16 +1,23 @@
 // /js/shared-rail.js – Additive Shared Rail Logik
+function getHeaderHeight() {
+  const root = document.documentElement;
+  const cssVal = getComputedStyle(root).getPropertyValue("--header-height");
+  const parsed = parseInt(cssVal, 10);
+  if (!Number.isNaN(parsed) && parsed > 0) {
+    return parsed;
+  }
+
+  const header = document.querySelector("#site-header");
+  return header ? Math.round(header.getBoundingClientRect().height) : 72;
+}
+
 export function initSharedRail({ railId = "index-rail", listId = "index-rail-list" } = {}) {
   const rail = document.getElementById(railId);
   const railList = document.getElementById(listId);
   if (!rail || !railList) return;
 
-  const docStyle = getComputedStyle(document.documentElement);
-  const headerVar = parseInt(docStyle.getPropertyValue("--header-height"), 10);
-  const headerEl = document.getElementById("site-header");
-  const fallbackHeight = headerEl ? Math.round(headerEl.getBoundingClientRect().height) : 0;
-  const headerHeight = Number.isFinite(headerVar) && headerVar > 0 ? headerVar : fallbackHeight;
-  const offset = headerHeight + 8;
-  document.documentElement.style.setProperty("--rail-top", `${offset}px`);
+  const headerHeight = getHeaderHeight();
+  document.documentElement.style.setProperty("--header-height", `${headerHeight}px`);
 
   // IntersectionObserver für Active-State
   const sections = Array.from(railList.querySelectorAll("a")).map(a => ({
@@ -38,31 +45,30 @@ export function initSharedRail({ railId = "index-rail", listId = "index-rail-lis
   // Sticky-Ende (Sentinel)
   const sentinel = document.createElement("div");
   sentinel.id = `${railId}-sentinel`;
-  sentinel.style.width = "1px";
-  sentinel.style.height = "1px";
+  sentinel.classList.add("rail-sentinel");
   rail.insertAdjacentElement("afterend", sentinel);
+
+  rail.classList.add("is-sticky");
+  rail.classList.remove("is-at-end");
 
   const ioEnd = new IntersectionObserver(
     ([en]) => {
-      if (en && en.isIntersecting) {
-        rail.style.position = "absolute";
-        rail.style.top = "auto";
-        rail.style.bottom = "0";
-      } else {
-        rail.style.position = "sticky";
-        rail.style.top = "var(--rail-top)";
-        rail.style.bottom = "auto";
-      }
+      const atEnd = Boolean(en && en.isIntersecting);
+      rail.classList.toggle("is-at-end", atEnd);
     },
     { threshold: 0, rootMargin: "0px 0px -50% 0px" }
   );
   ioEnd.observe(sentinel);
 
-  return {
-    destroy() {
-      observer.disconnect();
-      ioEnd.disconnect();
-      sentinel.remove();
-    },
+  const destroy = () => {
+    observer.disconnect();
+    ioEnd.disconnect();
+    rail.classList.remove("is-at-end");
+    rail.classList.remove("is-sticky");
+    sentinel.remove();
   };
+
+  window.addEventListener("beforeunload", destroy, { once: true });
+
+  return { destroy };
 }

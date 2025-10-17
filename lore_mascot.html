@@ -17,31 +17,29 @@
 </head>
 <body>
   <!-- Header -->
-  <header id="site-header" class="site-header">
-    <div class="site-header__inner">
-      <div class="header-left">
-        <button id="open-left-rail" class="site-header__toggle" aria-controls="left-rail-panel" aria-expanded="false" aria-label="Navigation öffnen">☰</button>
-        <a href="/" class="nav-card nav-card--brand" data-event="nav-home" aria-label="Zur Startseite">
-          <img src="/assets/socials/web-logo.svg" alt="Cryptober logo" width="48" height="48" />
-          <span>Home</span>
-        </a>
-      </div>
-      <div class="header-right">
-        <nav aria-label="Hauptnavigation" class="site-header__nav">
-          <a href="lore_index.html" class="nav-card" data-event="nav-lore">Lore</a>
-          <a href="lore_mascot.html" class="nav-card" aria-current="page">Mascot</a>
-        </nav>
-        <button id="open-right-rail" class="site-header__toggle" aria-controls="right-rail-panel" aria-expanded="false" aria-label="Live-Stats öffnen">📈</button>
-      </div>
+  <header id="site-header" role="banner">
+    <div class="header-left">
+      <button id="open-left-rail" class="site-header__toggle rail-toggle" aria-controls="left-rail" aria-expanded="false" aria-label="Navigation öffnen">☰</button>
+      <a href="/" class="nav-card nav-card--brand" data-event="nav-home" aria-label="Zur Startseite">
+        <img src="/assets/socials/web-logo.svg" alt="Cryptober logo" width="48" height="48" />
+        <span>Home</span>
+      </a>
+    </div>
+    <div class="header-right">
+      <nav aria-label="Hauptnavigation" class="header-nav">
+        <a href="lore_index.html" class="nav-card" data-event="nav-lore">Lore</a>
+        <a href="lore_mascot.html" class="nav-card" aria-current="page">Mascot</a>
+      </nav>
+      <button id="open-right-rail" class="site-header__toggle rail-toggle" aria-controls="right-rail" aria-expanded="false" aria-label="Live-Stats öffnen">📈</button>
     </div>
   </header>
 
   <!-- PAGE GRID -->
-  <div class="page">
+  <div class="layout-grid">
     <!-- LEFT RAIL -->
-    <aside id="left-rail-panel" class="left-rail" aria-label="Kapitel Navigation">
+    <aside id="left-rail" class="rail-card left-rail offcanvas" aria-label="Kapitel Navigation">
       <button id="rail-toggle" class="btn btn-ghost" aria-expanded="false" aria-controls="lore-nav-list">Menü öffnen</button>
-      <nav class="rail-card" aria-label="Kapitel-Navigation">
+      <nav aria-label="Kapitel-Navigation">
         <h3 class="muted">Kapitel</h3>
         <ul id="lore-nav-list" class="rail-list">
           <li class="rail-item"><a href="#hero" aria-controls="hero">Hero</a></li>
@@ -53,7 +51,7 @@
     </aside>
 
     <!-- MAIN -->
-    <main id="content">
+    <main id="site-main" role="main">
       <!-- Hero Section -->
       <section id="hero" class="section">
         <img src="placeholder-hero.jpg" alt="Sparkfiend Portrait Placeholder" style="aspect-ratio:16/9; max-width:100%; border-radius:var(--radius);" />
@@ -205,7 +203,7 @@
     </main>
 
     <!-- RIGHT RAIL -->
-    <aside id="right-rail-panel" class="rail-card right-rail" aria-label="Live Stats">
+    <aside id="right-rail" class="rail-card right-rail offcanvas right" aria-label="Live Stats">
       <div id="dex-screener-placeholder" class="dex-placeholder" data-src="https://dexscreener.com/widget/dexscreener?pairId=solana_BBRQZBQ3Kr1qSsihGDK69UzC3zmpkX9174wxGPdvqANE">
         <p class="muted">Live stats werden geladen …</p>
       </div>

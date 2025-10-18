@@ -156,60 +156,67 @@
       </section>
 
       <!-- Roadmap -->
-      <section id="roadmap" class="section roadmap" aria-labelledby="roadmap-title">
-        <header class="roadmap-header">
-          <h2 id="roadmap-title" class="text-neon-orange" style="font-weight:800">Roadmap</h2>
-          <div class="roadmap-controls">
+      <section id="roadmap" class="section roadmap" aria-labelledby="roadmap-title" data-source="auto">
+        <header class="roadmap__hdr">
+          <h2 id="roadmap-title" class="text-neon-orange">Roadmap</h2>
+          <div class="roadmap__controls">
             <label>
-              <span class="sr-only">Filter Status</span>
-              <select id="rm-filter-status" aria-label="Filter by status">
+              <span class="sr-only">Filter by quarter</span>
+              <select id="rm-filter-quarter" aria-label="Filter quarter">
                 <option value="all">All</option>
-                <option value="planned">Planned</option>
-                <option value="inprogress">In Progress</option>
-                <option value="risk">At Risk</option>
-                <option value="done">Done</option>
-              </select>
-            </label>
-            <label>
-              <span class="sr-only">Filter Quarter</span>
-              <select id="rm-filter-quarter" aria-label="Filter by quarter">
-                <option value="all">All Quarters</option>
                 <option value="Q4">Q4</option>
                 <option value="Q1">Q1</option>
                 <option value="Q2">Q2</option>
                 <option value="Q3">Q3</option>
               </select>
             </label>
-            <button id="rm-toggle-deps" aria-pressed="false" aria-label="Toggle dependencies">Show dependencies</button>
+            <button id="rm-toggle-showdone" aria-pressed="true" aria-label="Toggle done items">Show Done</button>
           </div>
         </header>
 
-        <div class="roadmap-timeline" role="region" aria-label="Milestone timeline">
-          <ol class="rm-timeline" id="rm-timeline">
-            <li><button class="rm-dot" data-quarter="Q4" aria-current="true">Q4</button></li>
-            <li><button class="rm-dot" data-quarter="Q1">Q1</button></li>
-            <li><button class="rm-dot" data-quarter="Q2">Q2</button></li>
-            <li><button class="rm-dot" data-quarter="Q3">Q3</button></li>
-          </ol>
+        <div class="rm-timeline" role="group" aria-label="Milestones">
+          <ol class="rm-dots" id="rm-dots" role="list"></ol>
           <div class="rm-progress" aria-hidden="true"></div>
         </div>
 
-        <div class="roadmap-board" role="region" aria-label="Now Next Later board">
-          <section class="rm-column" aria-labelledby="rm-now-title">
-            <h3 id="rm-now-title">Now</h3>
-            <div class="rm-stack" id="rm-col-now" role="list"></div>
-          </section>
-          <section class="rm-column" aria-labelledby="rm-next-title">
-            <h3 id="rm-next-title">Next</h3>
-            <div class="rm-stack" id="rm-col-next" role="list"></div>
-          </section>
-          <section class="rm-column" aria-labelledby="rm-later-title">
-            <h3 id="rm-later-title">Later</h3>
-            <div class="rm-stack" id="rm-col-later" role="list"></div>
-          </section>
-        </div>
+        <div class="rm-details" id="rm-details" role="region" aria-label="Details"></div>
 
         <div id="rm-live" class="sr-only" aria-live="polite"></div>
+
+        <ul id="existing-roadmap-steps" class="hidden">
+          <li data-id="a11y-rotator" data-quarter="Q4" data-status="done" data-theme="candle">
+            <h4>A11y: Reduced motion across autoplay</h4>
+            <p>Disable autoplay across components; add helper.</p>
+            <ul class="tags">
+              <li>a11y</li>
+              <li>motion</li>
+            </ul>
+          </li>
+          <li data-id="gallery-4x2" data-quarter="Q4" data-status="inprogress" data-theme="bull">
+            <h4>Gallery 4×2 pagination</h4>
+            <p>Pager with 8 items per view, adaptive preload.</p>
+            <ul class="tags">
+              <li>gallery</li>
+              <li>performance</li>
+            </ul>
+          </li>
+          <li data-id="left-rail-accordion" data-quarter="Q4" data-status="inprogress" data-theme="bull">
+            <h4>Left-rail accordion</h4>
+            <p>Grouped navigation with keyboard toggle.</p>
+            <ul class="tags">
+              <li>navigation</li>
+              <li>keyboard</li>
+            </ul>
+          </li>
+          <li data-id="lightbox" data-quarter="Q1" data-status="planned" data-theme="candle">
+            <h4>Gallery lightbox preview</h4>
+            <p>Accessible modal preview for gallery items.</p>
+            <ul class="tags">
+              <li>gallery</li>
+              <li>a11y</li>
+            </ul>
+          </li>
+        </ul>
       </section>
 
       <!-- Tools -->

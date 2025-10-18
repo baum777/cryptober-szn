@@ -1,28 +1,12 @@
 // ================================
-// /js/gallery.js — Gallery Pager (4x2 grid, pagination skeleton)
+// /js/gallery.js — Gallery Grid + Lightbox Viewer
 // ================================
 
 import { prefersReducedMotion } from "/utils/a11y.js";
 
-const PRELOAD_RADIUS_DEFAULT = 1;
 const DEFAULT_BASE_PATH = "/assets/gallery/";
-
-function getPreloadRadius() {
-  try {
-    const connection =
-      navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-    if (
-      connection &&
-      typeof connection.effectiveType === "string" &&
-      connection.effectiveType.includes("2g")
-    ) {
-      return 0;
-    }
-  } catch (error) {
-    // ignore — fallback to default radius
-  }
-  return PRELOAD_RADIUS_DEFAULT;
-}
+const SWIPE_THRESHOLD_PX = 48;
+const SWIPE_MAX_DURATION_MS = 600;
 
 function mapLabelFromFile(file) {
   return String(file || "")
@@ -96,7 +80,7 @@ function resolveImages({ images, files, basePath } = {}) {
   return DEFAULT_GALLERY_FILES.map((file) => toGalleryImage(file, activeBasePath));
 }
 
-function queryWithin(root, selector, fallback) {
+function queryWithin(root, selector, fallbackId) {
   if (root && selector) {
     const found = root.querySelector(selector);
     if (found) return found;
@@ -106,158 +90,385 @@ function queryWithin(root, selector, fallback) {
       const direct = document.querySelector(selector);
       if (direct) return direct;
     } catch (error) {
-      // ignore selector syntax errors and continue
+      // ignore invalid selectors and continue
     }
   }
-  if (fallback) {
-    return document.getElementById(fallback);
+  if (fallbackId) {
+    return document.getElementById(fallbackId);
   }
   return null;
 }
 
-export class GalleryPager {
+function clampIndex(index, max) {
+  if (index < 0) return 0;
+  if (index > max) return max;
+  return index;
+}
+
+class GalleryLightbox {
   constructor({
     rootId,
     gridId = "gallery-grid",
-    prevId = "gallery-prev",
-    nextId = "gallery-next",
+    lightboxId = "lightbox",
     gridSelector,
-    prevSelector,
-    nextSelector,
+    lightboxSelector,
     images,
     files,
     basePath = DEFAULT_BASE_PATH,
-    perPage = 8,
   } = {}) {
     this.root = rootId ? document.getElementById(rootId) : null;
     this.grid = queryWithin(this.root, gridSelector, gridId);
-    this.prevButton = queryWithin(this.root, prevSelector, prevId);
-    this.nextButton = queryWithin(this.root, nextSelector, nextId);
+    this.lightbox = queryWithin(null, lightboxSelector, lightboxId);
     this.images = resolveImages({ images, files, basePath });
-    this.perPage = Math.max(1, perPage);
-    this.page = 0;
     this.reduceMotion = prefersReducedMotion();
-    this.preloadRadius = this.reduceMotion ? 0 : getPreloadRadius();
-    this.destroyed = false;
+    this.body = document.body;
+    this.activeIndex = 0;
+    this.isOpen = false;
+    this.lastTrigger = null;
+    this.swipeStartX = null;
+    this.swipeStartTime = 0;
 
-    if (!this.grid || !this.prevButton || !this.nextButton || this.images.length === 0) {
+    if (!this.grid || !this.lightbox || this.images.length === 0) {
+      this.ready = false;
+      return;
+    }
+
+    this.window = this.lightbox.querySelector(".lightbox__window");
+    this.closeButton = this.lightbox.querySelector(".btn--close");
+    this.prevButton = this.lightbox.querySelector(".btn--prev");
+    this.nextButton = this.lightbox.querySelector(".btn--next");
+    this.media = this.lightbox.querySelector(".lightbox__media");
+    this.imageEl = this.lightbox.querySelector(".lightbox__img");
+    this.indicator = this.lightbox.querySelector(".lightbox__indicator");
+    this.announcer = this.lightbox.querySelector(".lightbox__announcer");
+
+    if (!this.window || !this.closeButton || !this.imageEl || !this.indicator) {
       this.ready = false;
       return;
     }
 
     this.ready = true;
     this.grid.setAttribute("role", "list");
-    this.grid.setAttribute("data-gallery-total", String(this.images.length));
-    this.prevButton.setAttribute("data-gallery-control", "prev");
-    this.nextButton.setAttribute("data-gallery-control", "next");
 
+    this.handleKeyDown = this.onKeyDown.bind(this);
+    this.handleOverlayClick = this.onOverlayClick.bind(this);
     this.handlePrev = this.prev.bind(this);
     this.handleNext = this.next.bind(this);
+    this.handleClose = this.close.bind(this);
+    this.handleTrap = this.trapTab.bind(this);
+    this.handlePointerDown = this.onPointerDown.bind(this);
+    this.handlePointerUp = this.onPointerUp.bind(this);
+    this.handlePointerCancel = this.resetPointer.bind(this);
 
-    this.prevButton.addEventListener("click", this.handlePrev);
-    this.nextButton.addEventListener("click", this.handleNext);
-
-    this.renderPage();
+    this.renderGrid();
+    this.bindLightbox();
   }
 
-  get totalPages() {
-    return Math.ceil(this.images.length / this.perPage);
-  }
-
-  renderPage() {
+  renderGrid() {
     if (!this.ready || !this.grid) return;
-    const start = this.page * this.perPage;
-    const slice = this.images.slice(start, start + this.perPage);
 
     this.grid.innerHTML = "";
-
-    slice.forEach((img, index) => {
-      const item = document.createElement("div");
-      item.className = "gallery-item";
-      item.setAttribute("role", "listitem");
+    const lightboxId = this.lightbox?.id || "lightbox";
+    this.buttons = this.images.map((img, index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "gallery-item";
+      button.dataset.index = String(index);
+      button.setAttribute("role", "listitem");
+      button.setAttribute("aria-label", this.buildAriaLabel(img, index));
+      button.setAttribute("aria-haspopup", "dialog");
+      button.setAttribute("aria-controls", lightboxId);
 
       const picture = document.createElement("img");
+      picture.className = "gallery-item__img";
       picture.src = img.src;
       picture.alt = img.alt || "";
       picture.decoding = "async";
-      picture.loading = this.page === 0 && index === 0 ? "eager" : "lazy";
+      picture.loading = index < 3 ? "eager" : "lazy";
       if (typeof img.width === "number") picture.width = img.width;
       if (typeof img.height === "number") picture.height = img.height;
 
-      item.appendChild(picture);
-      this.grid.appendChild(item);
+      button.appendChild(picture);
+      button.addEventListener("click", () => this.open(index, button));
+      button.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          this.open(index, button);
+        }
+      });
+
+      this.grid.appendChild(button);
+      return button;
     });
-
-    this.grid.setAttribute("data-gallery-page", String(this.page + 1));
-    this.updateControls();
-    this.preloadNeighbors();
   }
 
-  updateControls() {
+  bindLightbox() {
     if (!this.ready) return;
-    const total = this.totalPages;
-    const atStart = this.page === 0;
-    const atEnd = this.page >= total - 1;
 
-    this.prevButton.disabled = atStart;
-    this.prevButton.setAttribute("aria-disabled", atStart ? "true" : "false");
-    this.nextButton.disabled = atEnd;
-    this.nextButton.setAttribute("aria-disabled", atEnd ? "true" : "false");
-  }
+    this.closeButton.addEventListener("click", this.handleClose);
+    this.prevButton?.addEventListener("click", this.handlePrev);
+    this.nextButton?.addEventListener("click", this.handleNext);
+    this.lightbox.addEventListener("click", this.handleOverlayClick);
+    this.lightbox.addEventListener("keydown", this.handleTrap);
 
-  next() {
-    if (!this.ready || this.page >= this.totalPages - 1) return;
-    this.page += 1;
-    this.renderPage();
-  }
-
-  prev() {
-    if (!this.ready || this.page === 0) return;
-    this.page -= 1;
-    this.renderPage();
-  }
-
-  goTo(page) {
-    if (!this.ready) return;
-    const target = Math.max(0, Math.min(this.totalPages - 1, page));
-    if (target === this.page) return;
-    this.page = target;
-    this.renderPage();
-  }
-
-  preloadNeighbors() {
-    if (!this.ready || this.preloadRadius <= 0) return;
-    for (let offset = 1; offset <= this.preloadRadius; offset += 1) {
-      this.preloadPage(this.page + offset);
-      this.preloadPage(this.page - offset);
+    const swipeTarget = this.media || this.imageEl;
+    if (swipeTarget) {
+      swipeTarget.addEventListener("pointerdown", this.handlePointerDown);
+      swipeTarget.addEventListener("pointerup", this.handlePointerUp);
+      swipeTarget.addEventListener("pointercancel", this.handlePointerCancel);
+      swipeTarget.addEventListener("pointerleave", this.handlePointerCancel);
     }
   }
 
-  preloadPage(pageIndex) {
-    if (!this.ready) return;
-    if (pageIndex < 0 || pageIndex >= this.totalPages) return;
+  buildAriaLabel(img, index) {
+    const label = img?.alt?.trim() || `Gallery item ${index + 1}`;
+    return `Open ${label} in viewer`;
+  }
 
-    const start = pageIndex * this.perPage;
-    const slice = this.images.slice(start, start + this.perPage);
-    slice.forEach((img) => {
-      if (!img || !img.src) return;
-      const preloadImage = new Image();
-      preloadImage.src = img.src;
+  open(index = 0, trigger) {
+    if (!this.ready) return;
+    const safeIndex = clampIndex(index, this.images.length - 1);
+    this.activeIndex = safeIndex;
+    this.lastTrigger = trigger || this.buttons?.[safeIndex] || null;
+
+    this.updateLightbox();
+
+    this.isOpen = true;
+    this.lightbox.removeAttribute("hidden");
+    if (!this.reduceMotion) {
+      requestAnimationFrame(() => {
+        this.lightbox.classList.add("is-visible");
+      });
+    } else {
+      this.lightbox.classList.add("is-visible");
+    }
+    if (this.body) {
+      this.body.classList.add("is-lightbox-open");
+    }
+
+    document.addEventListener("keydown", this.handleKeyDown);
+    this.focusFirstControl();
+    this.preloadNeighbors();
+  }
+
+  close() {
+    if (!this.isOpen) return;
+
+    this.isOpen = false;
+    this.lightbox.classList.remove("is-visible");
+    const finishClose = () => {
+      this.lightbox.setAttribute("hidden", "");
+    };
+
+    if (!this.reduceMotion) {
+      setTimeout(finishClose, 260);
+    } else {
+      finishClose();
+    }
+
+    if (this.body) {
+      this.body.classList.remove("is-lightbox-open");
+    }
+
+    document.removeEventListener("keydown", this.handleKeyDown);
+    this.resetPointer();
+
+    if (this.lastTrigger && typeof this.lastTrigger.focus === "function") {
+      this.lastTrigger.focus();
+    }
+  }
+
+  next() {
+    if (!this.isOpen) {
+      this.open(0);
+      return;
+    }
+    if (this.activeIndex >= this.images.length - 1) return;
+    this.activeIndex += 1;
+    this.updateLightbox();
+    this.preloadNeighbors();
+  }
+
+  prev() {
+    if (!this.isOpen) {
+      this.open(this.images.length - 1);
+      return;
+    }
+    if (this.activeIndex <= 0) return;
+    this.activeIndex -= 1;
+    this.updateLightbox();
+    this.preloadNeighbors();
+  }
+
+  onKeyDown(event) {
+    if (!this.isOpen) return;
+
+    switch (event.key) {
+      case "Escape":
+        event.preventDefault();
+        this.close();
+        break;
+      case "ArrowRight":
+        event.preventDefault();
+        this.next();
+        break;
+      case "ArrowLeft":
+        event.preventDefault();
+        this.prev();
+        break;
+      default:
+        break;
+    }
+  }
+
+  onOverlayClick(event) {
+    if (event.target === this.lightbox) {
+      this.close();
+    }
+  }
+
+  trapTab(event) {
+    if (event.key !== "Tab") return;
+    const focusable = this.getFocusableElements();
+    if (focusable.length === 0) return;
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    if (event.shiftKey) {
+      if (document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      }
+    } else if (document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  }
+
+  getFocusableElements() {
+    return Array.from(
+      this.lightbox.querySelectorAll(
+        "button:not([disabled]), [href], input, select, textarea, [tabindex]:not([tabindex='-1'])"
+      )
+    ).filter((el) => !el.hasAttribute("hidden") && el.offsetParent !== null);
+  }
+
+  focusFirstControl() {
+    const focusable = this.getFocusableElements();
+    if (this.window && typeof this.window.focus === "function") {
+      this.window.focus({ preventScroll: true });
+    }
+    const target = focusable.find((el) => el === this.closeButton) || focusable[0];
+    if (target && typeof target.focus === "function") {
+      target.focus();
+    }
+  }
+
+  updateLightbox() {
+    const item = this.images[this.activeIndex];
+    if (!item || !this.imageEl) return;
+
+    if (this.imageEl.src !== item.src) {
+      this.imageEl.src = item.src;
+    }
+    this.imageEl.alt = item.alt || "";
+    if (typeof item.width === "number") this.imageEl.width = item.width;
+    if (typeof item.height === "number") this.imageEl.height = item.height;
+
+    const positionText = `${this.activeIndex + 1} / ${this.images.length}`;
+    const description = item.alt || "Gallery image";
+    this.indicator.textContent = `${positionText} — ${description}`;
+    this.announce(`${positionText}: ${description}`);
+
+    this.updateControls();
+  }
+
+  updateControls() {
+    const atStart = this.activeIndex <= 0;
+    const atEnd = this.activeIndex >= this.images.length - 1;
+
+    if (this.prevButton) {
+      this.prevButton.disabled = atStart;
+      this.prevButton.setAttribute("aria-disabled", atStart ? "true" : "false");
+    }
+    if (this.nextButton) {
+      this.nextButton.disabled = atEnd;
+      this.nextButton.setAttribute("aria-disabled", atEnd ? "true" : "false");
+    }
+  }
+
+  announce(message) {
+    if (!this.announcer) return;
+    this.announcer.textContent = "";
+    window.requestAnimationFrame(() => {
+      this.announcer.textContent = message;
     });
   }
 
+  preloadNeighbors() {
+    [this.activeIndex - 1, this.activeIndex + 1]
+      .filter((idx) => idx >= 0 && idx < this.images.length)
+      .forEach((idx) => {
+        const candidate = this.images[idx];
+        if (!candidate || !candidate.src) return;
+        const preload = new Image();
+        preload.src = candidate.src;
+      });
+  }
+
+  onPointerDown(event) {
+    if (event.pointerType !== "touch") return;
+    this.swipeStartX = event.clientX;
+    this.swipeStartTime = Date.now();
+  }
+
+  onPointerUp(event) {
+    if (event.pointerType !== "touch" || this.swipeStartX === null) return;
+    const deltaX = event.clientX - this.swipeStartX;
+    const duration = Date.now() - this.swipeStartTime;
+    if (Math.abs(deltaX) > SWIPE_THRESHOLD_PX && duration < SWIPE_MAX_DURATION_MS) {
+      if (deltaX > 0) {
+        this.prev();
+      } else {
+        this.next();
+      }
+    }
+    this.resetPointer();
+  }
+
+  resetPointer() {
+    this.swipeStartX = null;
+    this.swipeStartTime = 0;
+  }
+
   destroy() {
-    if (!this.ready || this.destroyed) return;
-    this.prevButton.removeEventListener("click", this.handlePrev);
-    this.nextButton.removeEventListener("click", this.handleNext);
-    this.destroyed = true;
+    if (!this.ready) return;
+    this.buttons?.forEach((button) => {
+      button.replaceWith(button.cloneNode(true));
+    });
+    this.closeButton.removeEventListener("click", this.handleClose);
+    this.prevButton?.removeEventListener("click", this.handlePrev);
+    this.nextButton?.removeEventListener("click", this.handleNext);
+    this.lightbox.removeEventListener("click", this.handleOverlayClick);
+    this.lightbox.removeEventListener("keydown", this.handleTrap);
+    const swipeTarget = this.media || this.imageEl;
+    if (swipeTarget) {
+      swipeTarget.removeEventListener("pointerdown", this.handlePointerDown);
+      swipeTarget.removeEventListener("pointerup", this.handlePointerUp);
+      swipeTarget.removeEventListener("pointercancel", this.handlePointerCancel);
+      swipeTarget.removeEventListener("pointerleave", this.handlePointerCancel);
+    }
+    document.removeEventListener("keydown", this.handleKeyDown);
   }
 }
 
 export function initGallery(options = {}) {
-  return new GalleryPager(options);
+  return new GalleryLightbox(options);
 }
 
 export function initGalleryPager(options = {}) {
-  return new GalleryPager(options);
+  return new GalleryLightbox(options);
 }
+
+export { resolveImages, toGalleryImage };

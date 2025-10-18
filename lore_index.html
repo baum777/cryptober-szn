@@ -179,9 +179,7 @@
       <section id="gallery-section" class="section" aria-labelledby="gallery-title">
         <h2 id="gallery-title" class="text-neon-orange" style="font-weight:800">Gallery</h2>
         <section id="gallery" class="gallery-wrapper" aria-label="Gallery">
-          <button class="gallery-btn prev" id="gallery-prev" type="button" aria-label="Previous images">‹</button>
           <div class="gallery-grid" id="gallery-grid" role="list"></div>
-          <button class="gallery-btn next" id="gallery-next" type="button" aria-label="Next images">›</button>
         </section>
       </section>
 
@@ -333,6 +331,30 @@
       </section>
     </main>
 
+  </div>
+
+  <div
+    id="lightbox"
+    class="lightbox"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Image Viewer"
+    hidden
+  >
+    <div class="lightbox__window" role="document" tabindex="-1">
+      <button class="lightbox__control btn--close" type="button" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+      <div class="lightbox__media">
+        <img class="lightbox__img" alt="" decoding="async" />
+      </div>
+      <div class="lightbox__nav" aria-label="Image navigation">
+        <button class="lightbox__control btn--prev" type="button" aria-label="Previous image">‹</button>
+        <div class="lightbox__indicator" aria-live="off"></div>
+        <button class="lightbox__control btn--next" type="button" aria-label="Next image">›</button>
+      </div>
+    </div>
+    <div class="lightbox__announcer sr-only" aria-live="polite"></div>
   </div>
 
   <!-- Footer -->

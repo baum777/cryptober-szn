@@ -153,8 +153,8 @@ const catchPhrases = [
 
 initCatchPhraseRotation({ phrases: catchPhrases, interval: 5000 });
 
-/* Gallery Pager (4x2 grid) */
-initGallery({ rootId: "gallery" });
+/* Gallery Grid + Lightbox */
+initGallery({ rootId: "gallery", lightboxId: "lightbox" });
 
 /* Kapitel-Navigation (links) — erzeugt aus vorhandenen Epochen + Sub-H3 */
 (function initLoreNav() {

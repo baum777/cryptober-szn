@@ -421,58 +421,6 @@ export function initStickyRail({
 }
 
 /**
- * Transformiert Roadmap-Karten in eine Questmap.
- */
-export function upgradeRoadmapToQuest() {
-  const sec = document.getElementById("roadmap");
-  if (!sec) return;
-  const grid = sec.querySelector(".grid");
-  if (!grid) return;
-  const cards = [...grid.querySelectorAll(".card")];
-  if (cards.length === 0) return;
-
-  const qm = document.createElement("div");
-  qm.className = "questmap";
-  const path = document.createElement("div");
-  path.className = "path";
-  qm.appendChild(path);
-
-  const nowAttr = Number(sec.getAttribute("data-now") || 1);
-  const nowIndex = isNaN(nowAttr) ? 1 : Math.max(1, Math.min(cards.length, nowAttr));
-
-  cards.forEach((card, idx) => {
-    const title = card.querySelector("h3")?.textContent?.trim() || `Step ${idx + 1}`;
-    const text = card.querySelector("p")?.textContent?.trim() || "";
-    const cp = document.createElement("div");
-    cp.className = "checkpoint";
-    cp.setAttribute("role", "listitem");
-    cp.dataset.status = idx + 1 === nowIndex ? "now" : idx + 1 < nowIndex ? "done" : "later";
-    const dot = document.createElement("div");
-    dot.className = "dot";
-    const content = document.createElement("div");
-    content.className = "content";
-    const h3 = document.createElement("h3");
-    h3.textContent = title;
-    const p = document.createElement("p");
-    p.textContent = text;
-    p.className = "muted";
-    content.appendChild(h3);
-    content.appendChild(p);
-    cp.appendChild(dot);
-    cp.appendChild(content);
-    qm.appendChild(cp);
-  });
-
-  const title = sec.querySelector("#roadmap-title");
-  if (title) {
-    title.insertAdjacentElement("afterend", qm);
-  } else {
-    sec.appendChild(qm);
-  }
-  grid.classList.add("hidden");
-}
-
-/**
  * Bindet Klick-Events für "Reveal soon"-Overlays in Quest-Tiles.
  */
 export function bindQuestOverlays() {

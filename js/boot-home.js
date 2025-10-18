@@ -8,10 +8,10 @@ import {
   setFooterYear,
   initCandleBG,
   initDexScreenerLazy,
-  upgradeRoadmapToQuest,
   toast,
   initStickyRail,
 } from "/js/main.js";
+import { initQuestmap } from "/js/questmap.js";
 import { initSharedRail } from "/js/shared-rail.js";
 import { initMobileRails } from "/js/mobile-rail.js";
 
@@ -37,8 +37,8 @@ function initGalleryProgressBar() {
 }
 initGalleryProgressBar();
 
-/* Roadmap → Questmap (nur Layout, Inhalte bleiben unverändert) */
-upgradeRoadmapToQuest();
+/* Roadmap → Questmap (bindet Inhalte der Index-Sections) */
+initQuestmap();
 
 /* Pyramid-Links kleines Feedback */
 ["pyramid-x", "pyramid-telegram", "pyramid-dexscreener"].forEach((ev) => {

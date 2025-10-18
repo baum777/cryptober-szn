@@ -87,48 +87,46 @@
     </aside>
 
     <!-- MAIN -->
-    <main id="content" tabindex="-1">
+    <main id="site-main" tabindex="-1">
       <!-- Hero -->
       <section id="hero" class="section" aria-label="Hero">
-        <div class="grid grid-2" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem;align-items:center">
-          <div>
-            <h1 class="text-neon-orange" style="font-size:clamp(2rem,3.6vw,3.2rem);font-weight:800;line-height:1.02">
-              Ride the Pump - <span aria-hidden="true">$Cryptober</span>
-            </h1>
+        <div class="hero-copy">
+          <h1 class="text-neon-orange">
+            Ride the Pump - <span aria-hidden="true">$Cryptober</span>
+          </h1>
 
-            <div id="ca-display" class="contract-address muted" role="button" aria-label="Copy contract address" tabindex="0" aria-describedby="copy-status" style="font-size:0.95rem; margin-top:.5rem;">
-              BBRQZBQ3Kr1qSsihGDK69UzC3zmpkX9174wxGPdvqANE
-            </div>
-
-            <p class="muted" style="margin-top:.75rem;">
-              From 2013's +54% Cryptober to 2025's Uptober momentum - pumpkins & green candles.
-            </p>
-
-            <div class="flex-gap" style="margin-top:.5rem; display:flex;gap:.5rem;flex-wrap:wrap;align-items:center">
-              <a href="lore_index.html#cryptober" class="chip" data-event="teaser-cryptober">Cryptober</a>
-              <a href="lore_index.html#uptober" class="chip" data-event="teaser-uptober">Uptober</a>
-              <a href="lore_index.html#moonvember" class="chip" data-event="teaser-moonvember">Moonvember</a>
-              <a href="lore_index.html#upcember" class="chip" data-event="teaser-upcember">Upcember</a>
-            </div>
-
-            <div class="flex-gap" style="align-items:center;margin-top:.75rem;display:flex;gap:.5rem">
-              <a href="lore_index.html" class="btn" data-event="cta-lore">Join the Spooky Rally</a>
-              <button
-                id="copy-ca"
-                class="btn"
-                data-event="cta-copy"
-                data-copy="BBRQZBQ3Kr1qSsihGDK69UzC3zmpkX9174wxGPdvqANE"
-                aria-label="Kopiere Contract Address"
-              >
-                CA: BBRQZ…ANE
-              </button>
-              <span id="copy-status" role="status" aria-live="polite" class="muted" style="margin-left:.5rem"></span>
-            </div>
+          <div id="ca-display" class="contract-address muted" role="button" aria-label="Copy contract address" tabindex="0" aria-describedby="copy-status">
+            BBRQZBQ3Kr1qSsihGDK69UzC3zmpkX9174wxGPdvqANE
           </div>
 
-          <div class="ph-box logo-frame" style="aspect-ratio:1/1; max-width:320px; margin:0 auto;" aria-hidden="true">
-            <img class="logo-frame__img" src="/assets/socials/web-logo.png" alt="" width="240" height="240" loading="lazy" decoding="async" />
+          <p class="muted lead">
+            From 2013's +54% Cryptober to 2025's Uptober momentum - pumpkins & green candles.
+          </p>
+
+          <div class="flex-gap hero-chip-row">
+            <a href="lore_index.html#cryptober" class="chip" data-event="teaser-cryptober">Cryptober</a>
+            <a href="lore_index.html#uptober" class="chip" data-event="teaser-uptober">Uptober</a>
+            <a href="lore_index.html#moonvember" class="chip" data-event="teaser-moonvember">Moonvember</a>
+            <a href="lore_index.html#upcember" class="chip" data-event="teaser-upcember">Upcember</a>
           </div>
+
+          <div class="flex-gap hero-cta-row">
+            <a href="lore_index.html" class="btn" data-event="cta-lore">Join the Spooky Rally</a>
+            <button
+              id="copy-ca"
+              class="btn"
+              data-event="cta-copy"
+              data-copy="BBRQZBQ3Kr1qSsihGDK69UzC3zmpkX9174wxGPdvqANE"
+              aria-label="Kopiere Contract Address"
+            >
+              CA: BBRQZ…ANE
+            </button>
+            <span id="copy-status" role="status" aria-live="polite" class="muted"></span>
+          </div>
+        </div>
+
+        <div class="img-box ph-box logo-frame" style="aspect-ratio:1/1; max-width:320px; margin:0 auto;" aria-hidden="true">
+          <img class="logo-frame__img" src="/assets/socials/web-logo.png" alt="" width="240" height="240" loading="lazy" decoding="async" />
         </div>
       </section>
 

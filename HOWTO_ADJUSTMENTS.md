@@ -13,6 +13,10 @@
 - Tag/button glow: edit `.tag-pill` in `styles.css` for shared pill styles.
 - Glossary spacing: tweak `.glossary` and `.glossary-card` grid rules.
 
+## Localization & Audits
+- UI copy, alt attributes, and aria labels live in English—translate any new strings before shipping.
+- After layout or copy edits, run `npm run audit:sitemap` to validate structure/text and `npm run i18n:scan` if new phrases need to be tracked.
+
 ## Gallery & Lightbox System
 - **Data flow:** `js/gallery.js` bootstraps DOM-sourced grids and wires the shared `Lightbox` (`src/js/lightbox.js`).
 - **Pager sync:** `GalleryController` keeps lightbox + grid pages aligned (edges trigger `goToPage`).

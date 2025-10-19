@@ -1,0 +1,22 @@
+[
+  {
+    "source": "X – Community (öffnet in neuem Tab)",
+    "path": "index.html::html > body.landing > div.layout-grid:nth-of-type(1) > main#site-main > section#social-pyramid.section:nth-of-type(5) > div.container.pyramid-grid > figure.pyramid-item.card.hover-glow:nth-of-type(1) > a[@title]",
+    "translation": "X – Community (opens in new tab)"
+  },
+  {
+    "source": "Menü öffnen",
+    "path": "lore_mascot.html::html > body > div.layout-grid:nth-of-type(1) > aside#left-rail.rail-card.left-rail.offcanvas > button#rail-toggle.btn.btn-ghost",
+    "translation": "Open menu"
+  },
+  {
+    "source": "Vorherige Quest-Seite",
+    "path": "lore_mascot.html::html > body > div.layout-grid:nth-of-type(1) > main#site-main > section#mascot-questgrid.section:nth-of-type(4) > section#quest-grid.section > div.glass.card.card-lg > div.quest-controls:nth-of-type(2) > button.btn.btn-ghost:nth-of-type(1)[@aria-label]",
+    "translation": "Previous quest page"
+  },
+  {
+    "source": "Nächste Quest-Seite",
+    "path": "lore_mascot.html::html > body > div.layout-grid:nth-of-type(1) > main#site-main > section#mascot-questgrid.section:nth-of-type(4) > section#quest-grid.section > div.glass.card.card-lg > div.quest-controls:nth-of-type(2) > button.btn.btn-ghost:nth-of-type(2)[@aria-label]",
+    "translation": "Next quest page"
+  }
+]

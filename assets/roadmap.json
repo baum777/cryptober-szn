@@ -1,38 +1,62 @@
 [
   {
-    "id": "a11y-rotator",
-    "title": "A11y: Reduced motion across autoplay",
-    "desc": "Disable autoplay across components; add helper.",
+    "id": "website-community-takeover",
+    "title": "Website & Community Takeover",
+    "desc": "Shared hub for lore, memes, coordination. Claim roles, co-create the movement.",
     "status": "done",
     "quarter": "Q4",
-    "col": "now",
-    "deps": ["gallery-4x2"]
-  },
-  {
-    "id": "gallery-4x2",
-    "title": "Gallery 4×2 pagination",
-    "desc": "Pager with 8 items per view, adaptive preload.",
-    "status": "inprogress",
-    "quarter": "Q4",
-    "col": "now",
+    "theme": "candle",
+    "tags": ["community", "lore"],
     "deps": []
   },
   {
-    "id": "left-rail-accordion",
-    "title": "Left-rail accordion",
-    "desc": "Grouped navigation with keyboard toggle.",
-    "status": "inprogress",
+    "id": "dex-vault-community-barometer",
+    "title": "DEX Vault → Community Barometer",
+    "desc": "Heartbeat over hype. On-chain signal for genuine support and activity.",
+    "status": "done",
     "quarter": "Q4",
-    "col": "next",
+    "theme": "bull",
+    "tags": ["on-chain", "signal"],
     "deps": []
   },
   {
-    "id": "lightbox",
-    "title": "Gallery lightbox preview",
-    "desc": "Accessible modal preview for gallery items.",
+    "id": "schill-phase-pulse",
+    "title": "Schill Phase → Pulse over Push",
+    "desc": "Build quiet; vibe loud. No new drops yet to keep curiosity and incentives alive.",
+    "status": "inprogress",
+    "quarter": "Q4",
+    "theme": "candle",
+    "tags": ["momentum"],
+    "deps": []
+  },
+  {
+    "id": "creator-fee-distribution",
+    "title": "Creator Fee Distribution",
+    "desc": "50% Locks+Burn · 30–35% Growth/Market · 15–20% Dev Ops (staged locks; unlocks burn).",
     "status": "planned",
     "quarter": "Q1",
-    "col": "later",
-    "deps": ["gallery-4x2"]
+    "theme": "bull",
+    "tags": ["tokenomics"],
+    "deps": []
+  },
+  {
+    "id": "tool-development-controlled-fire",
+    "title": "Tool Development → Controlled Fire",
+    "desc": "Spark releases: Pumpkin Patch first; Oracle & Candle Carver follow.",
+    "status": "planned",
+    "quarter": "Q1",
+    "theme": "candle",
+    "tags": ["tools"],
+    "deps": []
+  },
+  {
+    "id": "community-first-tool-vision",
+    "title": "Community-First Tool Vision",
+    "desc": "Co-create real utility + fun; iterate with real user feedback.",
+    "status": "planned",
+    "quarter": "Q2",
+    "theme": "candle",
+    "tags": ["community", "tools"],
+    "deps": []
   }
 ]

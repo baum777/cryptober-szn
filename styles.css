@@ -87,6 +87,14 @@
   --rm-candle: #ffb86c;
   --rm-bull: #60ffa6;
   --rm-bear: #ff6f6f;
+  --quest-gap: clamp(1.6rem, 4vw, 2.6rem);
+  --quest-spine-width: 4px;
+  --quest-dot-size: 18px;
+  --quest-spine-gap: clamp(2.5rem, 7vw, 4.75rem);
+  --quest-card-bg: rgba(12, 16, 22, 0.86);
+  --quest-card-border: rgba(255, 255, 255, 0.08);
+  --quest-card-shadow: 0 24px 56px rgba(0, 0, 0, 0.5);
+  --quest-connector: clamp(2.4rem, 6vw, 3.4rem);
 }
 
 /* ---------- Base / Reset ---------- */
@@ -390,180 +398,239 @@ main#site-main {
   box-shadow: 0 0 0 3px var(--rm-accent-dim);
 }
 
-/* ---------- Questmap (Index-Binding) ---------- */
+/* ---------- Questmap (Roadmap spine) ---------- */
 .questmap {
-  margin-top: 1.5rem;
-  padding: 1.25rem;
-  border-radius: var(--rm-radius);
-  border: 1px solid var(--rm-border);
-  background: var(--rm-bg-card);
-  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.38);
+  position: relative;
+  margin-top: 1.75rem;
+  padding: clamp(1.5rem, 3vw, 2.75rem) clamp(1rem, 4vw, 2.75rem);
+  border-radius: var(--card-radius);
+  border: 1px solid var(--quest-card-border);
+  background: linear-gradient(180deg, rgba(10, 14, 22, 0.88), rgba(7, 10, 18, 0.74));
+  box-shadow: 0 26px 72px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+#quest-spine {
+  position: absolute;
+  inset-block: clamp(1.3rem, 4vw, 3rem);
+  left: 50%;
+  width: var(--quest-spine-width);
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, rgba(0, 255, 102, 0), rgba(0, 255, 102, 0.72) 15%, rgba(0, 255, 102, 0.9) 50%, rgba(0, 255, 102, 0.72) 85%, rgba(0, 255, 102, 0));
+  border-radius: 999px;
+  filter: drop-shadow(0 0 18px rgba(0, 255, 102, 0.45));
+  pointer-events: none;
+  z-index: 0;
 }
 
 .questmap__list {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: grid;
-  gap: 1rem;
-}
-
-.quest-step {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 1rem;
-  padding: 1rem;
-  border-radius: calc(var(--rm-radius) - 2px);
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  background: rgba(13, 16, 20, 0.6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--quest-gap);
   position: relative;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  z-index: 1;
 }
 
-.quest-step[data-status="later"] {
-  opacity: 0.75;
+.checkpoint {
+  position: relative;
+  list-style: none;
+  padding: 0;
+  display: block;
 }
 
-.quest-step[data-status="done"] {
-  border-color: color-mix(in srgb, var(--rm-bull) 50%, rgba(255, 255, 255, 0.12));
+.checkpoint:focus-visible {
+  outline: none;
+}
+
+.checkpoint__card {
+  position: relative;
+  padding: clamp(1.15rem, 2.8vw, 1.85rem);
+  border-radius: var(--card-radius);
+  border: 1px solid var(--quest-card-border);
+  background: var(--quest-card-bg);
+  box-shadow: var(--quest-card-shadow);
+  display: grid;
+  gap: 0.75rem;
+  transition: transform 240ms ease, box-shadow 240ms ease, border-color 240ms ease, background-color 240ms ease, opacity 240ms ease;
+  text-align: left;
+}
+
+.checkpoint__card::before {
+  content: '';
+  position: absolute;
+  top: clamp(1.1rem, 2vw, 1.6rem);
+  height: 2px;
+  width: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.checkpoint.is-current .checkpoint__card,
+.checkpoint__card:hover {
+  border-color: rgba(0, 255, 102, 0.32);
+  box-shadow: 0 28px 64px rgba(0, 0, 0, 0.55), 0 0 22px rgba(0, 255, 102, 0.22);
+  transform: translateY(-6px);
+}
+
+.checkpoint:focus-visible .checkpoint__card {
+  box-shadow: var(--focus-ring);
+}
+
+.checkpoint--done .checkpoint__card {
+  opacity: 0.82;
+  filter: saturate(0.8);
+}
+
+.checkpoint--later .checkpoint__card {
+  opacity: 0.68;
+}
+
+.checkpoint--now .checkpoint__card {
   opacity: 1;
 }
 
-.quest-step:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px var(--rm-accent-dim);
-}
-
-.quest-step.is-current {
-  border-color: var(--rm-accent);
-  box-shadow: 0 0 0 1px var(--rm-accent-dim);
-}
-
-.quest-step__marker {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.18);
-  align-self: flex-start;
-  margin-top: 0.2rem;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
-}
-
-.quest-step[data-status="done"] .quest-step__marker {
-  background: var(--rm-bull);
-  border-color: var(--rm-bull);
-}
-
-.quest-step[data-status="now"] .quest-step__marker {
-  background: var(--rm-candle);
-  border-color: var(--rm-candle);
-  box-shadow: 0 0 12px color-mix(in srgb, var(--rm-candle) 60%, transparent);
-}
-
-.quest-step__body {
-  display: grid;
-  gap: 0.75rem;
-}
-
-.quest-step__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
-.quest-step__title {
+.checkpoint__title {
+  font-size: clamp(1.1rem, 2.4vw, 1.45rem);
   font-weight: 700;
-  font-size: clamp(1.1rem, 2.2vw, 1.4rem);
-  line-height: 1.15;
+  line-height: 1.2;
   color: var(--text);
-}
-
-.quest-step__desc p,
-.quest-step__desc .lead,
-.quest-step__desc [data-lead] {
   margin: 0;
-  color: rgba(231, 233, 239, 0.86);
 }
 
-.quest-step__tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
+.checkpoint__desc {
+  margin: 0;
+  color: rgba(232, 236, 244, 0.86);
+  line-height: 1.5;
 }
 
-.quest-tag {
-  display: inline-flex;
-  align-items: center;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 0.2rem 0.65rem;
-  background: rgba(255, 255, 255, 0.04);
-  font-size: 0.78rem;
-}
-
-.quest-step__media {
-  max-width: 180px;
-  border-radius: 12px;
-  background: rgba(0, 0, 0, 0.25);
-  padding: 0.35rem;
-}
-
-.quest-step__cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  padding: 0.5rem 0.9rem;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: transparent;
-  color: inherit;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.quest-step__cta:is(:hover, :focus-visible) {
-  outline: none;
-  border-color: var(--rm-accent);
-  box-shadow: 0 0 0 3px var(--rm-accent-dim);
-}
-
-.quest-step__controls {
+.checkpoint__controls {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
 }
 
-.quest-step__action {
-  padding: 0.45rem 0.85rem;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: transparent;
-  color: inherit;
+.checkpoint__btn {
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.45rem 1rem;
+  font-size: 0.85rem;
   font-weight: 600;
-  cursor: pointer;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  backdrop-filter: blur(12px);
+  transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease, background-color 200ms ease;
 }
 
-.quest-step__action[aria-disabled="true"],
-.quest-step__action:disabled {
-  opacity: 0.45;
+.checkpoint__btn[aria-disabled="true"],
+.checkpoint__btn:disabled {
+  opacity: 0.5;
   cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
 }
 
-.quest-step__action:is(:hover, :focus-visible) {
+.checkpoint__btn:not([aria-disabled="true"]):is(:hover, :focus-visible) {
+  border-color: rgba(0, 255, 102, 0.7);
+  background: rgba(0, 255, 102, 0.18);
+  box-shadow: 0 0 18px rgba(0, 255, 102, 0.28);
+  transform: translateY(-1px);
   outline: none;
-  border-color: var(--rm-accent);
-  box-shadow: 0 0 0 3px var(--rm-accent-dim);
 }
 
-@media (max-width: 768px) {
-  .quest-step {
-    grid-template-columns: 1fr;
+.checkpoint__dot {
+  position: absolute;
+  top: clamp(1rem, 2.6vw, 1.8rem);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: var(--quest-dot-size);
+  height: var(--quest-dot-size);
+  border-radius: 50%;
+  background: var(--neon-green);
+  border: 2px solid var(--neon-green);
+  box-shadow: 0 0 0 8px rgba(0, 255, 102, 0.2);
+  transition: box-shadow 220ms ease, background-color 220ms ease, border-color 220ms ease, opacity 220ms ease;
+  z-index: 2;
+}
+
+.checkpoint--done .checkpoint__dot {
+  opacity: 0.9;
+  box-shadow: 0 0 0 10px rgba(0, 255, 102, 0.16);
+}
+
+.checkpoint--later .checkpoint__dot {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: none;
+  opacity: 0.7;
+}
+
+.checkpoint--now .checkpoint__dot {
+  animation: quest-dot-pulse 1.6s ease-in-out infinite;
+  box-shadow: 0 0 0 12px rgba(0, 255, 102, 0.26);
+}
+
+@keyframes quest-dot-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 8px rgba(0, 255, 102, 0.25);
   }
 
-  .quest-step__marker {
-    display: none;
+  50% {
+    box-shadow: 0 0 0 18px rgba(0, 255, 102, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .checkpoint__card {
+    transition: background-color 0.01ms, border-color 0.01ms, opacity 0.01ms;
+  }
+
+  .checkpoint__card:hover,
+  .checkpoint.is-current .checkpoint__card {
+    transform: none;
+  }
+
+  .checkpoint--now .checkpoint__dot {
+    animation: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .checkpoint {
+    width: min(480px, calc(50% - var(--quest-spine-gap)));
+  }
+
+  .checkpoint--left {
+    margin-right: auto;
+    padding-right: var(--quest-spine-gap);
+  }
+
+  .checkpoint--right {
+    margin-left: auto;
+    padding-left: var(--quest-spine-gap);
+  }
+
+  .checkpoint__card::before {
+    width: var(--quest-connector);
+    opacity: 0.6;
+    background: linear-gradient(90deg, rgba(0, 255, 102, 0.65), rgba(0, 255, 102, 0));
+  }
+
+  .checkpoint--left .checkpoint__card::before {
+    right: calc(-1 * var(--quest-connector) + var(--quest-dot-size) * 0.5);
+  }
+
+  .checkpoint--right .checkpoint__card::before {
+    left: calc(-1 * var(--quest-connector) + var(--quest-dot-size) * 0.5);
+    background: linear-gradient(270deg, rgba(0, 255, 102, 0.65), rgba(0, 255, 102, 0));
+  }
+}
+
+@media (max-width: 767px) {
+  .checkpoint__card {
+    text-align: left;
   }
 }
 

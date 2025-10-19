@@ -120,88 +120,296 @@
       <!-- Mini-Gallery -->
       <section id="mini-gallery" class="section">
         <div class="glass card card-lg">
-          <h2 class="text-neon-orange">Mini-Gallery</h2>
-          <div class="gallery-grid mini-gallery-grid">
-            <figure class="card mini-gallery-item">
-              <img class="mini-gallery-item__img" src="placeholder-thumb1.jpg" alt="Mascot Variant 1" loading="lazy" decoding="async" width="320" height="320" />
-              <figcaption class="muted mini-gallery-caption">Base Frame</figcaption>
-            </figure>
-            <figure class="card mini-gallery-item">
-              <img class="mini-gallery-item__img" src="placeholder-thumb2.jpg" alt="Mascot Variant 2" loading="lazy" decoding="async" width="320" height="320" />
-              <figcaption class="muted mini-gallery-caption">Glitch Frame</figcaption>
-            </figure>
-            <figure class="card mini-gallery-item">
-              <img class="mini-gallery-item__img" src="placeholder-thumb3.jpg" alt="Mascot Variant 3" loading="lazy" decoding="async" width="320" height="320" />
-              <figcaption class="muted mini-gallery-caption">Trophy Frame</figcaption>
-            </figure>
-            <figure class="card mini-gallery-item">
-              <img class="mini-gallery-item__img" src="placeholder-thumb4.jpg" alt="Mascot Variant 4" loading="lazy" decoding="async" width="320" height="320" />
-              <figcaption class="muted mini-gallery-caption">Minimal Frame</figcaption>
-            </figure>
-            <figure class="card mini-gallery-item">
-              <img class="mini-gallery-item__img" src="placeholder-thumb5.jpg" alt="Mascot Variant 5" loading="lazy" decoding="async" width="320" height="320" />
-              <figcaption class="muted mini-gallery-caption">Base Frame</figcaption>
-            </figure>
-            <figure class="card mini-gallery-item">
-              <img class="mini-gallery-item__img" src="placeholder-thumb6.jpg" alt="Mascot Variant 6" loading="lazy" decoding="async" width="320" height="320" />
-              <figcaption class="muted mini-gallery-caption">Glitch Frame</figcaption>
-            </figure>
-            <figure class="card mini-gallery-item">
-              <img class="mini-gallery-item__img" src="placeholder-thumb7.jpg" alt="Mascot Variant 7" loading="lazy" decoding="async" width="320" height="320" />
-              <figcaption class="muted mini-gallery-caption">Trophy Frame</figcaption>
-            </figure>
-            <figure class="card mini-gallery-item">
-              <img class="mini-gallery-item__img" src="placeholder-thumb8.jpg" alt="Mascot Variant 8" loading="lazy" decoding="async" width="320" height="320" />
-              <figcaption class="muted mini-gallery-caption">Minimal Frame</figcaption>
-            </figure>
+          <h2 id="mini-gallery-title" class="text-neon-orange">Mini-Gallery</h2>
+          <div class="gallery-wrapper" role="region" aria-labelledby="mini-gallery-title" data-gallery="mascot">
+            <div id="mascot-gallery" class="gallery-grid" role="list">
+            <article class="gallery-item card-glass" role="listitem">
+              <div class="img-box">
+                <img src="placeholder-thumb1.jpg" alt="Mascot Variant 1" loading="lazy" decoding="async" width="320" height="320" />
+              </div>
+              <p class="gallery-item__caption muted">Base Frame</p>
+            </article>
+            <article class="gallery-item card-glass" role="listitem">
+              <div class="img-box">
+                <img src="placeholder-thumb2.jpg" alt="Mascot Variant 2" loading="lazy" decoding="async" width="320" height="320" />
+              </div>
+              <p class="gallery-item__caption muted">Glitch Frame</p>
+            </article>
+            <article class="gallery-item card-glass" role="listitem">
+              <div class="img-box">
+                <img src="placeholder-thumb3.jpg" alt="Mascot Variant 3" loading="lazy" decoding="async" width="320" height="320" />
+              </div>
+              <p class="gallery-item__caption muted">Trophy Frame</p>
+            </article>
+            <article class="gallery-item card-glass" role="listitem">
+              <div class="img-box">
+                <img src="placeholder-thumb4.jpg" alt="Mascot Variant 4" loading="lazy" decoding="async" width="320" height="320" />
+              </div>
+              <p class="gallery-item__caption muted">Minimal Frame</p>
+            </article>
+            <article class="gallery-item card-glass" role="listitem">
+              <div class="img-box">
+                <img src="placeholder-thumb5.jpg" alt="Mascot Variant 5" loading="lazy" decoding="async" width="320" height="320" />
+              </div>
+              <p class="gallery-item__caption muted">Base Frame</p>
+            </article>
+            <article class="gallery-item card-glass" role="listitem">
+              <div class="img-box">
+                <img src="placeholder-thumb6.jpg" alt="Mascot Variant 6" loading="lazy" decoding="async" width="320" height="320" />
+              </div>
+              <p class="gallery-item__caption muted">Glitch Frame</p>
+            </article>
+            <article class="gallery-item card-glass" role="listitem">
+              <div class="img-box">
+                <img src="placeholder-thumb7.jpg" alt="Mascot Variant 7" loading="lazy" decoding="async" width="320" height="320" />
+              </div>
+              <p class="gallery-item__caption muted">Trophy Frame</p>
+            </article>
+            <article class="gallery-item card-glass" role="listitem">
+              <div class="img-box">
+                <img src="placeholder-thumb8.jpg" alt="Mascot Variant 8" loading="lazy" decoding="async" width="320" height="320" />
+              </div>
+              <p class="gallery-item__caption muted">Minimal Frame</p>
+            </article>
           </div>
-
-          <div class="mini-gallery-actions">
-            <button id="gallery-load-more" class="btn btn-ghost" aria-label="Mehr anzeigen">Mehr anzeigen</button>
           </div>
         </div>
       </section>
 
       <!-- Quest Grid S1 -->
-      <section id="quest-grid" class="section">
+      <section id="quest-grid" class="section" aria-labelledby="quest-grid-title">
         <div class="glass card card-lg">
-          <h2 class="text-neon-orange">Quest Grid Season 1</h2>
-          <div class="quest-grid-list">
-            <figure class="card quest-tile" role="button" tabindex="0" aria-label="Reveal soon">
-              <img class="quest-tile__img" src="placeholder-quest.jpg" alt="Quest Tile 1 Placeholder" loading="lazy" decoding="async" width="280" height="280" />
-              <div class="overlay text-neon-green" aria-hidden="true">Reveal soon</div>
-            </figure>
-            <figure class="card quest-tile" role="button" tabindex="0" aria-label="Reveal soon">
-              <img class="quest-tile__img" src="placeholder-quest.jpg" alt="Quest Tile 2 Placeholder" loading="lazy" decoding="async" width="280" height="280" />
-              <div class="overlay text-neon-green" aria-hidden="true">Reveal soon</div>
-            </figure>
-            <figure class="card quest-tile" role="button" tabindex="0" aria-label="Reveal soon">
-              <img class="quest-tile__img" src="placeholder-quest.jpg" alt="Quest Tile 3 Placeholder" loading="lazy" decoding="async" width="280" height="280" />
-              <div class="overlay text-neon-green" aria-hidden="true">Reveal soon</div>
-            </figure>
-            <figure class="card quest-tile" role="button" tabindex="0" aria-label="Reveal soon">
-              <img class="quest-tile__img" src="placeholder-quest.jpg" alt="Quest Tile 4 Placeholder" loading="lazy" decoding="async" width="280" height="280" />
-              <div class="overlay text-neon-green" aria-hidden="true">Reveal soon</div>
-            </figure>
-            <figure class="card quest-tile" role="button" tabindex="0" aria-label="Reveal soon">
-              <img class="quest-tile__img" src="placeholder-quest.jpg" alt="Quest Tile 5 Placeholder" loading="lazy" decoding="async" width="280" height="280" />
-              <div class="overlay text-neon-green" aria-hidden="true">Reveal soon</div>
-            </figure>
-            <figure class="card quest-tile" role="button" tabindex="0" aria-label="Reveal soon">
-              <img class="quest-tile__img" src="placeholder-quest.jpg" alt="Quest Tile 6 Placeholder" loading="lazy" decoding="async" width="280" height="280" />
-              <div class="overlay text-neon-green" aria-hidden="true">Reveal soon</div>
-            </figure>
-            <figure class="card quest-tile" role="button" tabindex="0" aria-label="Reveal soon">
-              <img class="quest-tile__img" src="placeholder-quest.jpg" alt="Quest Tile 7 Placeholder" loading="lazy" decoding="async" width="280" height="280" />
-              <div class="overlay text-neon-green" aria-hidden="true">Reveal soon</div>
-            </figure>
-            <figure class="card quest-tile" role="button" tabindex="0" aria-label="Reveal soon">
-              <img class="quest-tile__img" src="placeholder-quest.jpg" alt="Quest Tile 8 Placeholder" loading="lazy" decoding="async" width="280" height="280" />
-              <div class="overlay text-neon-green" aria-hidden="true">Reveal soon</div>
-            </figure>
+          <h2 id="quest-grid-title" class="text-neon-orange">Quest Grid Season 1</h2>
+          <div class="gallery-wrapper quest-grid-wrapper" role="region" aria-labelledby="quest-grid-title">
+            <div class="gallery-grid quest-grid" role="list">
+              <article class="gallery-item card-glass quest-tile" role="listitem">
+                <button
+                  class="quest-tile__media"
+                  type="button"
+                  data-quest-media
+                  aria-label="Open image preview"
+                  aria-describedby="quest-tile-1-caption"
+                >
+                  <div class="img-box">
+                    <img
+                      src="placeholder-quest.jpg"
+                      alt="Quest Tile 1 Placeholder"
+                      loading="lazy"
+                      decoding="async"
+                      width="280"
+                      height="280"
+                    />
+                    <span class="img-gradient-bottom" aria-hidden="true"></span>
+                  </div>
+                  <span class="quest-tile__overlay" aria-hidden="true">Reveal soon</span>
+                </button>
+                <div class="quest-tile__info">
+                  <p id="quest-tile-1-caption" class="gallery-item__caption muted">Quest Tile 1 Placeholder</p>
+                  <div class="quest-tile__actions">
+                    <button class="tag-pill quest-tile__action" type="button" data-quest-action="reveal">Reveal soon</button>
+                  </div>
+                </div>
+              </article>
+              <article class="gallery-item card-glass quest-tile" role="listitem">
+                <button
+                  class="quest-tile__media"
+                  type="button"
+                  data-quest-media
+                  aria-label="Open image preview"
+                  aria-describedby="quest-tile-2-caption"
+                >
+                  <div class="img-box">
+                    <img
+                      src="placeholder-quest.jpg"
+                      alt="Quest Tile 2 Placeholder"
+                      loading="lazy"
+                      decoding="async"
+                      width="280"
+                      height="280"
+                    />
+                    <span class="img-gradient-bottom" aria-hidden="true"></span>
+                  </div>
+                  <span class="quest-tile__overlay" aria-hidden="true">Reveal soon</span>
+                </button>
+                <div class="quest-tile__info">
+                  <p id="quest-tile-2-caption" class="gallery-item__caption muted">Quest Tile 2 Placeholder</p>
+                  <div class="quest-tile__actions">
+                    <button class="tag-pill quest-tile__action" type="button" data-quest-action="reveal">Reveal soon</button>
+                  </div>
+                </div>
+              </article>
+              <article class="gallery-item card-glass quest-tile" role="listitem">
+                <button
+                  class="quest-tile__media"
+                  type="button"
+                  data-quest-media
+                  aria-label="Open image preview"
+                  aria-describedby="quest-tile-3-caption"
+                >
+                  <div class="img-box">
+                    <img
+                      src="placeholder-quest.jpg"
+                      alt="Quest Tile 3 Placeholder"
+                      loading="lazy"
+                      decoding="async"
+                      width="280"
+                      height="280"
+                    />
+                    <span class="img-gradient-bottom" aria-hidden="true"></span>
+                  </div>
+                  <span class="quest-tile__overlay" aria-hidden="true">Reveal soon</span>
+                </button>
+                <div class="quest-tile__info">
+                  <p id="quest-tile-3-caption" class="gallery-item__caption muted">Quest Tile 3 Placeholder</p>
+                  <div class="quest-tile__actions">
+                    <button class="tag-pill quest-tile__action" type="button" data-quest-action="reveal">Reveal soon</button>
+                  </div>
+                </div>
+              </article>
+              <article class="gallery-item card-glass quest-tile" role="listitem">
+                <button
+                  class="quest-tile__media"
+                  type="button"
+                  data-quest-media
+                  aria-label="Open image preview"
+                  aria-describedby="quest-tile-4-caption"
+                >
+                  <div class="img-box">
+                    <img
+                      src="placeholder-quest.jpg"
+                      alt="Quest Tile 4 Placeholder"
+                      loading="lazy"
+                      decoding="async"
+                      width="280"
+                      height="280"
+                    />
+                    <span class="img-gradient-bottom" aria-hidden="true"></span>
+                  </div>
+                  <span class="quest-tile__overlay" aria-hidden="true">Reveal soon</span>
+                </button>
+                <div class="quest-tile__info">
+                  <p id="quest-tile-4-caption" class="gallery-item__caption muted">Quest Tile 4 Placeholder</p>
+                  <div class="quest-tile__actions">
+                    <button class="tag-pill quest-tile__action" type="button" data-quest-action="reveal">Reveal soon</button>
+                  </div>
+                </div>
+              </article>
+              <article class="gallery-item card-glass quest-tile" role="listitem">
+                <button
+                  class="quest-tile__media"
+                  type="button"
+                  data-quest-media
+                  aria-label="Open image preview"
+                  aria-describedby="quest-tile-5-caption"
+                >
+                  <div class="img-box">
+                    <img
+                      src="placeholder-quest.jpg"
+                      alt="Quest Tile 5 Placeholder"
+                      loading="lazy"
+                      decoding="async"
+                      width="280"
+                      height="280"
+                    />
+                    <span class="img-gradient-bottom" aria-hidden="true"></span>
+                  </div>
+                  <span class="quest-tile__overlay" aria-hidden="true">Reveal soon</span>
+                </button>
+                <div class="quest-tile__info">
+                  <p id="quest-tile-5-caption" class="gallery-item__caption muted">Quest Tile 5 Placeholder</p>
+                  <div class="quest-tile__actions">
+                    <button class="tag-pill quest-tile__action" type="button" data-quest-action="reveal">Reveal soon</button>
+                  </div>
+                </div>
+              </article>
+              <article class="gallery-item card-glass quest-tile" role="listitem">
+                <button
+                  class="quest-tile__media"
+                  type="button"
+                  data-quest-media
+                  aria-label="Open image preview"
+                  aria-describedby="quest-tile-6-caption"
+                >
+                  <div class="img-box">
+                    <img
+                      src="placeholder-quest.jpg"
+                      alt="Quest Tile 6 Placeholder"
+                      loading="lazy"
+                      decoding="async"
+                      width="280"
+                      height="280"
+                    />
+                    <span class="img-gradient-bottom" aria-hidden="true"></span>
+                  </div>
+                  <span class="quest-tile__overlay" aria-hidden="true">Reveal soon</span>
+                </button>
+                <div class="quest-tile__info">
+                  <p id="quest-tile-6-caption" class="gallery-item__caption muted">Quest Tile 6 Placeholder</p>
+                  <div class="quest-tile__actions">
+                    <button class="tag-pill quest-tile__action" type="button" data-quest-action="reveal">Reveal soon</button>
+                  </div>
+                </div>
+              </article>
+              <article class="gallery-item card-glass quest-tile" role="listitem">
+                <button
+                  class="quest-tile__media"
+                  type="button"
+                  data-quest-media
+                  aria-label="Open image preview"
+                  aria-describedby="quest-tile-7-caption"
+                >
+                  <div class="img-box">
+                    <img
+                      src="placeholder-quest.jpg"
+                      alt="Quest Tile 7 Placeholder"
+                      loading="lazy"
+                      decoding="async"
+                      width="280"
+                      height="280"
+                    />
+                    <span class="img-gradient-bottom" aria-hidden="true"></span>
+                  </div>
+                  <span class="quest-tile__overlay" aria-hidden="true">Reveal soon</span>
+                </button>
+                <div class="quest-tile__info">
+                  <p id="quest-tile-7-caption" class="gallery-item__caption muted">Quest Tile 7 Placeholder</p>
+                  <div class="quest-tile__actions">
+                    <button class="tag-pill quest-tile__action" type="button" data-quest-action="reveal">Reveal soon</button>
+                  </div>
+                </div>
+              </article>
+              <article class="gallery-item card-glass quest-tile" role="listitem">
+                <button
+                  class="quest-tile__media"
+                  type="button"
+                  data-quest-media
+                  aria-label="Open image preview"
+                  aria-describedby="quest-tile-8-caption"
+                >
+                  <div class="img-box">
+                    <img
+                      src="placeholder-quest.jpg"
+                      alt="Quest Tile 8 Placeholder"
+                      loading="lazy"
+                      decoding="async"
+                      width="280"
+                      height="280"
+                    />
+                    <span class="img-gradient-bottom" aria-hidden="true"></span>
+                  </div>
+                  <span class="quest-tile__overlay" aria-hidden="true">Reveal soon</span>
+                </button>
+                <div class="quest-tile__info">
+                  <p id="quest-tile-8-caption" class="gallery-item__caption muted">Quest Tile 8 Placeholder</p>
+                  <div class="quest-tile__actions">
+                    <button class="tag-pill quest-tile__action" type="button" data-quest-action="reveal">Reveal soon</button>
+                  </div>
+                </div>
+              </article>
+            </div>
           </div>
 
-          <div class="quest-controls">
+          <div class="quest-controls" aria-label="Quest navigation">
             <button class="btn btn-ghost" data-quest-action="prev" aria-label="Vorherige Quest-Seite">‹ Prev</button>
             <button class="btn btn-ghost" data-quest-action="next" aria-label="Nächste Quest-Seite">Next ›</button>
           </div>
@@ -209,6 +417,31 @@
       </section>
     </main>
 
+  </div>
+
+  <div
+    id="lightbox"
+    class="lightbox"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Image Viewer"
+    hidden
+  >
+    <div class="lightbox__window" role="document" tabindex="-1">
+      <button class="lightbox__control btn--close" type="button" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+      <div class="lightbox__media">
+        <img class="lightbox__img" alt="" decoding="async" />
+      </div>
+      <p class="lightbox__caption hidden"></p>
+      <div class="lightbox__nav" aria-label="Image navigation">
+        <button class="lightbox__control btn--prev" type="button" aria-label="Previous image">‹</button>
+        <div class="lightbox__indicator" aria-live="off"></div>
+        <button class="lightbox__control btn--next" type="button" aria-label="Next image">›</button>
+      </div>
+    </div>
+    <div class="lightbox__announcer sr-only" aria-live="polite"></div>
   </div>
 
   <!-- Footer -->

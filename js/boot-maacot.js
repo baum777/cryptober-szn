@@ -8,12 +8,12 @@ import {
   setFooterYear,
   initRotator,
   initDexScreenerLazy,
-  bindQuestOverlays,
   initStickyRail,
 } from "/js/main.js";
 import { initGallery } from "/js/gallery.js";
 import { initSharedRail } from "/js/shared-rail.js";
 import { initMobileRails } from "/js/mobile-rail.js";
+import { initQuestGrid } from "/js/questgrid.js";
 
 /* Core bindings */
 bindClipboard();
@@ -38,11 +38,16 @@ initRotator({
 initSharedRail({ railId: "lore-nav", listId: "lore-nav-list" });
 
 /* Mini-Gallery Init (angepasst für Mascot-Seite) */
-initGallery({
-  gridId: "gallery",
-  fadeId: "gallery-fade",
-  api: "/api/mascot-gallery.json",
-  maxVisible: 9,
+const mascotGallery = initGallery({
+  gridId: "mascot-gallery",
+  lightboxId: "lightbox",
+  pageSize: 8,
+});
+
+/* Quest Grid setup */
+initQuestGrid({
+  lightbox: mascotGallery?.lightbox,
+  lightboxId: mascotGallery?.lightbox?.id || "lightbox",
 });
 
 /* Additive Mobil-Toggle für Rail */
@@ -64,9 +69,6 @@ if (toggle && railList) {
 if (!toggle && railList) {
   railList.classList.remove("hidden");
 }
-
-/* Quest Grid Overlays binden */
-bindQuestOverlays();
 
 /* Autoplay Progress-Bar für Mini-Gallery (additiv) */
 function initGalleryProgressBar() {

@@ -1,267 +1,156 @@
-const headingSelectors = "h1, h2, h3, h4, h5, h6";
-const CTA_SELECTORS = [
-  'a.btn-primary',
-  'button.btn-primary',
-  'a.btn',
-  'button.btn',
-  '[data-primary="true"]',
-  'a[href][role="button"]',
-  'button[type="button"]',
-  'a[href]'
-];
+const SOURCE_LIST_ID = 'existing-roadmap-steps';
+const QUESTMAP_ID = 'questmap';
+const SPINE_ID = 'quest-spine';
+const LIVE_REGION_ID = 'questmap-live';
 
-function $all(selector, root = document) {
-  return Array.from(root.querySelectorAll(selector));
+const STATUS_BY_INDEX = ['done', 'done', 'now'];
+const STATUS_LABELS = {
+  now: 'Status: now – aktueller Schritt',
+  done: 'Status: done – abgeschlossen',
+  later: 'Status: later – geplant'
+};
+
+function toArray(nodeList) {
+  return Array.from(nodeList || []);
 }
 
-function slugify(text) {
-  return text
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)/g, '')
-    .slice(0, 48) || 'step';
+function getReducedMotion() {
+  if (typeof window === 'undefined' || !window.matchMedia) return true;
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
-function removeIds(node) {
-  if (!node || node.nodeType !== Node.ELEMENT_NODE) return;
-  node.removeAttribute('id');
-  $all('[id]', node).forEach((child) => child.removeAttribute('id'));
-}
-
-function getHeading(section) {
-  const heading = section.querySelector(headingSelectors);
-  if (heading) return heading;
-
-  const ariaLabelledBy = section.getAttribute('aria-labelledby');
-  if (ariaLabelledBy) {
-    const label = document.getElementById(ariaLabelledBy);
-    if (label) {
-      return label;
-    }
-  }
-
-  const ariaLabel = section.getAttribute('aria-label');
-  if (ariaLabel) {
-    const proxy = document.createElement('span');
-    proxy.textContent = ariaLabel;
-    proxy.dataset.virtual = 'true';
-    return proxy;
-  }
-
-  console.warn('[questmap] Section is missing a heading', section);
-  return null;
-}
-
-function getParagraph(section) {
-  const paragraphs = $all('p, .lead, [data-lead]', section);
-  const candidate = paragraphs.find((p) => p.textContent && p.textContent.trim().length);
-  if (candidate) return candidate;
-  console.warn('[questmap] Section is missing a description paragraph', section);
-  return null;
-}
-
-function collectTags(section) {
-  const tags = [];
-  const nodes = $all('.chip, .tag-pill, .tag, [data-tag], .tags li', section);
-  nodes.forEach((node) => {
-    const text = node.textContent;
-    if (!text) return;
-    tags.push(text);
-  });
-
-  if (!tags.length && section.id === 'tools') {
-    $all('.card h3', section).forEach((node) => {
-      const text = node.textContent;
-      if (!text) return;
-      tags.push(text);
-    });
-  }
-
-  if (!tags.length && section.id === 'social-pyramid') {
-    $all('.pyramid-label > div:first-child', section).forEach((node) => {
-      const text = node.textContent;
-      if (!text) return;
-      tags.push(text);
-    });
-  }
-
-  return tags;
-}
-
-function getFirstImage(section) {
-  return section.querySelector('img');
-}
-
-function getPrimaryLink(section) {
-  for (const selector of CTA_SELECTORS) {
-    const candidate = section.querySelector(selector);
-    if (candidate) return candidate;
-  }
-  return null;
-}
-
-function determineTheme(section) {
-  if (section.dataset.theme) return section.dataset.theme;
-  if (section.classList.contains('hero')) return 'candle';
-  if (section.id === 'roadmap') return 'bull';
-  if (section.id === 'social-pyramid') return 'candle';
-  return 'default';
-}
-
-function createTitleNode(titleEl) {
-  if (!titleEl) return null;
-  const levelMatch = titleEl.tagName?.match(/^H(\d)$/i);
-  const level = levelMatch ? Number(levelMatch[1]) : 3;
-  const wrapper = document.createElement('div');
-  wrapper.className = 'quest-step__title';
-  wrapper.setAttribute('role', 'heading');
-  wrapper.setAttribute('aria-level', String(level));
-  Array.from(titleEl.childNodes).forEach((child) => {
-    wrapper.appendChild(child.cloneNode(true));
-  });
-  return wrapper;
-}
-
-function createDescNode(descEl) {
-  if (!descEl) return null;
-  const container = document.createElement('div');
-  container.className = 'quest-step__desc';
-  container.appendChild(descEl.cloneNode(true));
-  return container;
-}
-
-function createTagsNode(tagTexts) {
-  if (!tagTexts || !tagTexts.length) return null;
-  const list = document.createElement('div');
-  list.className = 'quest-step__tags';
-  tagTexts.forEach((text) => {
-    const chip = document.createElement('span');
-    chip.className = 'quest-tag';
-    chip.textContent = text;
-    list.appendChild(chip);
-  });
-  return list;
-}
-
-function createMediaNode(mediaEl) {
-  if (!mediaEl) return null;
-  const clone = mediaEl.cloneNode(true);
-  removeIds(clone);
-  clone.classList.add('quest-step__media');
-  return clone;
-}
-
-function createLinkNode(linkEl) {
-  if (!linkEl) return null;
-  const isAnchor = linkEl.tagName === 'A';
-  const element = document.createElement(isAnchor ? 'a' : 'button');
-  element.className = 'quest-step__cta';
-  if (isAnchor) {
-    element.href = linkEl.getAttribute('href') || '#';
-    if (linkEl.target) element.target = linkEl.target;
-    if (linkEl.rel) element.rel = linkEl.getAttribute('rel');
-  } else {
-    element.type = linkEl.getAttribute('type') || 'button';
-  }
-  Array.from(linkEl.attributes).forEach((attr) => {
-    if (attr.name.startsWith('aria-')) {
-      element.setAttribute(attr.name, attr.value);
-    }
-  });
-  if (!isAnchor && (linkEl.disabled || linkEl.getAttribute('aria-disabled') === 'true')) {
-    element.disabled = true;
-    element.setAttribute('aria-disabled', 'true');
-  }
-  element.textContent = linkEl.textContent;
-  return element;
-}
-
-function extractStage(section, index) {
-  const titleEl = getHeading(section);
-  if (!titleEl) return null;
-  const descEl = getParagraph(section);
-  if (!descEl) return null;
-  const tags = collectTags(section);
-  const mediaEl = getFirstImage(section);
-  const linkEl = getPrimaryLink(section);
-  const id = section.id || slugify(titleEl.textContent || `stage-${index + 1}`);
-
-  return {
-    id,
-    index,
-    section,
-    titleEl,
-    descEl,
-    tags,
-    mediaEl,
-    linkEl,
-    theme: determineTheme(section),
-    status: index === 0 ? 'now' : 'later',
+function setupReducedMotionListener(state) {
+  if (typeof window === 'undefined' || !window.matchMedia) return;
+  const query = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const update = (event) => {
+    state.prefersReducedMotion = event.matches;
   };
+  state.prefersReducedMotion = query.matches;
+  if (query.addEventListener) {
+    query.addEventListener('change', update);
+  } else if (query.addListener) {
+    query.addListener(update);
+  }
 }
 
-function buildStepElement(stage) {
+function parseRoadmapSteps(section) {
+  const list = section.querySelector(`#${SOURCE_LIST_ID}`);
+  if (!list) return [];
+  const items = toArray(list.children);
+  return items
+    .map((li, index) => {
+      const heading = li.querySelector('h4, h3, h2');
+      const desc = li.querySelector('p');
+      if (!heading || !desc) return null;
+      const id = li.dataset.id || `checkpoint-${index + 1}`;
+      const status = STATUS_BY_INDEX[index] || 'later';
+      return {
+        id,
+        title: heading.textContent.trim(),
+        description: desc.textContent.trim(),
+        theme: li.dataset.theme || 'candle',
+        quarter: li.dataset.quarter || 'Q4',
+        questStatus: status,
+        roadmapStatus: li.dataset.status || 'planned'
+      };
+    })
+    .filter(Boolean);
+}
+
+function createLiveRegion(section, requestedId) {
+  const existing = requestedId ? document.getElementById(requestedId) : null;
+  if (existing) return existing;
+  let fallback = section.querySelector(`#${LIVE_REGION_ID}`);
+  if (!fallback) {
+    fallback = document.createElement('div');
+    fallback.id = LIVE_REGION_ID;
+    fallback.className = 'sr-only';
+    fallback.setAttribute('aria-live', 'polite');
+    section.appendChild(fallback);
+  }
+  return fallback;
+}
+
+function statusLabel(status) {
+  return STATUS_LABELS[status] || `Status: ${status}`;
+}
+
+function buildCheckpointElement(step, index) {
+  const orientation = index % 2 === 0 ? 'left' : 'right';
   const item = document.createElement('li');
-  item.className = 'quest-step';
-  item.dataset.status = stage.status;
-  item.dataset.stepId = stage.id;
+  item.className = `checkpoint checkpoint--${step.questStatus} checkpoint--${orientation}`;
+  item.dataset.status = step.questStatus;
+  item.dataset.stepId = step.id;
+  item.dataset.orientation = orientation;
   item.setAttribute('role', 'listitem');
   item.tabIndex = 0;
 
-  const marker = document.createElement('div');
-  marker.className = 'quest-step__marker';
-  marker.setAttribute('aria-hidden', 'true');
+  const titleId = `${step.id}-title`;
+  const descId = `${step.id}-desc`;
+  item.setAttribute('aria-labelledby', titleId);
+  item.setAttribute('aria-describedby', descId);
 
-  const body = document.createElement('article');
-  body.className = 'quest-step__body';
-  body.dataset.theme = stage.theme || 'default';
+  const dot = document.createElement('span');
+  dot.className = 'checkpoint__dot';
+  dot.setAttribute('aria-hidden', 'true');
 
-  const header = document.createElement('div');
-  header.className = 'quest-step__header';
+  const card = document.createElement('article');
+  card.className = 'checkpoint__card card-glass';
+  card.dataset.theme = step.theme || 'default';
+  card.setAttribute('aria-labelledby', titleId);
+  card.setAttribute('aria-describedby', descId);
 
-  const titleNode = createTitleNode(stage.titleEl);
-  if (titleNode) header.appendChild(titleNode);
+  const statusNode = document.createElement('span');
+  statusNode.className = 'checkpoint__status sr-only';
+  statusNode.textContent = statusLabel(step.questStatus);
+  card.appendChild(statusNode);
 
-  body.appendChild(header);
+  const heading = document.createElement('h3');
+  heading.className = 'checkpoint__title';
+  heading.id = titleId;
+  heading.textContent = step.title;
+  card.appendChild(heading);
 
-  const descNode = createDescNode(stage.descEl);
-  const tagsNode = createTagsNode(stage.tags);
-  const mediaNode = createMediaNode(stage.mediaEl);
-  const linkNode = createLinkNode(stage.linkEl);
-
-  if (descNode) body.appendChild(descNode);
-  if (tagsNode) body.appendChild(tagsNode);
-  if (mediaNode) body.appendChild(mediaNode);
-  if (linkNode) body.appendChild(linkNode);
+  const body = document.createElement('p');
+  body.className = 'checkpoint__desc';
+  body.id = descId;
+  body.textContent = step.description;
+  card.appendChild(body);
 
   const controls = document.createElement('div');
-  controls.className = 'quest-step__controls';
+  controls.className = 'checkpoint__controls';
 
   const completeBtn = document.createElement('button');
   completeBtn.type = 'button';
-  completeBtn.className = 'quest-step__action quest-step__action--done';
+  completeBtn.className = 'btn checkpoint__btn checkpoint__btn--done';
   completeBtn.textContent = 'Abschließen';
 
   const nextBtn = document.createElement('button');
   nextBtn.type = 'button';
-  nextBtn.className = 'quest-step__action quest-step__action--next';
+  nextBtn.className = 'btn checkpoint__btn checkpoint__btn--next';
   nextBtn.textContent = 'Weiter';
 
   controls.appendChild(completeBtn);
   controls.appendChild(nextBtn);
-  body.appendChild(controls);
+  card.appendChild(controls);
 
-  item.appendChild(marker);
-  item.appendChild(body);
+  item.appendChild(dot);
+  item.appendChild(card);
 
   return {
     root: item,
-    marker,
-    body,
+    dot,
+    card,
+    statusNode,
     completeBtn,
     nextBtn,
-    linkNode,
+    orientation
   };
+}
+
+function updateButtonState(button, disabled) {
+  button.disabled = disabled;
+  button.setAttribute('aria-disabled', String(disabled));
 }
 
 function announce(liveRegion, message) {
@@ -272,147 +161,157 @@ function announce(liveRegion, message) {
   });
 }
 
-export function initQuestmap({
-  hostId,
-  liveRegionId,
-} = {}) {
+function scrollEntryIntoView(entry, prefersReducedMotion) {
+  if (!entry?.root) return;
+  const behavior = prefersReducedMotion ? 'auto' : 'smooth';
+  entry.root.scrollIntoView({ behavior, block: 'center', inline: 'nearest' });
+}
+
+export function initQuestmap({ hostId, liveRegionId } = {}) {
   const roadmapSection = document.getElementById('roadmap');
   if (!roadmapSection) return null;
-  const main = document.getElementById('site-main');
-  if (!main) return null;
 
-  const sections = Array.from(main.children).filter((node) => node.tagName === 'SECTION');
-  const stages = sections
-    .map((section, index) => extractStage(section, index))
-    .filter(Boolean);
+  const steps = parseRoadmapSteps(roadmapSection);
+  if (!steps.length) return null;
 
-  if (!stages.length) return null;
-
-  const host = hostId ? document.getElementById(hostId) : null;
-  const headerSibling = roadmapSection.querySelector('.roadmap__hdr');
-  const renderHost = host || document.createElement('div');
-  renderHost.classList.add('questmap');
-  renderHost.setAttribute('role', 'list');
-  renderHost.setAttribute('aria-label', 'Questmap Schritte');
-
-  if (!host) {
-    if (headerSibling) {
-      headerSibling.insertAdjacentElement('afterend', renderHost);
+  const container = hostId ? document.getElementById(hostId) : null;
+  const questmap = container || document.createElement('div');
+  questmap.id = QUESTMAP_ID;
+  questmap.className = 'questmap';
+  questmap.setAttribute('role', 'region');
+  const roadmapHeading = roadmapSection.querySelector('#roadmap-title');
+  if (roadmapHeading) {
+    questmap.setAttribute('aria-labelledby', roadmapHeading.id);
+  } else {
+    questmap.setAttribute('aria-label', 'Questmap Checkpoints');
+  }
+  if (!container) {
+    const header = roadmapSection.querySelector('.roadmap__hdr');
+    const insertAfter = header?.nextSibling;
+    if (insertAfter) {
+      header.parentNode.insertBefore(questmap, insertAfter);
     } else {
-      roadmapSection.insertBefore(renderHost, roadmapSection.firstChild);
+      roadmapSection.insertBefore(questmap, roadmapSection.firstChild);
     }
   } else {
-    renderHost.innerHTML = '';
+    questmap.innerHTML = '';
   }
 
-  const liveRegion = liveRegionId
-    ? document.getElementById(liveRegionId)
-    : roadmapSection.querySelector('#questmap-live');
-
-  let liveNode = liveRegion;
-  if (!liveNode) {
-    liveNode = document.createElement('div');
-    liveNode.id = liveRegionId || 'questmap-live';
-    liveNode.className = 'sr-only';
-    liveNode.setAttribute('aria-live', 'polite');
-    roadmapSection.appendChild(liveNode);
-  }
+  const spine = document.createElement('div');
+  spine.id = SPINE_ID;
+  spine.setAttribute('aria-hidden', 'true');
+  questmap.appendChild(spine);
 
   const list = document.createElement('ol');
   list.className = 'questmap__list';
   list.setAttribute('role', 'list');
 
+  questmap.appendChild(list);
+
+  const liveRegion = createLiveRegion(roadmapSection, liveRegionId);
+
+  let initialIndex = steps.findIndex((step) => step.questStatus === 'now');
+  if (initialIndex < 0) {
+    initialIndex = 0;
+    steps[0].questStatus = 'now';
+  }
+
   const state = {
-    stages,
-    currentIndex: 0,
+    steps,
     nodes: [],
-    liveRegion: liveNode,
+    currentIndex: initialIndex,
+    liveRegion,
+    prefersReducedMotion: getReducedMotion()
   };
 
-  stages.forEach((stage) => {
-    const stepNode = buildStepElement(stage);
-    state.nodes.push({ stage, ...stepNode });
-    list.appendChild(stepNode.root);
-  });
+  setupReducedMotionListener(state);
 
-  renderHost.appendChild(list);
+  steps.forEach((step, index) => {
+    const entry = buildCheckpointElement(step, index);
+    list.appendChild(entry.root);
+    state.nodes.push({
+      step,
+      ...entry
+    });
+  });
 
   function updateStatusIndicators() {
     state.nodes.forEach((entry, index) => {
-      const { stage, root, completeBtn, nextBtn } = entry;
-      root.dataset.status = stage.status;
+      const { step, root, statusNode, completeBtn, nextBtn } = entry;
+      root.classList.remove('checkpoint--done', 'checkpoint--now', 'checkpoint--later');
+      root.classList.add(`checkpoint--${step.questStatus}`);
+      root.dataset.status = step.questStatus;
+      statusNode.textContent = statusLabel(step.questStatus);
+
       const isCurrent = index === state.currentIndex;
+      const isNow = step.questStatus === 'now';
       if (isCurrent) {
-        root.setAttribute('aria-current', 'step');
         root.classList.add('is-current');
       } else {
-        root.removeAttribute('aria-current');
         root.classList.remove('is-current');
       }
-      const isDone = stage.status === 'done';
-      const completeDisabled = isDone || !isCurrent;
-      completeBtn.disabled = completeDisabled;
-      completeBtn.setAttribute('aria-disabled', String(completeDisabled));
-      const isLast = index >= stages.length - 1;
-      const nextDisabled = isLast || !isCurrent;
-      nextBtn.disabled = nextDisabled;
-      nextBtn.setAttribute('aria-disabled', String(nextDisabled));
+
+      if (isNow) {
+        root.setAttribute('aria-current', 'step');
+      } else {
+        root.removeAttribute('aria-current');
+      }
+
+      const isLast = index === state.nodes.length - 1;
+      updateButtonState(nextBtn, !isCurrent || !isNow || isLast);
+      updateButtonState(completeBtn, !isCurrent || !isNow || step.questStatus === 'done');
     });
   }
 
-  function setCurrent(index, { announceChange = true } = {}) {
+  function setCurrent(index, { scroll = false, announceChange = true } = {}) {
     if (index < 0 || index >= state.nodes.length) return;
     const previous = state.nodes[state.currentIndex];
-    const requested = state.nodes[index];
+    const target = state.nodes[index];
+    const targetWillBeNow = target.step.questStatus !== 'done';
 
-    if (
-      previous &&
-      previous !== requested &&
-      previous.stage.status === 'now' &&
-      requested.stage.status !== 'done'
-    ) {
-      previous.stage.status = 'later';
+    if (targetWillBeNow && previous && previous !== target && previous.step.questStatus === 'now') {
+      previous.step.questStatus = 'later';
     }
 
-    if (requested.stage.status !== 'done') {
-      requested.stage.status = 'now';
+    if (targetWillBeNow) {
+      target.step.questStatus = 'now';
+      state.currentIndex = index;
     }
 
-    let resolvedIndex = index;
-    if (!state.nodes.some((entry) => entry.stage.status === 'now')) {
-      const fallback = state.nodes.find((entry) => entry.stage.status !== 'done');
-      if (fallback) {
-        fallback.stage.status = 'now';
-        resolvedIndex = state.nodes.indexOf(fallback);
-      }
+    if (!targetWillBeNow && target.step.questStatus === 'now') {
+      state.currentIndex = index;
     }
 
-    state.currentIndex = resolvedIndex;
     updateStatusIndicators();
 
-    const active = state.nodes[state.currentIndex];
-
     if (announceChange) {
-      const titleText = active.stage.titleEl?.textContent?.trim() || active.stage.id;
-      announce(state.liveRegion, `Opened: ${titleText}`);
+      announce(state.liveRegion, `Opened: ${target.step.title}`);
     }
 
-    active.root.focus();
+    try {
+      target.root.focus({ preventScroll: scroll });
+    } catch (error) {
+      target.root.focus();
+    }
+
+    if (scroll) {
+      scrollEntryIntoView(target, state.prefersReducedMotion);
+    }
   }
 
   function completeCurrent() {
     const entry = state.nodes[state.currentIndex];
-    if (!entry) return;
-    if (entry.stage.status === 'done') return;
-
-    entry.stage.status = 'done';
-    updateStatusIndicators();
-    const titleText = entry.stage.titleEl?.textContent?.trim() || entry.stage.id;
-    announce(state.liveRegion, `Completed: ${titleText}`);
+    if (!entry || entry.step.questStatus === 'done') return;
+    entry.step.questStatus = 'done';
+    announce(state.liveRegion, `Completed: ${entry.step.title}`);
 
     const nextIndex = Math.min(state.currentIndex + 1, state.nodes.length - 1);
     if (nextIndex !== state.currentIndex) {
-      setCurrent(nextIndex);
+      const nextEntry = state.nodes[nextIndex];
+      if (nextEntry.step.questStatus !== 'done') {
+        nextEntry.step.questStatus = 'now';
+      }
+      setCurrent(nextIndex, { scroll: true, announceChange: true });
     } else {
       updateStatusIndicators();
     }
@@ -420,23 +319,43 @@ export function initQuestmap({
 
   state.nodes.forEach((entry, index) => {
     entry.root.addEventListener('click', (event) => {
-      if (event.target.closest('.quest-step__action')) return;
-      setCurrent(index);
+      if (event.target.closest('.checkpoint__btn')) return;
+      setCurrent(index, { scroll: true });
     });
 
     entry.root.addEventListener('keydown', (event) => {
-      if (event.target.closest('.quest-step__action')) return;
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        setCurrent(index);
-      }
-      if (event.key === 'ArrowRight') {
-        event.preventDefault();
-        setCurrent(Math.min(state.nodes.length - 1, index + 1));
-      }
-      if (event.key === 'ArrowLeft') {
-        event.preventDefault();
-        setCurrent(Math.max(0, index - 1));
+      if (event.target.closest('.checkpoint__btn')) return;
+      switch (event.key) {
+        case 'Enter':
+        case ' ': {
+          event.preventDefault();
+          setCurrent(index, { scroll: true });
+          break;
+        }
+        case 'ArrowRight':
+        case 'ArrowDown': {
+          event.preventDefault();
+          setCurrent(Math.min(state.nodes.length - 1, index + 1), { scroll: true });
+          break;
+        }
+        case 'ArrowLeft':
+        case 'ArrowUp': {
+          event.preventDefault();
+          setCurrent(Math.max(0, index - 1), { scroll: true });
+          break;
+        }
+        case 'Home': {
+          event.preventDefault();
+          setCurrent(0, { scroll: true });
+          break;
+        }
+        case 'End': {
+          event.preventDefault();
+          setCurrent(state.nodes.length - 1, { scroll: true });
+          break;
+        }
+        default:
+          break;
       }
     });
 
@@ -447,17 +366,21 @@ export function initQuestmap({
 
     entry.nextBtn.addEventListener('click', (event) => {
       event.stopPropagation();
-      setCurrent(Math.min(state.nodes.length - 1, index + 1));
+      setCurrent(Math.min(state.nodes.length - 1, index + 1), { scroll: true });
     });
   });
 
   updateStatusIndicators();
-  announce(state.liveRegion, `Opened: ${state.nodes[0].stage.titleEl?.textContent?.trim() || stages[0].id}`);
+  const activeEntry = state.nodes[state.currentIndex];
+  if (activeEntry) {
+    announce(state.liveRegion, `Opened: ${activeEntry.step.title}`);
+    activeEntry.root.classList.add('is-current');
+  }
 
   return {
     destroy() {
-      renderHost.innerHTML = '';
+      questmap.innerHTML = '';
     },
-    setCurrent,
+    setCurrent
   };
 }

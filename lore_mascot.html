@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="de">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Cryptober - Mascot Lore</title>
-  <meta name="description" content="Ursprung, Symbolik und Persönlichkeit des Maskottchens – Portrait, Traits und Quest-Teaser." />
+  <meta name="description" content="Origin, symbolism, and personality of the mascot – portrait, traits, and quest teaser." />
 
   <!-- Open Graph -->
   <meta property="og:title" content="Cryptober - Mascot Lore" />
@@ -29,10 +29,10 @@
   <!-- PAGE GRID -->
   <div class="layout-grid">
     <!-- LEFT RAIL -->
-    <aside id="left-rail" class="rail-card left-rail offcanvas" aria-label="Kapitel Navigation">
-      <button id="rail-toggle" class="btn btn-ghost" aria-expanded="false" aria-controls="lore-nav-list">Menü öffnen</button>
-      <nav aria-label="Kapitel-Navigation">
-        <h3 class="muted">Kapitel</h3>
+    <aside id="left-rail" class="rail-card left-rail offcanvas" aria-label="Chapter navigation">
+      <button id="rail-toggle" class="btn btn-ghost" aria-expanded="false" aria-controls="lore-nav-list">Open menu</button>
+      <nav aria-label="Chapter navigation">
+        <h3 class="muted">Chapters</h3>
         <ul id="lore-nav-list" class="rail-list">
           <li class="rail-item"><a href="#hero" aria-controls="hero">Hero</a></li>
           <li class="rail-item"><a href="#traits" aria-controls="traits">Origin &amp; Traits</a></li>
@@ -45,8 +45,9 @@
     <!-- MAIN -->
     <main id="site-main" role="main">
       <!-- Hero Section -->
-      <section id="hero" class="section">
-        <div class="glass card card-lg mascot-hero">
+      <section id="mascot-intro" class="section">
+        <section id="hero" class="section">
+          <div class="glass card card-lg mascot-hero">
           <img
             class="mascot-hero__image"
             src="placeholder-hero.jpg"
@@ -56,18 +57,20 @@
             loading="lazy"
             decoding="async"
           />
-          <h1 class="text-neon-orange">
-            Sparkfiend – The Flame Keeper
-          </h1>
-          <p class="muted">
-            Guardian of the Bullrun — Igniting the first green candle in $Cryptober before the OG-Bullrun.
-          </p>
-        </div>
+            <h1 class="text-neon-orange">
+              Sparkfiend – The Flame Keeper
+            </h1>
+            <p class="muted">
+              Guardian of the Bullrun — Igniting the first green candle in $Cryptober before the OG-Bullrun.
+            </p>
+          </div>
+        </section>
       </section>
 
       <!-- Origin & Traits -->
-      <section id="traits" class="section">
-        <div class="glass card card-lg">
+      <section id="mascot-cards" class="section">
+        <section id="traits" class="section">
+          <div class="glass card card-lg">
           <h2 class="text-neon-orange">Origin &amp; Traits</h2>
           <p class="muted">
             In the shadowed realms of crypto, where markets roar like ancient gods, Sparkfiend rises — a deathless ghost-bull, guardian of the eternal wick. For degens and normies alike, he’s the spark that ignites $Cryptober’s rituals: a mythic being born from the 2013 bullrun’s chaos, forging cycles into legends. His flame doesn’t just burn in charts but in the hearts of the community — a call to HODL, stoking FOMO, and shattering halving chains. Whether you’re a hardened trader or new to crypto’s wilds, Sparkfiend makes the yearly phases tangible: from Redtember’s frost to Pumpcember’s ashes. Dive into his origin, the traits that make him unforgettable, and the sacred rules guiding the ritual — an epic of sparks, spirits, and endless glow.
@@ -114,7 +117,8 @@
             </ol>
             </div>
           </div>
-        </div>
+          </div>
+        </section>
       </section>
 
       <!-- Mini-Gallery -->
@@ -177,8 +181,9 @@
       </section>
 
       <!-- Quest Grid S1 -->
-      <section id="quest-grid" class="section" aria-labelledby="quest-grid-title">
-        <div class="glass card card-lg">
+      <section id="mascot-questgrid" class="section">
+        <section id="quest-grid" class="section" aria-labelledby="quest-grid-title">
+          <div class="glass card card-lg">
           <h2 id="quest-grid-title" class="text-neon-orange">Quest Grid Season 1</h2>
           <div class="gallery-wrapper quest-grid-wrapper" role="region" aria-labelledby="quest-grid-title">
             <div class="gallery-grid quest-grid" role="list">
@@ -410,10 +415,11 @@
           </div>
 
           <div class="quest-controls" aria-label="Quest navigation">
-            <button class="btn btn-ghost" data-quest-action="prev" aria-label="Vorherige Quest-Seite">‹ Prev</button>
-            <button class="btn btn-ghost" data-quest-action="next" aria-label="Nächste Quest-Seite">Next ›</button>
+            <button class="btn btn-ghost" data-quest-action="prev" aria-label="Previous quest page">‹ Prev</button>
+            <button class="btn btn-ghost" data-quest-action="next" aria-label="Next quest page">Next ›</button>
           </div>
-        </div>
+          </div>
+        </section>
       </section>
     </main>
 
@@ -445,7 +451,7 @@
   </div>
 
   <!-- Footer -->
-  <footer class="section site-footer">
+  <footer id="site-footer" class="section site-footer">
     <div class="container card">
       <div>
         <img src="/assets/socials/web-logo.svg" alt="Cryptober logo" width="40" height="40" />

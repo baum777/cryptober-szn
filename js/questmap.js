@@ -5,9 +5,9 @@ const LIVE_REGION_ID = 'questmap-live';
 
 const STATUS_BY_INDEX = ['done', 'done', 'now'];
 const STATUS_LABELS = {
-  now: 'Status: now – aktueller Schritt',
-  done: 'Status: done – abgeschlossen',
-  later: 'Status: later – geplant'
+  now: 'Status: now – current step',
+  done: 'Status: done – completed',
+  later: 'Status: later – planned'
 };
 
 function toArray(nodeList) {
@@ -123,12 +123,12 @@ function buildCheckpointElement(step, index) {
   const completeBtn = document.createElement('button');
   completeBtn.type = 'button';
   completeBtn.className = 'btn checkpoint__btn checkpoint__btn--done';
-  completeBtn.textContent = 'Abschließen';
+  completeBtn.textContent = 'Complete';
 
   const nextBtn = document.createElement('button');
   nextBtn.type = 'button';
   nextBtn.className = 'btn checkpoint__btn checkpoint__btn--next';
-  nextBtn.textContent = 'Weiter';
+  nextBtn.textContent = 'Next';
 
   controls.appendChild(completeBtn);
   controls.appendChild(nextBtn);

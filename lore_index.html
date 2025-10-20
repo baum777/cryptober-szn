@@ -32,36 +32,10 @@
     <aside id="left-rail" class="rail-card left-rail offcanvas" aria-label="Chapter navigation">
       <div class="rail-scroll-wrap">
         <nav aria-label="Chapter navigation">
-          <section class="rail-group">
-            <button type="button" class="group-toggle" aria-expanded="true">Chronicle</button>
-            <ul class="group-list" role="list">
-              <li class="rail-item"><a href="#thesis" aria-controls="thesis">Thesis</a></li>
-              <li class="rail-item"><a href="#catch-phrase-section" aria-controls="catch-phrase-section">Catch a Phrase</a></li>
-              <li class="rail-item"><a href="#gallery-section" aria-controls="gallery-section">Gallery</a></li>
-            </ul>
-          </section>
-
-          <section class="rail-group">
-            <button type="button" class="group-toggle" aria-expanded="false">Seasons</button>
-            <ul class="group-list" role="list" hidden>
-              <li class="rail-item"><a href="#cryptober" aria-controls="cryptober">Cryptober</a></li>
-              <li class="rail-item"><a href="#uptober" aria-controls="uptober">Uptober</a></li>
-              <li class="rail-item"><a href="#moonvember" aria-controls="moonvember">Moonvember</a></li>
-              <li class="rail-item"><a href="#upcember" aria-controls="upcember">Upcember</a></li>
-            </ul>
-          </section>
-
-          <section class="rail-group">
-            <button type="button" class="group-toggle" aria-expanded="false">Specials</button>
-            <ul class="group-list" role="list" hidden>
-              <li class="rail-item"><a href="#faq" aria-controls="faq">FAQ</a></li>
-              <li class="rail-item"><a href="#glossary-panel" aria-controls="glossary-panel">Glossary</a></li>
-              <li class="rail-item"><a href="lore_mascot.html">Mascot</a></li>
-            </ul>
-          </section>
+          <ul id="lore-nav-list" class="rail-item"></ul>
         </nav>
 
-        <div id="glossary-of-day" class="rail-card"></div>
+        <div id="glossary-of-day" class="rail-card" aria-live="polite"></div>
       </div>
     </aside>
 
@@ -97,7 +71,6 @@
         <h3 id="catch-phrase-heading" class="text-neon-orange">Catch a Phrase <span aria-hidden="true">👻</span></h3>
         <section id="catch-phrase" class="card catch-phrase" aria-live="polite" aria-atomic="true">
           <h4 id="catch-phrase-text" class="catch-phrase__text" tabindex="0"></h4>
-          <button id="catchplay" class="catch-play" type="button" aria-pressed="false" aria-label="Pause rotation">Pause</button>
         </section>
       </section>
 
@@ -110,7 +83,7 @@
           <div class="faq-list" id="faq-list">
             <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-1">
               What's the 'meta' behind Cryptober as a Bullrun trigger?
-              <span class="faq-arrow" aria-hidden="true">▸</span>
+              <span aria-hidden="true">▸</span>
             </button>
             <div id="faq-a-1" class="faq-a" hidden>
               <p class="muted">Cryptober is the October vibe - a meme + sentiment push that helps markets flip from summer slow to winter hype. Tip: Check past Oct moves and line them up with current macro news before acting.</p>
@@ -118,7 +91,7 @@
 
             <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-2">
               How do Bullruns fit into cycles?
-              <span class="faq-arrow" aria-hidden="true">▸</span>
+              <span aria-hidden="true">▸</span>
             </button>
             <div id="faq-a-2" class="faq-a" hidden>
               <p class="muted">Bullruns often match halvings and macro events - recurring seasons. Tip: study 4-year cycles and use on-chain tools (dominance, volume) to time entries.</p>
@@ -126,7 +99,7 @@
 
             <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-3">
               What's different about Altseason in 2025?
-              <span class="faq-arrow" aria-hidden="true">▸</span>
+              <span aria-hidden="true">▸</span>
             </button>
             <div id="faq-a-3" class="faq-a" hidden>
               <p class="muted">2025 alt moves are pushed by AI hype + regulatory shifts - alts can surge when BTC dominance drops. Tip: watch dominance charts and whale flows on-chain.</p>
@@ -134,7 +107,7 @@
 
             <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-4">
               Why is DYOR essential during a Bullrun?
-              <span class="faq-arrow" aria-hidden="true">▸</span>
+              <span aria-hidden="true">▸</span>
             </button>
             <div id="faq-a-4" class="faq-a" hidden>
               <p class="muted">Hype blinds. Most alts fail long-term - DYOR protects you from FOMO. Tip: pair social buzz with on-chain metrics (holders, concentration) and audits.</p>
@@ -142,7 +115,7 @@
 
             <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-5">
               How do I spot the peak of an Altseason?
-              <span class="faq-arrow" aria-hidden="true">▸</span>
+              <span aria-hidden="true">▸</span>
             </button>
             <div id="faq-a-5" class="faq-a" hidden>
               <p class="muted">If random alts pump hard and BTC stalls, retail is probably late - that can signal a peak. Tip: track volume spikes and sentiment indexes; prefer selling discipline over greed.</p>
@@ -150,7 +123,7 @@
 
             <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-6">
               What risks come with the 'always up' Bullrun narrative?
-              <span class="faq-arrow" aria-hidden="true">▸</span>
+              <span aria-hidden="true">▸</span>
             </button>
             <div id="faq-a-6" class="faq-a" hidden>
               <p class="muted">That story ignores bear markets, regs and liquidity shocks. Tip: diversify, size positions, use stop-loss/take-profit rules.</p>
@@ -158,7 +131,7 @@
 
             <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-7">
               How does community power affect Cryptober runs?
-              <span class="faq-arrow" aria-hidden="true">▸</span>
+              <span aria-hidden="true">▸</span>
             </button>
             <div id="faq-a-7" class="faq-a" hidden>
               <p class="muted">For memecoins, narrative equals power - active communities can revive tokens or fuel pumps. Tip: check real engagement (not bot activity) before trusting hype.</p>
@@ -166,7 +139,7 @@
 
             <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-8">
               What long-term lessons do Altseason cycles teach?
-              <span class="faq-arrow" aria-hidden="true">▸</span>
+              <span aria-hidden="true">▸</span>
             </button>
             <div id="faq-a-8" class="faq-a" hidden>
               <p class="muted">Every run tests patience - fundamentals beat hype long-term. Tip: focus on utility, read whitepapers and audits to prep for the next cycle.</p>
@@ -179,7 +152,7 @@
       <section id="gallery-section" class="section" aria-labelledby="gallery-title">
         <h2 id="gallery-title" class="text-neon-orange" style="font-weight:800">Gallery</h2>
         <div class="gallery-wrapper" role="region" aria-labelledby="gallery-title" data-gallery="lore">
-          <div id="lore-gallery" class="gallery-grid" role="list"></div>
+          <div id="lore-gallery" class="gallery-grid" role="list" data-no-gradient="true"></div>
         </div>
       </section>
 
@@ -270,63 +243,115 @@
 
       <!-- Glossary (toggleable) -->
       <section id="glossary" class="section" aria-labelledby="glossary-toggle">
-        <button id="toggle-gloss" class="btn-block" aria-expanded="false" aria-controls="glossary-panel">Glossary / Degen Dictionary 🕯️</button>
-        <div id="glossary-panel" class="glass card glossary-card hidden" aria-hidden="true">
+        <button id="toggle-gloss" class="btn btn-ghost glossary-toggle" aria-expanded="false" aria-controls="glossary-panel">Glossary / Degen Dictionary 🕯️</button>
+        <div id="glossary-panel" class="card-glass glossary-card hidden" aria-hidden="true">
           <h3 class="text-neon-orange">Glossary</h3>
-          <dl class="glossary">
-            <dt class="text-neon-green">Yearly cycle</dt>
-            <dd class="muted">Redtember → Uptober → Moonvember → Pumpcember – the ritual dance of the eternal wick.</dd>
-            <dt class="text-neon-green">4-year cycle (bullrun)</dt>
-            <dd class="muted">Bitcoin halving rhythm (2012, 2016, 2020, 2024), where Sparkfiend shatters chains.</dd>
-            <dt class="text-neon-green">Uptober</dt>
-            <dd class="muted">October’s green tilt – the lever Sparkfiend pulls to ignite FOMO.</dd>
-            <dt class="text-neon-green">Moonvember</dt>
-            <dd class="muted">November’s follow-through – where the wick blazes into a $130k supernova.</dd>
-            <dt class="text-neon-green">Pumpcember</dt>
-            <dd class="muted">December’s seal – gains locked, the spark glows on.</dd>
-            <dt class="text-neon-green">Altseason</dt>
-            <dd class="muted">The season where alts rise like ghosts from BTC’s shadow, led by Sparkfiend.</dd>
-            <dt class="text-neon-green">DYOR</dt>
-            <dd class="muted">Do Your Own Research – decipher the runes before joining the coven.</dd>
-            <dt class="text-neon-green">NFA</dt>
-            <dd class="muted">Not Financial Advice – just the wick’s whisper, no promises.</dd>
-            <dt class="text-neon-green">Solana</dt>
-            <dd class="muted">The blazing blockchain where $Cryptober’s flames roar at 65k TPS.</dd>
-            <dt class="text-neon-green">DeFi</dt>
-            <dd class="muted">Decentralized Finance – the realm where Sparkfiend’s rituals harvest yield.</dd>
-            <dt class="text-neon-green">HODL</dt>
-            <dd class="muted">Hold On for Dear Life – the degen oath to clutch the wick.</dd>
-            <dt class="text-neon-green">Rug Pull</dt>
-            <dd class="muted">Sneaky ghosts draining bags – Sparkfiend’s flame burns them away.</dd>
-            <dt class="text-neon-green">Liquidity Pool</dt>
-            <dd class="muted">The cauldron where $Cryptober’s magic brews, $7K deep (Oct 2025).</dd>
-            <dt class="text-neon-green">Airdrop</dt>
-            <dd class="muted">Gifts from the coven – $Cryptober’s green sparks for loyalty.</dd>
-            <dt class="text-neon-green">Gas Fees</dt>
-            <dd class="muted">Tribute to the blockchain gods – a whisper on Solana’s speed.</dd>
-            <dt class="text-neon-green">Whale</dt>
-            <dd class="muted">Mighty sea beasts feeding Sparkfiend’s flames with their hoards.</dd>
-            <dt class="text-neon-green">FOMO</dt>
-            <dd class="muted">Fear Of Missing Out – the werewolf howl driving degens into Uptober’s blaze.</dd>
-            <dt class="text-neon-green">REKT</dt>
-            <dd class="muted">The loser’s curse – Sparkfiend saves those who hold the wick.</dd>
-            <dt class="text-neon-green">Smart Contract</dt>
-            <dd class="muted">Magical runes binding $Cryptober’s rituals on Solana’s ledger.</dd>
-            <dt class="text-neon-green">PFP</dt>
-            <dd class="muted">Profile Pic – your Sparkfiend avatar, forged by the coven’s spark.</dd>
-            <dt class="text-neon-green">Staking</dt>
-            <dd class="muted">Locking your $Cryptober bags to feed the eternal flame, earning rewards.</dd>
-            <dt class="text-neon-green">Yield Farming</dt>
-            <dd class="muted">Harvesting crops from DeFi fields, guided by Sparkfiend’s green sparks.</dd>
-            <dt class="text-neon-green">Wallet</dt>
-            <dd class="muted">Your enchanted pouch holding $Cryptober’s magical tokens.</dd>
-            <dt class="text-neon-green">DEX</dt>
-            <dd class="muted">Decentralized Exchange – the coven’s marketplace, like DexScreener’s altar.</dd>
-            <dt class="text-neon-green">Slippage</dt>
-            <dd class="muted">The ghostly drift when trading – Sparkfiend steadies the wick.</dd>
-            <dt class="text-neon-green">Ape In</dt>
-            <dd class="muted">Degen’s wild leap into $Cryptober, fueled by FOMO and faith.</dd>
-          </dl>
+          <div class="glossary-list">
+            <div class="glossary-entry">
+              <h4 class="glossary-term text-neon-green">Yearly cycle</h4>
+              <p class="glossary-def muted">Redtember → Uptober → Moonvember → Pumpcember – the ritual dance of the eternal wick.</p>
+            </div>
+            <div class="glossary-entry">
+              <h4 class="glossary-term text-neon-green">4-year cycle (bullrun)</h4>
+              <p class="glossary-def muted">Bitcoin halving rhythm (2012, 2016, 2020, 2024), where Sparkfiend shatters chains.</p>
+            </div>
+            <div class="glossary-entry">
+              <h4 class="glossary-term text-neon-green">Uptober</h4>
+              <p class="glossary-def muted">October’s green tilt – the lever Sparkfiend pulls to ignite FOMO.</p>
+            </div>
+            <div class="glossary-entry">
+              <h4 class="glossary-term text-neon-green">Moonvember</h4>
+              <p class="glossary-def muted">November’s follow-through – where the wick blazes into a $130k supernova.</p>
+            </div>
+            <div class="glossary-entry">
+              <h4 class="glossary-term text-neon-green">Pumpcember</h4>
+              <p class="glossary-def muted">December’s seal – gains locked, the spark glows on.</p>
+            </div>
+            <div class="glossary-entry">
+              <h4 class="glossary-term text-neon-green">Altseason</h4>
+              <p class="glossary-def muted">The season where alts rise like ghosts from BTC’s shadow, led by Sparkfiend.</p>
+            </div>
+            <div class="glossary-entry">
+              <h4 class="glossary-term text-neon-green">DYOR</h4>
+              <p class="glossary-def muted">Do Your Own Research – decipher the runes before joining the coven.</p>
+            </div>
+            <div class="glossary-entry">
+              <h4 class="glossary-term text-neon-green">NFA</h4>
+              <p class="glossary-def muted">Not Financial Advice – just the wick’s whisper, no promises.</p>
+            </div>
+            <div class="glossary-entry">
+              <h4 class="glossary-term text-neon-green">Solana</h4>
+              <p class="glossary-def muted">The blazing blockchain where $Cryptober’s flames roar at 65k TPS.</p>
+            </div>
+            <div class="glossary-entry">
+              <h4 class="glossary-term text-neon-green">DeFi</h4>
+              <p class="glossary-def muted">Decentralized Finance – the realm where Sparkfiend’s rituals harvest yield.</p>
+            </div>
+            <div class="glossary-entry">
+              <h4 class="glossary-term text-neon-green">HODL</h4>
+              <p class="glossary-def muted">Hold On for Dear Life – the degen oath to clutch the wick.</p>
+            </div>
+            <div class="glossary-entry">
+              <h4 class="glossary-term text-neon-green">Rug Pull</h4>
+              <p class="glossary-def muted">Sneaky ghosts draining bags – Sparkfiend’s flame burns them away.</p>
+            </div>
+            <div class="glossary-entry">
+              <h4 class="glossary-term text-neon-green">Liquidity Pool</h4>
+              <p class="glossary-def muted">The cauldron where $Cryptober’s magic brews, $7K deep (Oct 2025).</p>
+            </div>
+            <div class="glossary-entry">
+              <h4 class="glossary-term text-neon-green">Airdrop</h4>
+              <p class="glossary-def muted">Gifts from the coven – $Cryptober’s green sparks for loyalty.</p>
+            </div>
+            <div class="glossary-entry">
+              <h4 class="glossary-term text-neon-green">Gas Fees</h4>
+              <p class="glossary-def muted">Tribute to the blockchain gods – a whisper on Solana’s speed.</p>
+            </div>
+            <div class="glossary-entry">
+              <h4 class="glossary-term text-neon-green">Whale</h4>
+              <p class="glossary-def muted">Mighty sea beasts feeding Sparkfiend’s flames with their hoards.</p>
+            </div>
+            <div class="glossary-entry">
+              <h4 class="glossary-term text-neon-green">FOMO</h4>
+              <p class="glossary-def muted">Fear Of Missing Out – the werewolf howl driving degens into Uptober’s blaze.</p>
+            </div>
+            <div class="glossary-entry">
+              <h4 class="glossary-term text-neon-green">REKT</h4>
+              <p class="glossary-def muted">The loser’s curse – Sparkfiend saves those who hold the wick.</p>
+            </div>
+            <div class="glossary-entry">
+              <h4 class="glossary-term text-neon-green">Smart Contract</h4>
+              <p class="glossary-def muted">Magical runes binding $Cryptober’s rituals on Solana’s ledger.</p>
+            </div>
+            <div class="glossary-entry">
+              <h4 class="glossary-term text-neon-green">PFP</h4>
+              <p class="glossary-def muted">Profile Pic – your Sparkfiend avatar, forged by the coven’s spark.</p>
+            </div>
+            <div class="glossary-entry">
+              <h4 class="glossary-term text-neon-green">Staking</h4>
+              <p class="glossary-def muted">Locking your $Cryptober bags to feed the eternal flame, earning rewards.</p>
+            </div>
+            <div class="glossary-entry">
+              <h4 class="glossary-term text-neon-green">Yield Farming</h4>
+              <p class="glossary-def muted">Harvesting crops from DeFi fields, guided by Sparkfiend’s green sparks.</p>
+            </div>
+            <div class="glossary-entry">
+              <h4 class="glossary-term text-neon-green">Wallet</h4>
+              <p class="glossary-def muted">Your enchanted pouch holding $Cryptober’s magical tokens.</p>
+            </div>
+            <div class="glossary-entry">
+              <h4 class="glossary-term text-neon-green">DEX</h4>
+              <p class="glossary-def muted">Decentralized Exchange – the coven’s marketplace, like DexScreener’s altar.</p>
+            </div>
+            <div class="glossary-entry">
+              <h4 class="glossary-term text-neon-green">Slippage</h4>
+              <p class="glossary-def muted">The ghostly drift when trading – Sparkfiend steadies the wick.</p>
+            </div>
+            <div class="glossary-entry">
+              <h4 class="glossary-term text-neon-green">Ape In</h4>
+              <p class="glossary-def muted">Degen’s wild leap into $Cryptober, fueled by FOMO and faith.</p>
+            </div>
+          </div>
         </div>
       </section>
     </main>

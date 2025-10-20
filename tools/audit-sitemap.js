@@ -19,7 +19,7 @@ const requiredSelectors = {
       '#site-header',
       '#hero',
       '#intro',
-      '#roadmap',
+      ['#questmap', '#roadmap'],
       '#tools',
       '#social-pyramid',
       '#site-footer'
@@ -308,7 +308,12 @@ function collectIssuesForFile(file, documentRoot) {
   const warnings = [];
 
   for (const selector of required) {
-    if (!querySelector(documentRoot, selector)) {
+    if (Array.isArray(selector)) {
+      const found = selector.some((option) => querySelector(documentRoot, option));
+      if (!found) {
+        issues.push({ type: 'missing-selector', selector: selector.join(' | ') });
+      }
+    } else if (!querySelector(documentRoot, selector)) {
       issues.push({ type: 'missing-selector', selector });
     }
   }

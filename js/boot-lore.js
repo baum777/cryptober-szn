@@ -16,8 +16,7 @@ import { prefersReducedMotion } from "/utils/a11y.js";
 
 function initCatchPhraseRotation({ phrases = [], interval = 5000 } = {}) {
   const textNode = document.getElementById("catch-phrase-text");
-  const toggle = document.getElementById("catchplay");
-  if (!textNode || !toggle || phrases.length === 0) {
+  if (!textNode || phrases.length === 0) {
     return { destroy() {} };
   }
 
@@ -25,8 +24,6 @@ function initCatchPhraseRotation({ phrases = [], interval = 5000 } = {}) {
   let timerId = null;
   let shouldResume = false;
   const reducedMotion = prefersReducedMotion();
-  let playing = !reducedMotion;
-  let manualPause = reducedMotion;
 
   const render = () => {
     textNode.textContent = phrases[index] || "";
@@ -39,18 +36,9 @@ function initCatchPhraseRotation({ phrases = [], interval = 5000 } = {}) {
     }
   };
 
-  const updateToggle = () => {
-    toggle.textContent = playing ? "Pause" : "Play";
-    toggle.setAttribute("aria-pressed", playing ? "false" : "true");
-    toggle.setAttribute("aria-label", playing ? "Pause rotation" : "Resume rotation");
-  };
-
-  const start = (force = false) => {
-    if (!force && prefersReducedMotion()) {
+  const start = () => {
+    if (reducedMotion) {
       clearTimer();
-      playing = false;
-      manualPause = true;
-      updateToggle();
       return;
     }
     clearTimer();
@@ -58,56 +46,31 @@ function initCatchPhraseRotation({ phrases = [], interval = 5000 } = {}) {
       index = (index + 1) % phrases.length;
       render();
     }, interval);
-    playing = true;
-    updateToggle();
-  };
-
-  const stop = () => {
-    clearTimer();
-    playing = false;
-    updateToggle();
-  };
-
-  const handleToggle = () => {
-    if (playing) {
-      manualPause = true;
-      shouldResume = false;
-      stop();
-    } else {
-      manualPause = false;
-      start(true);
-    }
   };
 
   const pauseForInteraction = () => {
-    if (!playing) return;
+    if (!timerId) return;
     shouldResume = true;
-    stop();
+    clearTimer();
   };
 
   const resumeAfterInteraction = () => {
-    if (!manualPause && shouldResume) {
+    if (shouldResume) {
       start();
     }
     shouldResume = false;
   };
 
-  toggle.addEventListener("click", handleToggle);
   textNode.addEventListener("mouseenter", pauseForInteraction);
   textNode.addEventListener("focus", pauseForInteraction);
   textNode.addEventListener("mouseleave", resumeAfterInteraction);
   textNode.addEventListener("blur", resumeAfterInteraction);
 
   render();
-  if (playing) {
-    start();
-  } else {
-    updateToggle();
-  }
+  start();
 
   const destroy = () => {
     clearTimer();
-    toggle.removeEventListener("click", handleToggle);
     textNode.removeEventListener("mouseenter", pauseForInteraction);
     textNode.removeEventListener("focus", pauseForInteraction);
     textNode.removeEventListener("mouseleave", resumeAfterInteraction);
@@ -192,6 +155,7 @@ initGallery({ rootId: "gallery", lightboxId: "lightbox" });
     const sub = document.createElement("ul");
     makeSub(c.id).forEach((s) => {
       const li = document.createElement("li");
+      li.className = "rail-item";
       const sa = document.createElement("a");
       sa.href = `#${s.id}`;
       sa.textContent = s.label;
@@ -200,13 +164,21 @@ initGallery({ rootId: "gallery", lightboxId: "lightbox" });
     });
 
     details.appendChild(sub);
-    list.appendChild(details);
+    const wrapper = document.createElement("li");
+    wrapper.className = "rail-item";
+    wrapper.appendChild(details);
+    list.appendChild(wrapper);
   });
 
   // Zusätzliche Sprungziele
-  [{ href: "#gallery-section", label: "Gallery" }, { href: "#glossary-panel", label: "Glossary" }].forEach(
+  [
+    { href: "#catch-phrase-section", label: "Gallery" },
+    { href: "#gallery-section", label: "Seasons" },
+    { href: "#glossary-panel", label: "Glossary" },
+  ].forEach(
     (x) => {
       const li = document.createElement("li");
+      li.className = "rail-item";
       const a = document.createElement("a");
       a.href = x.href;
       a.textContent = x.label;
@@ -253,7 +225,6 @@ initGallery({ rootId: "gallery", lightboxId: "lightbox" });
   const idx = new Date().getDate() % pairs.length;
   const pick = pairs[idx];
   host.innerHTML = `
-    <h3 class="muted" style="margin:0 0 .25rem 0">Begriff des Tages</h3>
     <div class="card">
       <strong class="text-neon-green">${pick.term}</strong>
       <p class="muted" style="margin:.25rem 0 0 0">${pick.def}</p>

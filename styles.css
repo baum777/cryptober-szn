@@ -690,17 +690,20 @@ main,
   flex-shrink: 0;
   width: 100%;
   margin-top: auto;
-  background: var(--footer-bg);
-  color: var(--footer-color);
-  padding: 1.5rem 1rem;
+  background: var(--footer-bg, #0b0b0b);
+  color: var(--footer-color, #ffffff);
+  padding: 1.25rem 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .site-footer__inner {
+  max-width: min(1100px, 100%);
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
   text-align: center;
 }
 
@@ -712,6 +715,24 @@ main,
 
 .site-footer__inner .btn {
   margin-top: 0.25rem;
+}
+
+.site-footer__inner a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 160ms ease, box-shadow 160ms ease;
+}
+
+.site-footer__inner a:hover,
+.site-footer__inner a:focus-visible {
+  color: var(--neon-green);
+  box-shadow: 0 0 0 3px rgba(0, 255, 150, 0.35);
+  outline: none;
+}
+
+.site-footer__inner p {
+  margin: 0;
+  color: color-mix(in srgb, var(--footer-color, #ffffff) 88%, rgba(255, 255, 255, 0.72));
 }
 
 body.offcanvas-open {
@@ -886,12 +907,6 @@ h6:hover {
 .nav-card--brand {
   font-weight: 700;
   letter-spacing: 0.01em;
-}
-
-.site-footer {
-  background: var(--footer-bg);
-  color: var(--footer-color);
-  padding: 0;
 }
 
 .left-rail {
@@ -1689,6 +1704,55 @@ body.landing .logo-frame__img:focus {
 
 .glossary-card.is-open {
   box-shadow: 0 32px 64px rgba(0, 0, 0, 0.45);
+}
+
+.glossary-rotate-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: clamp(1.1rem, 3vw, 1.6rem);
+  border-radius: var(--card-radius);
+  border: 1px solid var(--glass-border);
+  background: color-mix(in srgb, var(--glass-bg) 88%, rgba(0, 0, 0, 0.35));
+  box-shadow: 0 24px 52px rgba(0, 0, 0, 0.35);
+}
+
+.glossary-rotate__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-height: 4.5rem;
+  text-align: left;
+}
+
+.glossary-rotate__text:focus-visible {
+  outline: 2px solid var(--neon-green);
+  outline-offset: 3px;
+}
+
+.glossary-rotate__term {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.glossary-rotate__definition {
+  margin: 0;
+}
+
+.glossary-of-day-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: clamp(0.85rem, 2.5vw, 1.1rem);
+  text-align: left;
+}
+
+.glossary-of-day__term {
+  margin: 0;
+}
+
+.glossary-of-day__definition {
+  margin: 0;
 }
 
 .glossary-list {

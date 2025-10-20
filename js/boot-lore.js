@@ -14,6 +14,26 @@ import { initGallery } from "/js/gallery.js";
 import { initMobileRails } from "/js/mobile-rail.js";
 import { prefersReducedMotion } from "/utils/a11y.js";
 
+function collectGlossaryEntries() {
+  const panel = document.getElementById("glossary-panel");
+  if (!panel) {
+    return [];
+  }
+
+  return Array.from(panel.querySelectorAll(".glossary-entry"))
+    .map((entry) => {
+      const term = entry.querySelector(".glossary-term");
+      const def = entry.querySelector(".glossary-def");
+      const termText = term?.textContent?.trim();
+      const defText = def?.textContent?.trim();
+      if (!termText || !defText) {
+        return null;
+      }
+      return { term: termText, definition: defText };
+    })
+    .filter(Boolean);
+}
+
 function initCatchPhraseRotation({ phrases = [], interval = 5000 } = {}) {
   const textNode = document.getElementById("catch-phrase-text");
   if (!textNode || phrases.length === 0) {
@@ -82,6 +102,115 @@ function initCatchPhraseRotation({ phrases = [], interval = 5000 } = {}) {
   return { destroy };
 }
 
+function initGlossaryRotation({ interval = 12000 } = {}) {
+  const card = document.querySelector("#glossary-rotate .glossary-rotate-card");
+  const region = document.querySelector("#glossary-rotate .glossary-rotate__text");
+  const entries = collectGlossaryEntries();
+
+  if (!card || !region) {
+    return { destroy() {} };
+  }
+
+  if (entries.length === 0) {
+    region.textContent = "Glossary entries will appear soon.";
+    return { destroy() {} };
+  }
+
+  const reducedMotion = prefersReducedMotion();
+  const canCycle = !reducedMotion && entries.length > 1;
+  let index = 0;
+  let timerId = null;
+  let interactionPaused = false;
+  let resumeAfterHide = false;
+
+  const render = () => {
+    const current = entries[index] ?? entries[0];
+    region.innerHTML = "";
+
+    const term = document.createElement("h4");
+    term.className = "glossary-rotate__term text-neon-green";
+    term.textContent = current.term;
+
+    const def = document.createElement("p");
+    def.className = "glossary-rotate__definition muted";
+    def.textContent = current.definition;
+
+    region.append(term, def);
+  };
+
+  const clearTimer = () => {
+    if (timerId) {
+      window.clearInterval(timerId);
+      timerId = null;
+    }
+  };
+
+  const start = () => {
+    clearTimer();
+    if (!canCycle) {
+      return;
+    }
+    timerId = window.setInterval(() => {
+      index = (index + 1) % entries.length;
+      render();
+    }, interval);
+  };
+
+  const pauseForInteraction = () => {
+    if (!canCycle) {
+      return;
+    }
+    interactionPaused = true;
+    clearTimer();
+  };
+
+  const resumeAfterInteraction = () => {
+    if (!canCycle || !interactionPaused) {
+      interactionPaused = false;
+      return;
+    }
+    interactionPaused = false;
+    start();
+  };
+
+  const handleVisibility = () => {
+    if (!canCycle) {
+      return;
+    }
+    if (document.hidden) {
+      if (timerId) {
+        resumeAfterHide = true;
+      }
+      clearTimer();
+    } else if (resumeAfterHide && !interactionPaused) {
+      resumeAfterHide = false;
+      start();
+    }
+  };
+
+  card.addEventListener("mouseenter", pauseForInteraction);
+  card.addEventListener("mouseleave", resumeAfterInteraction);
+  card.addEventListener("focusin", pauseForInteraction);
+  card.addEventListener("focusout", resumeAfterInteraction);
+  document.addEventListener("visibilitychange", handleVisibility);
+
+  render();
+  start();
+
+  const destroy = () => {
+    clearTimer();
+    card.removeEventListener("mouseenter", pauseForInteraction);
+    card.removeEventListener("mouseleave", resumeAfterInteraction);
+    card.removeEventListener("focusin", pauseForInteraction);
+    card.removeEventListener("focusout", resumeAfterInteraction);
+    document.removeEventListener("visibilitychange", handleVisibility);
+  };
+
+  window.addEventListener("beforeunload", destroy, { once: true });
+
+  return { destroy };
+}
+
 /* Core */
 bindClipboard();
 bindEventWire();
@@ -118,6 +247,9 @@ initCatchPhraseRotation({ phrases: catchPhrases, interval: 5000 });
 
 /* Gallery Grid + Lightbox */
 initGallery({ rootId: "gallery", lightboxId: "lightbox" });
+
+/* Glossary spotlight rotation */
+initGlossaryRotation({ interval: 12000 });
 
 /* Kapitel-Navigation (links) — erzeugt aus vorhandenen Epochen + Sub-H3 */
 (function initLoreNav() {
@@ -211,23 +343,15 @@ initGallery({ rootId: "gallery", lightboxId: "lightbox" });
 /* Glossary of the Day (liest bestehendes DL, ändert Inhalte nicht) */
 (function glossaryOfDay() {
   const host = document.getElementById("glossary-of-day");
-  const panel = document.getElementById("glossary-panel");
-  if (!host || !panel) return;
-  const terms = Array.from(panel.querySelectorAll("dl > dt"));
-  const pairs = terms
-    .map((dt) => {
-      const dd = dt.nextElementSibling;
-      if (!dd || dd.tagName !== "DD") return null;
-      return { term: (dt.textContent || "").trim(), def: (dd.textContent || "").trim() };
-    })
-    .filter(Boolean);
+  if (!host) return;
+  const pairs = collectGlossaryEntries();
   if (pairs.length === 0) return;
   const idx = new Date().getDate() % pairs.length;
   const pick = pairs[idx];
   host.innerHTML = `
-    <div class="card">
-      <strong class="text-neon-green">${pick.term}</strong>
-      <p class="muted" style="margin:.25rem 0 0 0">${pick.def}</p>
+    <div class="card-glass glossary-of-day-card">
+      <strong class="text-neon-green glossary-of-day__term">${pick.term}</strong>
+      <p class="muted glossary-of-day__definition">${pick.definition}</p>
     </div>`;
 })();
 

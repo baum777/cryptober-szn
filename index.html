@@ -233,24 +233,24 @@
       <!-- Tools -->
       <section id="tools" class="section" aria-labelledby="tools-title">
         <h2 id="tools-title" class="text-neon-orange" style="font-weight:800">Tools</h2>
-        <div class="grid grid-3" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:.75rem;">
-          <div class="card card-glass tool-card" data-tool="pumpkin-patch">
-            <img class="tool-card__icon" src="/assets/pfp-creator.svg" alt="Pumpkin Patch avatar generator icon" width="96" height="96" loading="lazy" decoding="async" />
-            <h3 class="text-neon-green">Pumpkin Patch</h3>
-            <p class="muted">Avatar generator with layered pumpkins and export-ready PNG output.</p>
-            <button class="btn" data-event="tool-patch" data-copy="Coming soon" aria-disabled="true">Create (Soon)</button>
+        <div class="tools-grid">
+          <div class="card card-glass tool-card" data-tool="signal-forge">
+            <img class="tool-card__icon" src="/assets/pfp-creator.svg" alt="Signal Forge icon" width="96" height="96" loading="lazy" decoding="async" />
+            <span class="tool-card__glyph" aria-hidden="true">⚡</span>
+            <h3 class="text-neon-green">Signal Forge</h3>
+            <p class="muted">Where Grok’s data alchemy meets viral energy — transforming raw market intel into razor-sharp insights or explosive $Cryptober memes.</p>
+            <ul class="tool-card__list muted">
+              <li>Built for speed, precision, and pure degen dominance.</li>
+            </ul>
+            <button type="button" class="btn btn-cta" data-overlay="signal-forge" aria-label="Learn more about Signal Forge">Learn more</button>
           </div>
-          <div class="card card-glass tool-card" data-tool="oracle">
-            <img class="tool-card__icon" src="/assets/oracle.svg" alt="Oracle analytics icon" width="96" height="96" loading="lazy" decoding="async" />
-            <h3 class="text-neon-green">Oracle</h3>
-            <p class="muted">Signal brief with momentum triggers and narrative alignment cues.</p>
-            <button class="btn" data-event="tool-oracle" data-copy="Coming soon" aria-disabled="true">Open (Soon)</button>
-          </div>
-          <div class="card card-glass tool-card" data-tool="candle-carver">
-            <img class="tool-card__icon" src="/assets/candle-carver.svg" alt="Candle Carver simulator icon" width="96" height="96" loading="lazy" decoding="async" />
-            <h3 class="text-neon-green">Candle Carver</h3>
-            <p class="muted">Market-cap simulator for scenario carving and wick planning.</p>
-            <button class="btn" data-event="tool-carver" data-copy="Coming soon" aria-disabled="true">Simulate (Soon)</button>
+          <div class="card card-glass tool-card" data-tool="specterscan">
+            <img class="tool-card__icon" src="/assets/oracle.svg" alt="SpecterScan icon" width="96" height="96" loading="lazy" decoding="async" />
+            <span class="tool-card__glyph" aria-hidden="true">👻</span>
+            <h3 class="text-neon-green">SpecterScan</h3>
+            <p class="muted">AI-fueled chart oracle that reveals hidden trends and breakout zones before they surface.</p>
+            <p class="muted">Neon-glow UI with ghostly tooltips turns every scan into a ritual of precision and power.</p>
+            <button type="button" class="btn btn-cta" data-overlay="specterscan" aria-label="Learn more about SpecterScan">Learn more</button>
           </div>
         </div>
       </section>
@@ -309,8 +309,25 @@
   <!-- Toast -->
   <div id="toast" class="toast" aria-live="polite"></div>
 
+  <div
+    id="tools-overlay"
+    class="overlay hidden"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="tools-overlay-title"
+    aria-describedby="tools-overlay-body"
+    aria-hidden="true"
+  >
+    <div class="overlay__window">
+      <button type="button" class="overlay__close" aria-label="Close">×</button>
+      <h3 id="tools-overlay-title">Tool details</h3>
+      <div id="tools-overlay-body"></div>
+    </div>
+  </div>
+
   <!-- Scripts -->
   <script type="module" src="/js/boot-home.js"></script>
+  <script type="module" src="/js/tools-overlay.js"></script>
   <script type="module" src="/js/roadmap.js"></script>
   <script type="module" src="/js/main.js"></script>
 </body>

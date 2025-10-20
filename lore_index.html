@@ -32,7 +32,18 @@
     <aside id="left-rail" class="rail-card left-rail offcanvas" aria-label="Chapter navigation">
       <div class="rail-scroll-wrap">
         <nav aria-label="Chapter navigation">
-          <ul id="lore-nav-list" class="rail-item"></ul>
+          <div class="rail-item">
+            <a href="#catch-phrase-section" data-target aria-controls="catch-phrase-section">Catch a Phrase</a>
+          </div>
+          <div class="rail-item">
+            <a href="#gallery-section" data-target aria-controls="gallery-section">Gallery</a>
+          </div>
+          <div class="rail-item">
+            <a href="#cryptober" data-target aria-controls="cryptober">Cryptober</a>
+          </div>
+          <div class="rail-item">
+            <a href="#glossary" data-target aria-controls="glossary">Glossary</a>
+          </div>
         </nav>
 
         <div id="glossary-of-day" class="rail-card" aria-live="polite"></div>
@@ -72,6 +83,14 @@
         <section id="catch-phrase" class="card catch-phrase" aria-live="polite" aria-atomic="true">
           <h4 id="catch-phrase-text" class="catch-phrase__text" tabindex="0"></h4>
         </section>
+      </section>
+
+      <!-- Glossary Spotlight (rotating) -->
+      <section id="glossary-rotate" class="section" aria-labelledby="glossary-rotate-heading">
+        <div class="card-glass glossary-rotate-card">
+          <h3 id="glossary-rotate-heading" class="text-neon-orange">Glossary Spotlight</h3>
+          <div class="glossary-rotate__text" aria-live="polite" tabindex="0"></div>
+        </div>
       </section>
 
       <!-- FAQ (EN) -->

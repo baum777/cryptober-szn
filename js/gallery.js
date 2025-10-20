@@ -107,6 +107,12 @@ function clampIndex(index, max) {
   return index;
 }
 
+function readBooleanFlag(value) {
+  if (value === undefined || value === null) return false;
+  const normalized = String(value).trim().toLowerCase();
+  return normalized === "" || normalized === "true" || normalized === "1" || normalized === "yes";
+}
+
 class GalleryController {
   constructor({
     rootId,
@@ -151,6 +157,10 @@ class GalleryController {
     }
 
     this.wrapper = this.grid.parentElement || this.root || null;
+    this.disableGradient =
+      readBooleanFlag(this.grid?.dataset?.noGradient) ||
+      readBooleanFlag(this.wrapper?.dataset?.noGradient) ||
+      readBooleanFlag(this.root?.dataset?.noGradient);
 
     this.lightbox = new Lightbox({
       element: this.lightboxElement,
@@ -233,10 +243,12 @@ class GalleryController {
     img.addEventListener("error", errorHandler);
 
     box.appendChild(img);
-    const gradient = document.createElement("span");
-    gradient.className = "img-gradient-bottom";
-    gradient.setAttribute("aria-hidden", "true");
-    box.appendChild(gradient);
+    if (!this.disableGradient) {
+      const gradient = document.createElement("span");
+      gradient.className = "img-gradient-bottom";
+      gradient.setAttribute("aria-hidden", "true");
+      box.appendChild(gradient);
+    }
 
     button.appendChild(box);
 
@@ -317,7 +329,6 @@ class GalleryController {
     prev.textContent = "← Prev";
 
     const status = document.createElement("span");
-    status.className = "gallery-pager__status";
     status.setAttribute("aria-live", "polite");
 
     const next = document.createElement("button");

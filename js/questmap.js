@@ -19,6 +19,10 @@ function getReducedMotion() {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
+function getRoadmapSection() {
+  return document.getElementById('questmap') || document.getElementById('roadmap');
+}
+
 function setupReducedMotionListener(state) {
   if (typeof window === 'undefined' || !window.matchMedia) return;
   const query = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -168,7 +172,7 @@ function scrollEntryIntoView(entry, prefersReducedMotion) {
 }
 
 export function initQuestmap({ hostId, liveRegionId } = {}) {
-  const roadmapSection = document.getElementById('roadmap');
+  const roadmapSection = getRoadmapSection();
   if (!roadmapSection) return null;
 
   const steps = parseRoadmapSteps(roadmapSection);
@@ -176,7 +180,10 @@ export function initQuestmap({ hostId, liveRegionId } = {}) {
 
   const container = hostId ? document.getElementById(hostId) : null;
   const questmap = container || document.createElement('div');
-  questmap.id = QUESTMAP_ID;
+  const existingHost = document.getElementById(QUESTMAP_ID);
+  if (!container && (!existingHost || existingHost === questmap)) {
+    questmap.id = QUESTMAP_ID;
+  }
   questmap.className = 'questmap';
   questmap.setAttribute('role', 'region');
   const roadmapHeading = roadmapSection.querySelector('#roadmap-title');

@@ -4,6 +4,10 @@ const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selec
 let DATA = [];
 let currentIndex = 0;
 
+function getRoadmapSection() {
+  return document.getElementById('questmap') || document.getElementById('roadmap');
+}
+
 const ICONS = {
   candle: '🕯️',
   bull: '📈',
@@ -121,7 +125,7 @@ function renderDetail() {
   article.setAttribute('aria-expanded', 'true');
 
   const header = document.createElement('header');
-  header.className = 'rm-card__hdr';
+  header.className = 'rm-meta';
 
   const title = document.createElement('h3');
   title.className = 'rm-title';
@@ -132,19 +136,15 @@ function renderDetail() {
   title.append(` ${item.title}`);
 
   const meta = document.createElement('div');
-  meta.className = 'rm-meta';
+  meta.className = 'rm-meta__chips';
   meta.innerHTML = `
-    <span class="rm-chip ${item.status}">${item.status}</span>
+    <span class="rm-chip">${item.status}</span>
     <span class="rm-chip">${item.quarter}</span>
     ${item.tags && item.tags.length ? item.tags.map((tag) => `<span class="rm-chip tag-pill">${tag}</span>`).join('') : ''}
   `;
 
   header.appendChild(title);
   header.appendChild(meta);
-
-  const body = document.createElement('div');
-  body.className = 'rm-text';
-  body.textContent = item.desc;
 
   const actions = document.createElement('div');
   actions.className = 'rm-actions';
@@ -169,7 +169,6 @@ function renderDetail() {
   actions.appendChild(next);
 
   article.appendChild(header);
-  article.appendChild(body);
   article.appendChild(actions);
 
   host.appendChild(article);
@@ -277,7 +276,7 @@ function bindControls() {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const roadmapSection = document.getElementById('roadmap');
+  const roadmapSection = getRoadmapSection();
   if (!roadmapSection) return;
 
   DATA = await loadData();

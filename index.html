@@ -58,11 +58,11 @@
   <!-- PAGE GRID -->
   <div class="layout-grid">
     <!-- LEFT RAIL -->
-    <aside id="left-rail" class="rail-card left-rail offcanvas" aria-label="Seiten Navigation">
+    <aside id="left-rail" class="rail-card left-rail offcanvas" aria-label="Page navigation">
       <ul id="nav-list" class="rail-list">
         <li class="rail-item"><a href="#hero" data-target aria-controls="hero">Hero</a></li>
         <li class="rail-item"><a href="#intro" data-target aria-controls="intro">Intro</a></li>
-        <li class="rail-item"><a href="#roadmap" data-target aria-controls="roadmap">Roadmap</a></li>
+        <li class="rail-item"><a href="#questmap" data-target aria-controls="questmap">Roadmap</a></li>
         <li class="rail-item"><a href="#tools" data-target aria-controls="tools">Tools</a></li>
         <li class="rail-item"><a href="#social-pyramid" data-target aria-controls="social-pyramid">Social</a></li>
       </ul>
@@ -70,7 +70,7 @@
         <ul id="nav-noscript" class="rail-list">
           <li class="rail-item"><a href="#hero">Hero</a></li>
           <li class="rail-item"><a href="#intro">Intro</a></li>
-          <li class="rail-item"><a href="#roadmap">Roadmap</a></li>
+          <li class="rail-item"><a href="#questmap">Roadmap</a></li>
           <li class="rail-item"><a href="#tools">Tools</a></li>
           <li class="rail-item"><a href="#social-pyramid">Social</a></li>
         </ul>
@@ -94,7 +94,6 @@
               aria-label="Copy contract address"
               tabindex="0"
               data-copy="BBRQZBQ3Kr1qSsihGDK69UzC3zmpkX9174wxGPdvqANE"
-              style="font-size:0.95rem; margin-top:.5rem;"
             >
               BBRQZBQ3Kr1qSsihGDK69UzC3zmpkX9174wxGPdvqANE
             </div>
@@ -110,9 +109,6 @@
               <a href="lore_index.html#upcember" class="chip" data-event="teaser-upcember">Upcember</a>
             </div>
 
-            <div class="flex-gap" style="align-items:center;margin-top:.75rem;display:flex;gap:.5rem">
-              <a href="lore_index.html" class="btn" data-event="cta-lore">Join the Spooky Rally</a>
-            </div>
           </div>
 
           <div class="ph-box logo-frame" aria-hidden="true">
@@ -156,10 +152,10 @@
       </section>
 
       <!-- Roadmap -->
-      <section id="roadmap" class="section roadmap" aria-labelledby="roadmap-title" data-source="auto">
+      <section id="questmap" class="section roadmap" aria-labelledby="roadmap-title" data-source="auto">
         <header class="roadmap__hdr">
           <h2 id="roadmap-title" class="text-neon-orange">Roadmap</h2>
-          <div class="roadmap__controls">
+          <div>
             <label>
               <span class="sr-only">Filter by quarter</span>
               <select id="rm-filter-quarter" aria-label="Filter quarter">
@@ -184,9 +180,16 @@
         <div id="rm-live" class="sr-only" aria-live="polite"></div>
 
         <ul id="existing-roadmap-steps" class="hidden">
-          <li data-id="website-community-takeover" data-quarter="Q4" data-status="done" data-theme="candle">
+          <li
+            id="web-com-takeover"
+            class="is-active"
+            data-state="active"
+            data-id="website-community-takeover"
+            data-quarter="Q4"
+            data-status="done"
+            data-theme="candle"
+          >
             <h4>Website &amp; Community Takeover</h4>
-            <p>Shared hub for lore, memes, coordination. Claim roles, co-create the movement.</p>
             <ul class="tags">
               <li>community</li>
               <li>lore</li>
@@ -194,7 +197,6 @@
           </li>
           <li data-id="dex-vault-community-barometer" data-quarter="Q4" data-status="done" data-theme="bull">
             <h4>DEX Vault → Community Barometer</h4>
-            <p>Heartbeat over hype. On-chain signal for genuine support and activity.</p>
             <ul class="tags">
               <li>on-chain</li>
               <li>signal</li>
@@ -202,28 +204,24 @@
           </li>
           <li data-id="schill-phase-pulse" data-quarter="Q4" data-status="inprogress" data-theme="candle">
             <h4>Schill Phase → Pulse over Push</h4>
-            <p>Build quiet; vibe loud. No new drops yet to keep curiosity and incentives alive.</p>
             <ul class="tags">
               <li>momentum</li>
             </ul>
           </li>
           <li data-id="creator-fee-distribution" data-quarter="Q1" data-status="planned" data-theme="bull">
             <h4>Creator Fee Distribution</h4>
-            <p>50% Locks+Burn · 30–35% Growth/Market · 15–20% Dev Ops (staged locks; unlocks burn).</p>
             <ul class="tags">
               <li>tokenomics</li>
             </ul>
           </li>
           <li data-id="tool-development-controlled-fire" data-quarter="Q1" data-status="planned" data-theme="candle">
             <h4>Tool Development → Controlled Fire</h4>
-            <p>Spark releases: Pumpkin Patch first; Oracle &amp; Candle Carver follow.</p>
             <ul class="tags">
               <li>tools</li>
             </ul>
           </li>
           <li data-id="community-first-tool-vision" data-quarter="Q2" data-status="planned" data-theme="candle">
             <h4>Community-First Tool Vision</h4>
-            <p>Co-create real utility + fun; iterate with real user feedback.</p>
             <ul class="tags">
               <li>community</li>
               <li>tools</li>
@@ -236,19 +234,22 @@
       <section id="tools" class="section" aria-labelledby="tools-title">
         <h2 id="tools-title" class="text-neon-orange" style="font-weight:800">Tools</h2>
         <div class="grid grid-3" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:.75rem;">
-          <div class="card">
+          <div class="card card-glass tool-card" data-tool="pumpkin-patch">
+            <img class="tool-card__icon" src="/assets/pfp-creator.svg" alt="Pumpkin Patch avatar generator icon" width="96" height="96" loading="lazy" decoding="async" />
             <h3 class="text-neon-green">Pumpkin Patch</h3>
-            <p class="muted">PFP generator - privacy-first local export.</p>
+            <p class="muted">Avatar generator with layered pumpkins and export-ready PNG output.</p>
             <button class="btn" data-event="tool-patch" data-copy="Coming soon" aria-disabled="true">Create (Soon)</button>
           </div>
-          <div class="card">
+          <div class="card card-glass tool-card" data-tool="oracle">
+            <img class="tool-card__icon" src="/assets/oracle.svg" alt="Oracle analytics icon" width="96" height="96" loading="lazy" decoding="async" />
             <h3 class="text-neon-green">Oracle</h3>
-            <p class="muted">Signal brief & trend views.</p>
+            <p class="muted">Signal brief with momentum triggers and narrative alignment cues.</p>
             <button class="btn" data-event="tool-oracle" data-copy="Coming soon" aria-disabled="true">Open (Soon)</button>
           </div>
-          <div class="card">
+          <div class="card card-glass tool-card" data-tool="candle-carver">
+            <img class="tool-card__icon" src="/assets/candle-carver.svg" alt="Candle Carver simulator icon" width="96" height="96" loading="lazy" decoding="async" />
             <h3 class="text-neon-green">Candle Carver</h3>
-            <p class="muted">MCAP simulator.</p>
+            <p class="muted">Market-cap simulator for scenario carving and wick planning.</p>
             <button class="btn" data-event="tool-carver" data-copy="Coming soon" aria-disabled="true">Simulate (Soon)</button>
           </div>
         </div>
@@ -289,19 +290,14 @@
         <p class="sr-only">Pyramid layout: X centered at the top; Telegram bottom left; Dexscreener bottom right.</p>
       </section>
 
-      <!-- Glossary CTA -->
-      <section class="section" style="display:flex;justify-content:center;margin-top:1rem">
-        <a class="btn btn-primary" href="lore_index.html#glossary-panel" data-event="cta-glossary">Glossary</a>
-      </section>
-
       <!-- Footer -->
-      <footer id="site-footer" class="section site-footer">
-        <div class="container card" style="text-align:center;padding:1rem;">
-          <div style="display:flex;justify-content:center;margin-bottom:.5rem">
-            <img src="/assets/socials/web-logo.png" alt="Cryptober logo" width="40" height="40" />
+      <footer id="site-footer" class="site-footer">
+        <div class="site-footer__inner">
+          <div class="site-footer__logo">
+            <img src="/assets/socials/web-logo.png" alt="Cryptober logo" width="40" height="40" loading="lazy" decoding="async" />
           </div>
           <a href="lore_index.html" class="btn" data-event="footer-lore">Read the Lore</a>
-          <p style="margin-top:.5rem;">Since 2013 · Pumpkins + Green Candles · Community-Powered</p>
+          <p>Since 2013 · Pumpkins + Green Candles · Community-Powered</p>
           <p>Redtember → Uptober → Moonvember → Pumpcember = yearly cycle</p>
           <p class="legal">© <span id="year"></span> $Cryptober - All rights reserved.</p>
         </div>

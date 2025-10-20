@@ -85,7 +85,7 @@ initQuestmap();
   const sections = [
     { id: "main", label: "Hero" },
     { id: "intro", label: "Intro" },
-    { id: "roadmap", label: "Roadmap" },
+    { id: "questmap", label: "Roadmap" },
     { id: "tools", label: "Tools" },
     { id: "social-pyramid", label: "Social" },
   ].filter((s) => document.getElementById(s.id));

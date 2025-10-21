@@ -152,82 +152,68 @@
       </section>
 
       <!-- Roadmap -->
-      <section id="questmap" class="section roadmap" aria-labelledby="roadmap-title" data-source="auto">
-        <header class="roadmap__hdr">
+      <section id="questmap" class="section" aria-labelledby="roadmap-title">
+        <header class="section__header">
           <h2 id="roadmap-title" class="text-neon-orange">Roadmap</h2>
-          <div>
-            <label>
-              <span class="sr-only">Filter by quarter</span>
-              <select id="rm-filter-quarter" aria-label="Filter quarter">
-                <option value="all">All</option>
-                <option value="Q4">Q4</option>
-                <option value="Q1">Q1</option>
-                <option value="Q2">Q2</option>
-                <option value="Q3">Q3</option>
-              </select>
-            </label>
-            <button id="rm-toggle-showdone" aria-pressed="true" aria-label="Toggle done items">Show Done</button>
-          </div>
         </header>
 
-        <div class="rm-timeline" role="group" aria-label="Milestones">
-          <ol class="rm-dots" id="rm-dots" role="list"></ol>
-          <div class="rm-progress" aria-hidden="true"></div>
+        <div class="questmap" role="group" aria-describedby="roadmap-title">
+          <div id="quest-spine" aria-hidden="true"></div>
+
+          <ol id="rm-dots" class="rm-dots" role="list">
+            <li class="rm-dots__item rm-dots__item--now">
+              <span class="rm-dot" aria-hidden="true"></span>
+              <span class="sr-only">Website &amp; Community Takeover — current step</span>
+            </li>
+            <li class="rm-dots__item rm-dots__item--later">
+              <span class="rm-dot" aria-hidden="true"></span>
+              <span class="sr-only">DEX Vault → Community Barometer — upcoming step</span>
+            </li>
+            <li class="rm-dots__item rm-dots__item--later">
+              <span class="rm-dot" aria-hidden="true"></span>
+              <span class="sr-only">Schill Phase → Pulse over Push — upcoming step</span>
+            </li>
+            <li class="rm-dots__item rm-dots__item--later">
+              <span class="rm-dot" aria-hidden="true"></span>
+              <span class="sr-only">Creator Fee Distribution — upcoming step</span>
+            </li>
+            <li class="rm-dots__item rm-dots__item--later">
+              <span class="rm-dot" aria-hidden="true"></span>
+              <span class="sr-only">Tool Development → Controlled Fire — upcoming step</span>
+            </li>
+            <li class="rm-dots__item rm-dots__item--later">
+              <span class="rm-dot" aria-hidden="true"></span>
+              <span class="sr-only">Community-First Tool Vision — upcoming step</span>
+            </li>
+          </ol>
+
+          <div id="rm-details" class="questmap__details" role="list">
+            <article class="checkpoint checkpoint--now" role="listitem" aria-current="step">
+              <span class="checkpoint__dot" aria-hidden="true"></span>
+              <h3 class="checkpoint__title">Website &amp; Community Takeover</h3>
+            </article>
+            <article class="checkpoint checkpoint--later" role="listitem">
+              <span class="checkpoint__dot" aria-hidden="true"></span>
+              <h3 class="checkpoint__title">DEX Vault → Community Barometer</h3>
+            </article>
+            <article class="checkpoint checkpoint--later" role="listitem">
+              <span class="checkpoint__dot" aria-hidden="true"></span>
+              <h3 class="checkpoint__title">Schill Phase → Pulse over Push</h3>
+            </article>
+            <article class="checkpoint checkpoint--later" role="listitem">
+              <span class="checkpoint__dot" aria-hidden="true"></span>
+              <h3 class="checkpoint__title">Creator Fee Distribution</h3>
+            </article>
+            <article class="checkpoint checkpoint--later" role="listitem">
+              <span class="checkpoint__dot" aria-hidden="true"></span>
+              <h3 class="checkpoint__title">Tool Development → Controlled Fire</h3>
+            </article>
+            <article class="checkpoint checkpoint--later" role="listitem">
+              <span class="checkpoint__dot" aria-hidden="true"></span>
+              <h3 class="checkpoint__title">Community-First Tool Vision</h3>
+            </article>
+          </div>
         </div>
-
-        <div class="rm-details" id="rm-details" role="region" aria-label="Details"></div>
-
-        <div id="rm-live" class="sr-only" aria-live="polite"></div>
-
-        <ul id="existing-roadmap-steps" class="hidden">
-          <li
-            id="web-com-takeover"
-            class="is-active"
-            data-state="active"
-            data-id="website-community-takeover"
-            data-quarter="Q4"
-            data-status="done"
-            data-theme="candle"
-          >
-            <h4>Website &amp; Community Takeover</h4>
-            <ul class="tags">
-              <li>community</li>
-              <li>lore</li>
-            </ul>
-          </li>
-          <li data-id="dex-vault-community-barometer" data-quarter="Q4" data-status="done" data-theme="bull">
-            <h4>DEX Vault → Community Barometer</h4>
-            <ul class="tags">
-              <li>on-chain</li>
-              <li>signal</li>
-            </ul>
-          </li>
-          <li data-id="schill-phase-pulse" data-quarter="Q4" data-status="inprogress" data-theme="candle">
-            <h4>Schill Phase → Pulse over Push</h4>
-            <ul class="tags">
-              <li>momentum</li>
-            </ul>
-          </li>
-          <li data-id="creator-fee-distribution" data-quarter="Q1" data-status="planned" data-theme="bull">
-            <h4>Creator Fee Distribution</h4>
-            <ul class="tags">
-              <li>tokenomics</li>
-            </ul>
-          </li>
-          <li data-id="tool-development-controlled-fire" data-quarter="Q1" data-status="planned" data-theme="candle">
-            <h4>Tool Development → Controlled Fire</h4>
-            <ul class="tags">
-              <li>tools</li>
-            </ul>
-          </li>
-          <li data-id="community-first-tool-vision" data-quarter="Q2" data-status="planned" data-theme="candle">
-            <h4>Community-First Tool Vision</h4>
-            <ul class="tags">
-              <li>community</li>
-              <li>tools</li>
-            </ul>
-          </li>
-        </ul>
       </section>
 
       <!-- Tools -->
@@ -291,10 +277,10 @@
       </section>
 
       <!-- Footer -->
-      <footer id="site-footer" class="site-footer">
-        <div class="site-footer__inner">
+      <footer id="site-footer" class="section site-footer" role="contentinfo">
+        <div class="site-footer__inner card">
           <div class="site-footer__logo">
-            <img src="/assets/socials/web-logo.png" alt="Cryptober logo" width="40" height="40" loading="lazy" decoding="async" />
+            <img src="/assets/socials/web-logo.svg" alt="Cryptober logo" width="40" height="40" loading="lazy" decoding="async" />
           </div>
           <a href="lore_index.html" class="btn" data-event="footer-lore">Read the Lore</a>
           <p>Since 2013 · Pumpkins + Green Candles · Community-Powered</p>
@@ -328,7 +314,6 @@
   <!-- Scripts -->
   <script type="module" src="/js/boot-home.js"></script>
   <script type="module" src="/js/tools-overlay.js"></script>
-  <script type="module" src="/js/roadmap.js"></script>
   <script type="module" src="/js/main.js"></script>
 </body>
 </html>

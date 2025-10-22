@@ -36,6 +36,12 @@ Dokumentation ist nicht optional — sie ist Teil der Lieferung.
 * **Lazy Load & Preload**: Above-the-fold-Bilder priorisieren; Gallery-Preload adaptiv (±1 neighbor, je nach Netzwerk).
 * **Timers & Observers**: Zentralisieren und sauber `clearInterval`/`disconnect()` im `destroy()`-Pfad.
 
+## Localization Policy
+
+* **Primary language:** Sämtliche UI-Texte, Buttons, Alt-Texte und `aria-*`-Attribute werden in **englischer Sprache** gepflegt.
+* **Neue Copy:** Beim Ergänzen oder Aktualisieren von Oberflächentexten ausschließlich englische Formulierungen einsetzen.
+* **Audits:** Nach strukturellen oder textlichen Anpassungen `npm run audit:sitemap` ausführen; bei neuem Fundus an Übersetzungen zusätzlich `npm run i18n:scan` starten, um `i18n/de-terms.json` zu aktualisieren.
+
 ---
 
 ## Coding Conventions

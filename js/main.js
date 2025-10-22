@@ -423,34 +423,6 @@ export function initStickyRail({
 /**
  * Bindet Klick-Events für "Reveal soon"-Overlays in Quest-Tiles.
  */
-export function bindQuestOverlays() {
-  const tiles = document.querySelectorAll(".quest-tile");
-  if (tiles.length === 0) return;
-
-  tiles.forEach((tile) => {
-    const overlay = tile.querySelector(".overlay");
-    if (!overlay) return;
-
-    overlay.addEventListener("click", () => {
-      toast("Reveal soon ⏳", 2000);
-    });
-
-    tile.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        overlay.click();
-      }
-    });
-
-    tile.addEventListener("mouseenter", () => {
-      overlay.classList.add("is-active");
-    });
-    tile.addEventListener("mouseleave", () => {
-      overlay.classList.remove("is-active");
-    });
-  });
-}
-
 /**
  * LIVE DEX-STATS FETCH (ERWEITERT!)
  */
@@ -473,7 +445,6 @@ export async function fetchTokenStats() {
 
 /* 🎯 AUTO-INIT BEIM DOM-LOAD */
 document.addEventListener("DOMContentLoaded", () => {
-  bindQuestOverlays();
   initScrollSpy();
   fetchTokenStats().then(stats => {
     const el = document.getElementById('live-stats');

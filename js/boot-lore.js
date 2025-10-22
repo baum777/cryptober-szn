@@ -14,10 +14,29 @@ import { initGallery } from "/js/gallery.js";
 import { initMobileRails } from "/js/mobile-rail.js";
 import { prefersReducedMotion } from "/utils/a11y.js";
 
+function collectGlossaryEntries() {
+  const panel = document.getElementById("glossary-panel");
+  if (!panel) {
+    return [];
+  }
+
+  return Array.from(panel.querySelectorAll(".glossary-entry"))
+    .map((entry) => {
+      const term = entry.querySelector(".glossary-term");
+      const def = entry.querySelector(".glossary-def");
+      const termText = term?.textContent?.trim();
+      const defText = def?.textContent?.trim();
+      if (!termText || !defText) {
+        return null;
+      }
+      return { term: termText, definition: defText };
+    })
+    .filter(Boolean);
+}
+
 function initCatchPhraseRotation({ phrases = [], interval = 5000 } = {}) {
   const textNode = document.getElementById("catch-phrase-text");
-  const toggle = document.getElementById("catchplay");
-  if (!textNode || !toggle || phrases.length === 0) {
+  if (!textNode || phrases.length === 0) {
     return { destroy() {} };
   }
 
@@ -25,8 +44,6 @@ function initCatchPhraseRotation({ phrases = [], interval = 5000 } = {}) {
   let timerId = null;
   let shouldResume = false;
   const reducedMotion = prefersReducedMotion();
-  let playing = !reducedMotion;
-  let manualPause = reducedMotion;
 
   const render = () => {
     textNode.textContent = phrases[index] || "";
@@ -39,18 +56,9 @@ function initCatchPhraseRotation({ phrases = [], interval = 5000 } = {}) {
     }
   };
 
-  const updateToggle = () => {
-    toggle.textContent = playing ? "Pause" : "Play";
-    toggle.setAttribute("aria-pressed", playing ? "false" : "true");
-    toggle.setAttribute("aria-label", playing ? "Pause rotation" : "Resume rotation");
-  };
-
-  const start = (force = false) => {
-    if (!force && prefersReducedMotion()) {
+  const start = () => {
+    if (reducedMotion) {
       clearTimer();
-      playing = false;
-      manualPause = true;
-      updateToggle();
       return;
     }
     clearTimer();
@@ -58,60 +66,155 @@ function initCatchPhraseRotation({ phrases = [], interval = 5000 } = {}) {
       index = (index + 1) % phrases.length;
       render();
     }, interval);
-    playing = true;
-    updateToggle();
-  };
-
-  const stop = () => {
-    clearTimer();
-    playing = false;
-    updateToggle();
-  };
-
-  const handleToggle = () => {
-    if (playing) {
-      manualPause = true;
-      shouldResume = false;
-      stop();
-    } else {
-      manualPause = false;
-      start(true);
-    }
   };
 
   const pauseForInteraction = () => {
-    if (!playing) return;
+    if (!timerId) return;
     shouldResume = true;
-    stop();
+    clearTimer();
   };
 
   const resumeAfterInteraction = () => {
-    if (!manualPause && shouldResume) {
+    if (shouldResume) {
       start();
     }
     shouldResume = false;
   };
 
-  toggle.addEventListener("click", handleToggle);
   textNode.addEventListener("mouseenter", pauseForInteraction);
   textNode.addEventListener("focus", pauseForInteraction);
   textNode.addEventListener("mouseleave", resumeAfterInteraction);
   textNode.addEventListener("blur", resumeAfterInteraction);
 
   render();
-  if (playing) {
-    start();
-  } else {
-    updateToggle();
-  }
+  start();
 
   const destroy = () => {
     clearTimer();
-    toggle.removeEventListener("click", handleToggle);
     textNode.removeEventListener("mouseenter", pauseForInteraction);
     textNode.removeEventListener("focus", pauseForInteraction);
     textNode.removeEventListener("mouseleave", resumeAfterInteraction);
     textNode.removeEventListener("blur", resumeAfterInteraction);
+  };
+
+  window.addEventListener("beforeunload", destroy, { once: true });
+
+  return { destroy };
+}
+
+function initGlossaryRotation({ interval = 4000 } = {}) {
+  const card = document.getElementById("glossary-rotate");
+  const region = card?.querySelector(".glossary-rotate__text");
+  const mirrorRegion = document.querySelector("#glossary-spotlight .glossary-rotate__text");
+  const entries = collectGlossaryEntries();
+
+  if (!card || !region) {
+    return { destroy() {} };
+  }
+
+  if (entries.length === 0) {
+    region.textContent = "Glossary entries will appear soon.";
+    return { destroy() {} };
+  }
+
+  if (!region.hasAttribute("tabindex")) {
+    region.tabIndex = 0;
+  }
+
+  const reducedMotion = prefersReducedMotion();
+  const canCycle = !reducedMotion && entries.length > 1;
+  let index = 0;
+  let timerId = null;
+  let interactionPaused = false;
+  let resumeAfterHide = false;
+
+  const renderEntry = (container, entry) => {
+    if (!container) return;
+    container.innerHTML = "";
+
+    const term = document.createElement("h4");
+    term.className = "glossary-rotate__term text-neon-green";
+    term.textContent = entry.term;
+
+    const def = document.createElement("p");
+    def.className = "glossary-rotate__definition muted";
+    def.textContent = entry.definition;
+
+    container.append(term, def);
+  };
+
+  const render = () => {
+    const current = entries[index] ?? entries[0];
+    renderEntry(region, current);
+    renderEntry(mirrorRegion, current);
+  };
+
+  const clearTimer = () => {
+    if (timerId) {
+      window.clearInterval(timerId);
+      timerId = null;
+    }
+  };
+
+  const start = () => {
+    clearTimer();
+    if (!canCycle) {
+      return;
+    }
+    timerId = window.setInterval(() => {
+      index = (index + 1) % entries.length;
+      render();
+    }, interval);
+  };
+
+  const pauseForInteraction = () => {
+    if (!canCycle) {
+      return;
+    }
+    interactionPaused = true;
+    clearTimer();
+  };
+
+  const resumeAfterInteraction = () => {
+    if (!canCycle || !interactionPaused) {
+      interactionPaused = false;
+      return;
+    }
+    interactionPaused = false;
+    start();
+  };
+
+  const handleVisibility = () => {
+    if (!canCycle) {
+      return;
+    }
+    if (document.hidden) {
+      if (timerId) {
+        resumeAfterHide = true;
+      }
+      clearTimer();
+    } else if (resumeAfterHide && !interactionPaused) {
+      resumeAfterHide = false;
+      start();
+    }
+  };
+
+  card.addEventListener("mouseenter", pauseForInteraction);
+  card.addEventListener("mouseleave", resumeAfterInteraction);
+  card.addEventListener("focusin", pauseForInteraction);
+  card.addEventListener("focusout", resumeAfterInteraction);
+  document.addEventListener("visibilitychange", handleVisibility);
+
+  render();
+  start();
+
+  const destroy = () => {
+    clearTimer();
+    card.removeEventListener("mouseenter", pauseForInteraction);
+    card.removeEventListener("mouseleave", resumeAfterInteraction);
+    card.removeEventListener("focusin", pauseForInteraction);
+    card.removeEventListener("focusout", resumeAfterInteraction);
+    document.removeEventListener("visibilitychange", handleVisibility);
   };
 
   window.addEventListener("beforeunload", destroy, { once: true });
@@ -156,6 +259,9 @@ initCatchPhraseRotation({ phrases: catchPhrases, interval: 5000 });
 /* Gallery Grid + Lightbox */
 initGallery({ rootId: "gallery", lightboxId: "lightbox" });
 
+/* Glossary spotlight rotation */
+initGlossaryRotation({ interval: 4000 });
+
 /* Kapitel-Navigation (links) — erzeugt aus vorhandenen Epochen + Sub-H3 */
 (function initLoreNav() {
   const list = document.getElementById("lore-nav-list");
@@ -192,6 +298,7 @@ initGallery({ rootId: "gallery", lightboxId: "lightbox" });
     const sub = document.createElement("ul");
     makeSub(c.id).forEach((s) => {
       const li = document.createElement("li");
+      li.className = "rail-item";
       const sa = document.createElement("a");
       sa.href = `#${s.id}`;
       sa.textContent = s.label;
@@ -200,13 +307,21 @@ initGallery({ rootId: "gallery", lightboxId: "lightbox" });
     });
 
     details.appendChild(sub);
-    list.appendChild(details);
+    const wrapper = document.createElement("li");
+    wrapper.className = "rail-item";
+    wrapper.appendChild(details);
+    list.appendChild(wrapper);
   });
 
   // Zusätzliche Sprungziele
-  [{ href: "#gallery-section", label: "Gallery" }, { href: "#glossary-panel", label: "Glossary" }].forEach(
+  [
+    { href: "#catch-phrase-section", label: "Gallery" },
+    { href: "#gallery-section", label: "Seasons" },
+    { href: "#glossary-panel", label: "Glossary" },
+  ].forEach(
     (x) => {
       const li = document.createElement("li");
+      li.className = "rail-item";
       const a = document.createElement("a");
       a.href = x.href;
       a.textContent = x.label;
@@ -234,30 +349,6 @@ initGallery({ rootId: "gallery", lightboxId: "lightbox" });
     const el = document.getElementById(c.id);
     if (el) observer.observe(el);
   });
-})();
-
-/* Glossary of the Day (liest bestehendes DL, ändert Inhalte nicht) */
-(function glossaryOfDay() {
-  const host = document.getElementById("glossary-of-day");
-  const panel = document.getElementById("glossary-panel");
-  if (!host || !panel) return;
-  const terms = Array.from(panel.querySelectorAll("dl > dt"));
-  const pairs = terms
-    .map((dt) => {
-      const dd = dt.nextElementSibling;
-      if (!dd || dd.tagName !== "DD") return null;
-      return { term: (dt.textContent || "").trim(), def: (dd.textContent || "").trim() };
-    })
-    .filter(Boolean);
-  if (pairs.length === 0) return;
-  const idx = new Date().getDate() % pairs.length;
-  const pick = pairs[idx];
-  host.innerHTML = `
-    <h3 class="muted" style="margin:0 0 .25rem 0">Begriff des Tages</h3>
-    <div class="card">
-      <strong class="text-neon-green">${pick.term}</strong>
-      <p class="muted" style="margin:.25rem 0 0 0">${pick.def}</p>
-    </div>`;
 })();
 
 // Initialisiere Sticky-Rail

@@ -46,7 +46,9 @@
           </div>
         </nav>
 
-        <div id="glossary-of-day" class="rail-card" aria-live="polite"></div>
+        <div id="glossary-rotate" class="rail-card glossary-rotate-card">
+          <div class="glossary-rotate__text" aria-live="polite" tabindex="0"></div>
+        </div>
       </div>
     </aside>
 
@@ -83,14 +85,6 @@
         <section id="catch-phrase" class="card catch-phrase" aria-live="polite" aria-atomic="true">
           <h4 id="catch-phrase-text" class="catch-phrase__text" tabindex="0"></h4>
         </section>
-      </section>
-
-      <!-- Glossary Spotlight (rotating) -->
-      <section id="glossary-rotate" class="section" aria-labelledby="glossary-rotate-heading">
-        <div class="card-glass glossary-rotate-card">
-          <h3 id="glossary-rotate-heading" class="text-neon-orange">Glossary Spotlight</h3>
-          <div class="glossary-rotate__text" aria-live="polite" tabindex="0"></div>
-        </div>
       </section>
 
       <!-- FAQ (EN) -->
@@ -386,16 +380,13 @@
     hidden
   >
     <div class="lightbox__window" role="document" tabindex="-1">
-      <button class="lightbox__control btn--close" type="button" aria-label="Close">
-        <span aria-hidden="true">×</span>
-      </button>
       <div class="lightbox__media">
         <img class="lightbox__img" alt="" decoding="async" />
       </div>
-      <div class="lightbox__nav" aria-label="Image navigation">
-        <button class="lightbox__control btn--prev" type="button" aria-label="Previous image">‹</button>
-        <div class="lightbox__indicator" aria-live="off"></div>
-        <button class="lightbox__control btn--next" type="button" aria-label="Next image">›</button>
+      <div class="lightbox__actions">
+        <button class="lightbox__control btn--close" type="button" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
       </div>
     </div>
     <div class="lightbox__announcer sr-only" aria-live="polite"></div>

@@ -146,10 +146,81 @@
               <p class="intro-disclaimer muted">
                 No promises: just tools, lore, and community. DYOR · NFA.
               </p>
-            </div>
-          </div>
         </div>
-      </section>
+      </div>
+      <div class="questmap__extended" aria-labelledby="questmap-details-title">
+        <h3 id="questmap-details-title" class="questmap__extended-title text-neon-orange">
+          Quest Map — Step Details
+        </h3>
+
+        <div class="questmap-progress" role="list" aria-label="Roadmap progress">
+          <span class="questmap-progress__chip checkpoint--done" role="listitem" tabindex="0">
+            <span class="questmap-progress__label">Website &amp; Community Takeover</span>
+            <span class="questmap-progress__sr sr-only">completed step</span>
+          </span>
+          <span class="questmap-progress__chip checkpoint--done" role="listitem" tabindex="0">
+            <span class="questmap-progress__label">DEX Vault → Community Barometer</span>
+            <span class="questmap-progress__sr sr-only">completed step</span>
+          </span>
+          <span class="questmap-progress__chip checkpoint--now" role="listitem" tabindex="0" aria-current="step">
+            <span class="questmap-progress__label">Schill Phase → Pulse over Push</span>
+            <span class="questmap-progress__sr sr-only">current step</span>
+          </span>
+          <span class="questmap-progress__chip checkpoint--later" role="listitem" tabindex="0">
+            <span class="questmap-progress__label">Creator Fee Distribution</span>
+            <span class="questmap-progress__sr sr-only">upcoming step</span>
+          </span>
+          <span class="questmap-progress__chip checkpoint--later" role="listitem" tabindex="0">
+            <span class="questmap-progress__label">Tool Development → Controlled Fire</span>
+            <span class="questmap-progress__sr sr-only">upcoming step</span>
+          </span>
+          <span class="questmap-progress__chip checkpoint--later" role="listitem" tabindex="0">
+            <span class="questmap-progress__label">Community-First Tool Vision</span>
+            <span class="questmap-progress__sr sr-only">upcoming step</span>
+          </span>
+        </div>
+
+        <div class="questmap-cards" role="list">
+          <article class="questmap-card checkpoint--done" role="listitem">
+            <h3 class="questmap-card__title">Website &amp; Community Takeover</h3>
+            <p class="questmap-card__desc muted">
+              Shared hub for lore, memes, coordination. Claim roles, co-create the movement.
+            </p>
+          </article>
+          <article class="questmap-card checkpoint--done" role="listitem">
+            <h3 class="questmap-card__title">DEX Vault → Community Barometer</h3>
+            <p class="questmap-card__desc muted">
+              Heartbeat over hype. On-chain signal for genuine support and activity.
+            </p>
+          </article>
+          <article class="questmap-card checkpoint--now" role="listitem" aria-current="step">
+            <h3 class="questmap-card__title">Schill Phase → Pulse over Push</h3>
+            <p class="questmap-card__desc muted">
+              Build quiet; vibe loud. No new drops yet to keep curiosity and incentives alive.
+            </p>
+          </article>
+          <article class="questmap-card checkpoint--later" role="listitem">
+            <h3 class="questmap-card__title">Creator Fee Distribution</h3>
+            <p class="questmap-card__desc muted">
+              50% Locks+Burn · 30–35% Growth/Market · 15–20% Dev Ops (staged locks; unlocks burn).
+            </p>
+          </article>
+          <article class="questmap-card checkpoint--later" role="listitem">
+            <h3 class="questmap-card__title">Tool Development → Controlled Fire</h3>
+            <p class="questmap-card__desc muted">
+              Spark releases: Pumpkin Patch first; Oracle &amp; Candle Carver follow.
+            </p>
+          </article>
+          <article class="questmap-card checkpoint--later" role="listitem">
+            <h3 class="questmap-card__title">Community-First Tool Vision</h3>
+            <p class="questmap-card__desc muted">
+              Co-create real utility + fun; iterate with real user feedback.
+            </p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
 
       <!-- Roadmap -->
       <section id="questmap" class="section" aria-labelledby="roadmap-title">
@@ -159,33 +230,6 @@
 
         <div class="questmap" role="group" aria-describedby="roadmap-title">
           <div id="quest-spine" aria-hidden="true"></div>
-
-          <ol id="rm-dots" class="rm-dots" role="list">
-            <li class="rm-dots__item rm-dots__item--now">
-              <span class="rm-dot" aria-hidden="true"></span>
-              <span class="sr-only">Website &amp; Community Takeover — current step</span>
-            </li>
-            <li class="rm-dots__item rm-dots__item--later">
-              <span class="rm-dot" aria-hidden="true"></span>
-              <span class="sr-only">DEX Vault → Community Barometer — upcoming step</span>
-            </li>
-            <li class="rm-dots__item rm-dots__item--later">
-              <span class="rm-dot" aria-hidden="true"></span>
-              <span class="sr-only">Schill Phase → Pulse over Push — upcoming step</span>
-            </li>
-            <li class="rm-dots__item rm-dots__item--later">
-              <span class="rm-dot" aria-hidden="true"></span>
-              <span class="sr-only">Creator Fee Distribution — upcoming step</span>
-            </li>
-            <li class="rm-dots__item rm-dots__item--later">
-              <span class="rm-dot" aria-hidden="true"></span>
-              <span class="sr-only">Tool Development → Controlled Fire — upcoming step</span>
-            </li>
-            <li class="rm-dots__item rm-dots__item--later">
-              <span class="rm-dot" aria-hidden="true"></span>
-              <span class="sr-only">Community-First Tool Vision — upcoming step</span>
-            </li>
-          </ol>
 
           <div id="rm-details" class="questmap__details" role="list">
             <article class="checkpoint checkpoint--now" role="listitem" aria-current="step">
@@ -220,24 +264,19 @@
       <section id="tools" class="section" aria-labelledby="tools-title">
         <h2 id="tools-title" class="text-neon-orange" style="font-weight:800">Tools</h2>
         <div class="tools-grid">
-          <div class="card card-glass tool-card" data-tool="signal-forge">
-            <img class="tool-card__icon" src="/assets/pfp-creator.svg" alt="Signal Forge icon" width="96" height="96" loading="lazy" decoding="async" />
-            <span class="tool-card__glyph" aria-hidden="true">⚡</span>
-            <h3 class="text-neon-green">Signal Forge</h3>
+          <article class="card card-glass tool-card tool-card--merged">
+            <div class="tool-card__media" aria-hidden="true">
+              <img class="tool-card__icon" src="/assets/pfp-creator.svg" alt="Signal Forge icon" width="96" height="96" loading="lazy" decoding="async" />
+              <img class="tool-card__icon" src="/assets/oracle.svg" alt="SpecterScan icon" width="96" height="96" loading="lazy" decoding="async" />
+            </div>
+            <h3 class="tool-card__title text-neon-green">Signal Forge &amp; SpecterScan</h3>
             <p class="muted">Where Grok’s data alchemy meets viral energy — transforming raw market intel into razor-sharp insights or explosive $Cryptober memes.</p>
             <ul class="tool-card__list muted">
               <li>Built for speed, precision, and pure degen dominance.</li>
             </ul>
-            <button type="button" class="btn btn-cta" data-overlay="signal-forge" aria-label="Learn more about Signal Forge">Learn more</button>
-          </div>
-          <div class="card card-glass tool-card" data-tool="specterscan">
-            <img class="tool-card__icon" src="/assets/oracle.svg" alt="SpecterScan icon" width="96" height="96" loading="lazy" decoding="async" />
-            <span class="tool-card__glyph" aria-hidden="true">👻</span>
-            <h3 class="text-neon-green">SpecterScan</h3>
             <p class="muted">AI-fueled chart oracle that reveals hidden trends and breakout zones before they surface.</p>
             <p class="muted">Neon-glow UI with ghostly tooltips turns every scan into a ritual of precision and power.</p>
-            <button type="button" class="btn btn-cta" data-overlay="specterscan" aria-label="Learn more about SpecterScan">Learn more</button>
-          </div>
+          </article>
         </div>
       </section>
 
@@ -295,25 +334,8 @@
   <!-- Toast -->
   <div id="toast" class="toast" aria-live="polite"></div>
 
-  <div
-    id="tools-overlay"
-    class="overlay hidden"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="tools-overlay-title"
-    aria-describedby="tools-overlay-body"
-    aria-hidden="true"
-  >
-    <div class="overlay__window">
-      <button type="button" class="overlay__close" aria-label="Close">×</button>
-      <h3 id="tools-overlay-title">Tool details</h3>
-      <div id="tools-overlay-body"></div>
-    </div>
-  </div>
-
   <!-- Scripts -->
   <script type="module" src="/js/boot-home.js"></script>
-  <script type="module" src="/js/tools-overlay.js"></script>
   <script type="module" src="/js/main.js"></script>
 </body>
 </html>

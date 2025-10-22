@@ -102,9 +102,10 @@ function initCatchPhraseRotation({ phrases = [], interval = 5000 } = {}) {
   return { destroy };
 }
 
-function initGlossaryRotation({ interval = 12000 } = {}) {
-  const card = document.querySelector("#glossary-rotate .glossary-rotate-card");
-  const region = document.querySelector("#glossary-rotate .glossary-rotate__text");
+function initGlossaryRotation({ interval = 4000 } = {}) {
+  const card = document.getElementById("glossary-rotate");
+  const region = card?.querySelector(".glossary-rotate__text");
+  const mirrorRegion = document.querySelector("#glossary-spotlight .glossary-rotate__text");
   const entries = collectGlossaryEntries();
 
   if (!card || !region) {
@@ -116,6 +117,10 @@ function initGlossaryRotation({ interval = 12000 } = {}) {
     return { destroy() {} };
   }
 
+  if (!region.hasAttribute("tabindex")) {
+    region.tabIndex = 0;
+  }
+
   const reducedMotion = prefersReducedMotion();
   const canCycle = !reducedMotion && entries.length > 1;
   let index = 0;
@@ -123,19 +128,25 @@ function initGlossaryRotation({ interval = 12000 } = {}) {
   let interactionPaused = false;
   let resumeAfterHide = false;
 
-  const render = () => {
-    const current = entries[index] ?? entries[0];
-    region.innerHTML = "";
+  const renderEntry = (container, entry) => {
+    if (!container) return;
+    container.innerHTML = "";
 
     const term = document.createElement("h4");
     term.className = "glossary-rotate__term text-neon-green";
-    term.textContent = current.term;
+    term.textContent = entry.term;
 
     const def = document.createElement("p");
     def.className = "glossary-rotate__definition muted";
-    def.textContent = current.definition;
+    def.textContent = entry.definition;
 
-    region.append(term, def);
+    container.append(term, def);
+  };
+
+  const render = () => {
+    const current = entries[index] ?? entries[0];
+    renderEntry(region, current);
+    renderEntry(mirrorRegion, current);
   };
 
   const clearTimer = () => {
@@ -249,7 +260,7 @@ initCatchPhraseRotation({ phrases: catchPhrases, interval: 5000 });
 initGallery({ rootId: "gallery", lightboxId: "lightbox" });
 
 /* Glossary spotlight rotation */
-initGlossaryRotation({ interval: 12000 });
+initGlossaryRotation({ interval: 4000 });
 
 /* Kapitel-Navigation (links) — erzeugt aus vorhandenen Epochen + Sub-H3 */
 (function initLoreNav() {
@@ -338,21 +349,6 @@ initGlossaryRotation({ interval: 12000 });
     const el = document.getElementById(c.id);
     if (el) observer.observe(el);
   });
-})();
-
-/* Glossary of the Day (liest bestehendes DL, ändert Inhalte nicht) */
-(function glossaryOfDay() {
-  const host = document.getElementById("glossary-of-day");
-  if (!host) return;
-  const pairs = collectGlossaryEntries();
-  if (pairs.length === 0) return;
-  const idx = new Date().getDate() % pairs.length;
-  const pick = pairs[idx];
-  host.innerHTML = `
-    <div class="card-glass glossary-of-day-card">
-      <strong class="text-neon-green glossary-of-day__term">${pick.term}</strong>
-      <p class="muted glossary-of-day__definition">${pick.definition}</p>
-    </div>`;
 })();
 
 // Initialisiere Sticky-Rail

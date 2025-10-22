@@ -12,27 +12,13 @@ function getStatus(node) {
   return '';
 }
 
-function syncDot(dot, status, title, index) {
-  if (!dot) return;
-  dot.classList.remove('rm-dots__item--now', 'rm-dots__item--done', 'rm-dots__item--later');
-  if (status) {
-    dot.classList.add(`rm-dots__item--${status}`);
-  }
-
-  const sr = dot.querySelector('.sr-only');
-  if (sr) {
-    const descriptor = STATUS_TEXT[status] || 'step';
-    const safeTitle = title || `Step ${index + 1}`;
-    sr.textContent = `${safeTitle} — ${descriptor}`;
-  }
-}
-
 export function initQuestmap() {
   const section = document.getElementById('questmap');
   if (!section) return null;
 
   const checkpoints = Array.from(section.querySelectorAll('#rm-details .checkpoint'));
-  const dots = Array.from(section.querySelectorAll('#rm-dots .rm-dots__item'));
+  const progressChips = Array.from(section.querySelectorAll('.questmap-progress__chip'));
+  const detailCards = Array.from(section.querySelectorAll('.questmap-card'));
   if (!checkpoints.length) return null;
 
   checkpoints.forEach((checkpoint, index) => {
@@ -40,18 +26,56 @@ export function initQuestmap() {
     const heading = checkpoint.querySelector('.checkpoint__title');
     const title = heading ? heading.textContent.trim() : '';
 
+    let statusNode = checkpoint.querySelector('.checkpoint__status');
+    if (!statusNode) {
+      statusNode = document.createElement('span');
+      statusNode.className = 'checkpoint__status sr-only';
+      checkpoint.insertBefore(statusNode, heading || checkpoint.firstChild);
+    }
+
+    const descriptor = STATUS_TEXT[status] || 'step';
+    const safeTitle = title || `Step ${index + 1}`;
+    statusNode.textContent = `${safeTitle} — ${descriptor}`;
+
     if (status === 'now') {
       checkpoint.setAttribute('aria-current', 'step');
     } else {
       checkpoint.removeAttribute('aria-current');
     }
 
-    syncDot(dots[index], status, title, index);
+    const applyStatus = (node) => {
+      if (!node) return;
+      node.classList.remove('checkpoint--now', 'checkpoint--done', 'checkpoint--later');
+      if (status) {
+        node.classList.add(`checkpoint--${status}`);
+      }
+      if (status === 'now') {
+        node.setAttribute('aria-current', 'step');
+      } else {
+        node.removeAttribute('aria-current');
+      }
+    };
+
+    const chip = progressChips[index];
+    if (chip) {
+      applyStatus(chip);
+      const chipSr = chip.querySelector('.questmap-progress__sr');
+      if (chipSr) {
+        chipSr.textContent = descriptor;
+      }
+    }
+
+    const detail = detailCards[index];
+    if (detail) {
+      applyStatus(detail);
+    }
   });
 
   return {
     destroy() {
       checkpoints.forEach((checkpoint) => checkpoint.removeAttribute('aria-current'));
+      progressChips.forEach((chip) => chip.removeAttribute('aria-current'));
+      detailCards.forEach((card) => card.removeAttribute('aria-current'));
     },
   };
 }

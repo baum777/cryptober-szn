@@ -219,7 +219,7 @@ class GalleryController {
   createItem(image, globalIndex, localIndex) {
     const button = document.createElement("button");
     button.type = "button";
-    button.className = "gallery-item card-glass";
+    button.className = "gallery-item gallery-item--glow";
     button.dataset.index = String(globalIndex);
     button.setAttribute("role", "listitem");
     button.setAttribute("aria-label", this.buildAriaLabel(image, globalIndex));

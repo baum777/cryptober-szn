@@ -148,79 +148,8 @@
               </p>
         </div>
       </div>
-      <div class="questmap__extended" aria-labelledby="questmap-details-title">
-        <h3 id="questmap-details-title" class="questmap__extended-title text-neon-orange">
-          Quest Map — Step Details
-        </h3>
-
-        <div class="questmap-progress" role="list" aria-label="Roadmap progress">
-          <span class="questmap-progress__chip checkpoint--done" role="listitem" tabindex="0">
-            <span class="questmap-progress__label">Website &amp; Community Takeover</span>
-            <span class="questmap-progress__sr sr-only">completed step</span>
-          </span>
-          <span class="questmap-progress__chip checkpoint--done" role="listitem" tabindex="0">
-            <span class="questmap-progress__label">DEX Vault → Community Barometer</span>
-            <span class="questmap-progress__sr sr-only">completed step</span>
-          </span>
-          <span class="questmap-progress__chip checkpoint--now" role="listitem" tabindex="0" aria-current="step">
-            <span class="questmap-progress__label">Schill Phase → Pulse over Push</span>
-            <span class="questmap-progress__sr sr-only">current step</span>
-          </span>
-          <span class="questmap-progress__chip checkpoint--later" role="listitem" tabindex="0">
-            <span class="questmap-progress__label">Creator Fee Distribution</span>
-            <span class="questmap-progress__sr sr-only">upcoming step</span>
-          </span>
-          <span class="questmap-progress__chip checkpoint--later" role="listitem" tabindex="0">
-            <span class="questmap-progress__label">Tool Development → Controlled Fire</span>
-            <span class="questmap-progress__sr sr-only">upcoming step</span>
-          </span>
-          <span class="questmap-progress__chip checkpoint--later" role="listitem" tabindex="0">
-            <span class="questmap-progress__label">Community-First Tool Vision</span>
-            <span class="questmap-progress__sr sr-only">upcoming step</span>
-          </span>
         </div>
-
-        <div class="questmap-cards" role="list">
-          <article class="questmap-card checkpoint--done" role="listitem">
-            <h3 class="questmap-card__title">Website &amp; Community Takeover</h3>
-            <p class="questmap-card__desc muted">
-              Shared hub for lore, memes, coordination. Claim roles, co-create the movement.
-            </p>
-          </article>
-          <article class="questmap-card checkpoint--done" role="listitem">
-            <h3 class="questmap-card__title">DEX Vault → Community Barometer</h3>
-            <p class="questmap-card__desc muted">
-              Heartbeat over hype. On-chain signal for genuine support and activity.
-            </p>
-          </article>
-          <article class="questmap-card checkpoint--now" role="listitem" aria-current="step">
-            <h3 class="questmap-card__title">Schill Phase → Pulse over Push</h3>
-            <p class="questmap-card__desc muted">
-              Build quiet; vibe loud. No new drops yet to keep curiosity and incentives alive.
-            </p>
-          </article>
-          <article class="questmap-card checkpoint--later" role="listitem">
-            <h3 class="questmap-card__title">Creator Fee Distribution</h3>
-            <p class="questmap-card__desc muted">
-              50% Locks+Burn · 30–35% Growth/Market · 15–20% Dev Ops (staged locks; unlocks burn).
-            </p>
-          </article>
-          <article class="questmap-card checkpoint--later" role="listitem">
-            <h3 class="questmap-card__title">Tool Development → Controlled Fire</h3>
-            <p class="questmap-card__desc muted">
-              Spark releases: Pumpkin Patch first; Oracle &amp; Candle Carver follow.
-            </p>
-          </article>
-          <article class="questmap-card checkpoint--later" role="listitem">
-            <h3 class="questmap-card__title">Community-First Tool Vision</h3>
-            <p class="questmap-card__desc muted">
-              Co-create real utility + fun; iterate with real user feedback.
-            </p>
-          </article>
-        </div>
-      </div>
-    </div>
-  </section>
+      </section>
 
       <!-- Roadmap -->
       <section id="questmap" class="section" aria-labelledby="roadmap-title">
@@ -233,28 +162,96 @@
 
           <div id="rm-details" class="questmap__details" role="list">
             <article class="checkpoint checkpoint--now" role="listitem" aria-current="step">
-              <span class="checkpoint__dot" aria-hidden="true"></span>
               <h3 class="checkpoint__title">Website &amp; Community Takeover</h3>
             </article>
             <article class="checkpoint checkpoint--later" role="listitem">
-              <span class="checkpoint__dot" aria-hidden="true"></span>
               <h3 class="checkpoint__title">DEX Vault → Community Barometer</h3>
             </article>
             <article class="checkpoint checkpoint--later" role="listitem">
-              <span class="checkpoint__dot" aria-hidden="true"></span>
               <h3 class="checkpoint__title">Schill Phase → Pulse over Push</h3>
             </article>
             <article class="checkpoint checkpoint--later" role="listitem">
-              <span class="checkpoint__dot" aria-hidden="true"></span>
               <h3 class="checkpoint__title">Creator Fee Distribution</h3>
             </article>
             <article class="checkpoint checkpoint--later" role="listitem">
-              <span class="checkpoint__dot" aria-hidden="true"></span>
               <h3 class="checkpoint__title">Tool Development → Controlled Fire</h3>
             </article>
             <article class="checkpoint checkpoint--later" role="listitem">
-              <span class="checkpoint__dot" aria-hidden="true"></span>
               <h3 class="checkpoint__title">Community-First Tool Vision</h3>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="questmap-details" class="section questmap-details" aria-labelledby="questmap-details-title">
+        <header class="section__header">
+          <h2 id="questmap-details-title" class="text-neon-orange">Quest Map — Step Details</h2>
+        </header>
+
+        <div class="questmap__extended card glass" data-questmap-details>
+          <div class="questmap-progress" data-questmap-progress role="list" aria-label="Roadmap progress">
+            <span class="questmap-progress__chip checkpoint--now" role="listitem" tabindex="0" aria-current="step">
+              <span class="questmap-progress__label">Website &amp; Community Takeover</span>
+              <span class="questmap-progress__sr sr-only">current step</span>
+            </span>
+            <span class="questmap-progress__chip checkpoint--later" role="listitem" tabindex="0">
+              <span class="questmap-progress__label">DEX Vault → Community Barometer</span>
+              <span class="questmap-progress__sr sr-only">upcoming step</span>
+            </span>
+            <span class="questmap-progress__chip checkpoint--later" role="listitem" tabindex="0">
+              <span class="questmap-progress__label">Schill Phase → Pulse over Push</span>
+              <span class="questmap-progress__sr sr-only">upcoming step</span>
+            </span>
+            <span class="questmap-progress__chip checkpoint--later" role="listitem" tabindex="0">
+              <span class="questmap-progress__label">Creator Fee Distribution</span>
+              <span class="questmap-progress__sr sr-only">upcoming step</span>
+            </span>
+            <span class="questmap-progress__chip checkpoint--later" role="listitem" tabindex="0">
+              <span class="questmap-progress__label">Tool Development → Controlled Fire</span>
+              <span class="questmap-progress__sr sr-only">upcoming step</span>
+            </span>
+            <span class="questmap-progress__chip checkpoint--later" role="listitem" tabindex="0">
+              <span class="questmap-progress__label">Community-First Tool Vision</span>
+              <span class="questmap-progress__sr sr-only">upcoming step</span>
+            </span>
+          </div>
+
+          <div class="questmap-cards" data-questmap-cards role="list">
+            <article class="questmap-card checkpoint--now" role="listitem" aria-current="step">
+              <h3 class="questmap-card__title">Website &amp; Community Takeover</h3>
+              <p class="questmap-card__desc muted">
+                Shared hub for lore, memes, coordination. Claim roles, co-create the movement.
+              </p>
+            </article>
+            <article class="questmap-card checkpoint--later" role="listitem">
+              <h3 class="questmap-card__title">DEX Vault → Community Barometer</h3>
+              <p class="questmap-card__desc muted">
+                Heartbeat over hype. On-chain signal for genuine support and activity.
+              </p>
+            </article>
+            <article class="questmap-card checkpoint--later" role="listitem">
+              <h3 class="questmap-card__title">Schill Phase → Pulse over Push</h3>
+              <p class="questmap-card__desc muted">
+                Build quiet; vibe loud. No new drops yet to keep curiosity and incentives alive.
+              </p>
+            </article>
+            <article class="questmap-card checkpoint--later" role="listitem">
+              <h3 class="questmap-card__title">Creator Fee Distribution</h3>
+              <p class="questmap-card__desc muted">
+                50% Locks+Burn · 30–35% Growth/Market · 15–20% Dev Ops (staged locks; unlocks burn).
+              </p>
+            </article>
+            <article class="questmap-card checkpoint--later" role="listitem">
+              <h3 class="questmap-card__title">Tool Development → Controlled Fire</h3>
+              <p class="questmap-card__desc muted">
+                Spark releases: Pumpkin Patch first; Oracle &amp; Candle Carver follow.
+              </p>
+            </article>
+            <article class="questmap-card checkpoint--later" role="listitem">
+              <h3 class="questmap-card__title">Community-First Tool Vision</h3>
+              <p class="questmap-card__desc muted">
+                Co-create real utility + fun; iterate with real user feedback.
+              </p>
             </article>
           </div>
         </div>
@@ -315,18 +312,18 @@
         <p class="sr-only">Pyramid layout: X centered at the top; Telegram bottom left; Dexscreener bottom right.</p>
       </section>
 
-      <!-- Footer -->
-      <footer id="site-footer" class="section site-footer" role="contentinfo">
-        <div class="site-footer__inner card">
-          <div class="site-footer__logo">
-            <img src="/assets/socials/web-logo.svg" alt="Cryptober logo" width="40" height="40" loading="lazy" decoding="async" />
+        <!-- Footer -->
+        <footer id="site-footer" class="section site-footer" role="contentinfo">
+          <div class="site-footer__panel container card">
+            <div class="site-footer__logo">
+              <img src="/assets/socials/web-logo.svg" alt="Cryptober logo" width="40" height="40" loading="lazy" decoding="async" />
+            </div>
+            <a href="lore_index.html" class="btn" data-event="footer-lore">Read the Lore</a>
+            <p>Since 2013 · Pumpkins + Green Candles · Community-Powered</p>
+            <p>Redtember → Uptober → Moonvember → Pumpcember = yearly cycle</p>
+            <p class="legal">© <span id="year"></span> $Cryptober - All rights reserved.</p>
           </div>
-          <a href="lore_index.html" class="btn" data-event="footer-lore">Read the Lore</a>
-          <p>Since 2013 · Pumpkins + Green Candles · Community-Powered</p>
-          <p>Redtember → Uptober → Moonvember → Pumpcember = yearly cycle</p>
-          <p class="legal">© <span id="year"></span> $Cryptober - All rights reserved.</p>
-        </div>
-      </footer>
+        </footer>
     </main>
 
   </div>

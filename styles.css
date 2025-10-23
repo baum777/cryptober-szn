@@ -89,12 +89,12 @@
   --rm-bear: #ff6f6f;
   --quest-gap: clamp(1.6rem, 4vw, 2.6rem);
   --quest-spine-width: 4px;
-  --quest-dot-size: 18px;
   --quest-spine-gap: clamp(2.5rem, 7vw, 4.75rem);
   --quest-card-bg: rgba(12, 16, 22, 0.86);
   --quest-card-border: rgba(255, 255, 255, 0.08);
   --quest-card-shadow: 0 24px 56px rgba(0, 0, 0, 0.5);
   --quest-connector: clamp(2.4rem, 6vw, 3.4rem);
+  --quest-overlap: clamp(1.25rem, 4vw, 2.75rem);
 }
 
 /* ---------- Base / Reset ---------- */
@@ -279,17 +279,14 @@ main#site-main {
 }
 
 .questmap__extended {
-  margin-top: clamp(2rem, 4vw, 3rem);
+  margin-top: 0;
+  margin-inline: auto;
+  width: 100%;
+  max-width: var(--rm-col-max);
+  padding: clamp(1.75rem, 3vw, 2.5rem);
   display: flex;
   flex-direction: column;
   gap: clamp(1.5rem, 3vw, 2.75rem);
-}
-
-.questmap__extended-title {
-  margin: 0;
-  text-align: center;
-  font-size: clamp(1.25rem, 2.6vw, 1.7rem);
-  font-weight: 700;
 }
 
 .questmap-progress {
@@ -381,6 +378,7 @@ main#site-main {
   background: linear-gradient(180deg, rgba(11, 15, 24, 0.88), rgba(8, 11, 18, 0.68));
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.48);
   transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+  text-align: left;
 }
 
 .questmap-card__title {
@@ -424,8 +422,8 @@ main#site-main {
 .checkpoint {
   position: relative;
   display: block;
-  padding: clamp(1.15rem, 2.8vw, 1.85rem);
-  padding-top: clamp(2.05rem, 3.4vw, 2.75rem);
+  padding: clamp(1.35em, 3vw, 1.85em);
+  padding-top: clamp(2.6em, 4vw, 3.1em);
   border-radius: var(--card-radius);
   border: 1px solid var(--quest-card-border);
   background: var(--quest-card-bg);
@@ -455,20 +453,21 @@ main#site-main {
   margin: 0;
 }
 
-.checkpoint__dot {
+.checkpoint::before {
+  content: "";
   position: absolute;
-  top: 0;
+  top: clamp(1.45em, 4vw, 1.85em);
   left: 50%;
   transform: translate(-50%, -50%);
-  width: var(--quest-dot-size);
-  height: var(--quest-dot-size);
+  width: clamp(0.85em, 2.6vw, 1.15em);
+  height: clamp(0.85em, 2.6vw, 1.15em);
   border-radius: 50%;
-  background: var(--neon-green);
-  border: 2px solid var(--neon-green);
-  box-shadow: 0 0 0 8px rgba(0, 255, 102, 0.2);
+  background: rgba(255, 255, 255, 0.18);
+  border: 2px solid rgba(255, 255, 255, 0.28);
+  box-shadow: none;
   transition: box-shadow 220ms ease, background-color 220ms ease, border-color 220ms ease, opacity 220ms ease;
-  z-index: 2;
   pointer-events: none;
+  z-index: 1;
 }
 
 .checkpoint--done {
@@ -476,19 +475,19 @@ main#site-main {
   filter: saturate(0.85);
 }
 
-.checkpoint--done .checkpoint__dot {
-  opacity: 0.9;
-  box-shadow: 0 0 0 10px rgba(0, 255, 102, 0.16);
+.checkpoint--done::before {
+  background: var(--neon-green);
   border-color: rgba(0, 255, 102, 0.6);
+  box-shadow: 0 0 0 0.65em rgba(0, 255, 102, 0.16);
 }
 
 .checkpoint--later {
   opacity: 0.7;
 }
 
-.checkpoint--later .checkpoint__dot {
+.checkpoint--later::before {
   background: rgba(255, 255, 255, 0.18);
-  border-color: rgba(255, 255, 255, 0.35);
+  border-color: rgba(255, 255, 255, 0.32);
   box-shadow: none;
 }
 
@@ -496,19 +495,21 @@ main#site-main {
   opacity: 1;
 }
 
-.checkpoint--now .checkpoint__dot {
+.checkpoint--now::before {
+  background: var(--neon-green);
+  border-color: rgba(0, 255, 102, 0.8);
+  box-shadow: 0 0 0 0.85em rgba(0, 255, 102, 0.26);
   animation: quest-dot-pulse 1.6s ease-in-out infinite;
-  box-shadow: 0 0 0 12px rgba(0, 255, 102, 0.26);
 }
 
 @keyframes quest-dot-pulse {
   0%,
   100% {
-    box-shadow: 0 0 0 8px rgba(0, 255, 102, 0.25);
+    box-shadow: 0 0 0 0.85em rgba(0, 255, 102, 0.25);
   }
 
   50% {
-    box-shadow: 0 0 0 18px rgba(0, 255, 102, 0);
+    box-shadow: 0 0 0 1.45em rgba(0, 255, 102, 0);
   }
 }
 
@@ -521,7 +522,7 @@ main#site-main {
     transform: none;
   }
 
-  .checkpoint--now .checkpoint__dot {
+  .checkpoint--now::before {
     animation: none;
   }
 
@@ -546,30 +547,34 @@ main#site-main {
   }
 
   .questmap__details .checkpoint {
-    width: min(480px, calc(50% - var(--quest-spine-gap)));
+    width: min(520px, calc(50% + var(--quest-overlap)));
   }
 
   .questmap__details .checkpoint:nth-child(odd) {
-    margin-right: auto;
+    margin-right: calc(var(--quest-overlap) * -1);
     text-align: right;
   }
 
   .questmap__details .checkpoint:nth-child(even) {
-    margin-left: auto;
+    margin-left: calc(var(--quest-overlap) * -1);
   }
 }
 
 @media (max-width: 767px) {
   .questmap__details .checkpoint {
     text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+    width: min(520px, 100%);
   }
 }
 
 
 @media (min-width: 768px) {
   .checkpoint {
-    width: min(480px, calc(50% - var(--quest-spine-gap)));
+    width: min(520px, calc(50% + var(--quest-overlap)));
   }
+}
 
 /* center main content & cards */
 main,
@@ -693,7 +698,7 @@ main,
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.site-footer__inner {
+.site-footer__panel {
   max-width: min(1100px, 100%);
   margin: 0 auto;
   display: flex;
@@ -710,24 +715,24 @@ main,
   justify-content: center;
 }
 
-.site-footer__inner .btn {
+.site-footer__panel .btn {
   margin-top: 0.25rem;
 }
 
-.site-footer__inner a {
+.site-footer__panel a {
   color: inherit;
   text-decoration: none;
   transition: color 160ms ease, box-shadow 160ms ease;
 }
 
-.site-footer__inner a:hover,
-.site-footer__inner a:focus-visible {
+.site-footer__panel a:hover,
+.site-footer__panel a:focus-visible {
   color: var(--neon-green);
   box-shadow: 0 0 0 3px rgba(0, 255, 150, 0.35);
   outline: none;
 }
 
-.site-footer__inner p {
+.site-footer__panel p {
   margin: 0;
   color: color-mix(in srgb, var(--footer-color, #ffffff) 88%, rgba(255, 255, 255, 0.72));
 }

@@ -29,18 +29,21 @@
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "Cryptober",
-    "url": "https://yourdomain.example/"
-  }
-  </script>
-
-  <!-- Performance: preconnects & preload -->
+    "url": "https://yourdoma  <!-- Performance: preconnects & preload -->
+  <link rel="preconnect" href="https://api.coingecko.com" crossorigin>
   <link rel="preconnect" href="https://dexscreener.com" crossorigin>
   <link rel="preconnect" href="https://x.com" crossorigin>
   <link rel="preconnect" href="https://t.me" crossorigin>
-  <link rel="preload" as="style" href="styles.css">
+  <link rel="preload" as="style" href="dist/css/style.min.css">
+  
+  <!-- Fonts: Inter subset (latin) preload -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap&subset=latin">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap&subset=latin">
 
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="canonical" href="https://yourdomain.example/" />
+  <link rel="stylesheet" href="dist/css/style.min.css" />
+  <link rel="canonical" href="https://yourdomain.example/" />al" href="https://yourdomain.example/" />
 </head>
 <body class="landing">
   <!-- Header -->
@@ -62,6 +65,8 @@
       <ul id="nav-list" class="rail-list">
         <li class="rail-item"><a href="#hero" data-target aria-controls="hero">Hero</a></li>
         <li class="rail-item"><a href="#intro" data-target aria-controls="intro">Intro</a></li>
+        <li class="rail-item"><a href="#prices" data-target aria-controls="prices">Live Prices</a></li>
+        <li class="rail-item"><a href="#news" data-target aria-controls="news">News</a></li>
         <li class="rail-item"><a href="#timeline" data-target aria-controls="timeline">Timeline</a></li>
         <li class="rail-item"><a href="#questmap" data-target aria-controls="questmap">Quest Map</a></li>
         <li class="rail-item"><a href="#tools" data-target aria-controls="tools">Tools</a></li>
@@ -71,6 +76,8 @@
         <ul id="nav-noscript" class="rail-list">
           <li class="rail-item"><a href="#hero">Hero</a></li>
           <li class="rail-item"><a href="#intro">Intro</a></li>
+          <li class="rail-item"><a href="#prices">Live Prices</a></li>
+          <li class="rail-item"><a href="#news">News</a></li>
           <li class="rail-item"><a href="#timeline">Timeline</a></li>
           <li class="rail-item"><a href="#questmap">Quest Map</a></li>
           <li class="rail-item"><a href="#tools">Tools</a></li>
@@ -114,12 +121,7 @@
           </div>
 
           <div class="ph-box logo-frame" aria-hidden="true">
-            <img class="logo-frame__img" src="/assets/socials/web-logo.png" alt="" width="240" height="240" loading="lazy" decoding="async" />
-          </div>
-        </div>
-      </section>
-
-      <!-- Intro -->
+            <img class="logo-frame__img" src="/assets/socials/web-logo.png" alt="" width="240" height="240" loading="lazy" decoding="asyn      <!-- Intro -->
       <section id="intro" class="section" aria-labelledby="intro-heading">
         <div class="glass card" style="padding:1.25rem;">
           <div class="intro-content inner-gap">
@@ -147,6 +149,52 @@
               </p>
               <p class="intro-disclaimer muted">
                 No promises: just tools, lore, and community. DYOR · NFA.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Live Crypto Prices -->
+      <section id="prices" class="section" aria-labelledby="prices-title">
+        <header class="section__header">
+          <h2 id="prices-title" class="text-neon-orange">Live Crypto Prices</h2>
+          <p class="muted">Real-time market data powered by CoinGecko</p>
+        </header>
+        <div id="crypto-prices" role="region" aria-live="polite" aria-atomic="false">
+          <!-- Populated by JavaScript -->
+          <div class="price-card card-glass">
+            <div class="shimmer-bar" style="height: 120px;"></div>
+          </div>
+          <div class="price-card card-glass">
+            <div class="shimmer-bar" style="height: 120px;"></div>
+          </div>
+          <div class="price-card card-glass">
+            <div class="shimmer-bar" style="height: 120px;"></div>
+          </div>
+        </div>
+        <small id="prices-timestamp" class="muted">Loading prices...</small>
+      </section>
+
+      <!-- News Feed -->
+      <section id="news" class="section" aria-labelledby="news-title">
+        <header class="section__header">
+          <h2 id="news-title" class="text-neon-orange">Crypto News</h2>
+          <p class="muted">Latest updates from the crypto ecosystem</p>
+        </header>
+        <div id="news-feed" role="region" aria-live="polite">
+          <!-- Populated by JavaScript -->
+          <div class="news-card card-glass">
+            <div class="shimmer-bar" style="height: 140px;"></div>
+          </div>
+          <div class="news-card card-glass">
+            <div class="shimmer-bar" style="height: 140px;"></div>
+          </div>
+          <div class="news-card card-glass">
+            <div class="shimmer-bar" style="height: 140px;"></div>
+          </div>
+        </div>
+      </section>d community. DYOR · NFA.
               </p>
         </div>
       </div>
@@ -243,7 +291,12 @@
   <div id="toast" class="toast" aria-live="polite"></div>
 
   <!-- Scripts -->
-  <script type="module" src="/js/boot-home.js"></script>
-  <script type="module" src="/js/main.js"></script>
+  <script type="module" src="/dist/js/app.min.js" defer></script>
+  <noscript>
+    <div class="card glass" style="padding: 1.5rem; margin: 2rem auto; max-width: 600px; text-align: center;">
+      <p><strong>⚠️ JavaScript Required</strong></p>
+      <p class="muted">This site requires JavaScript for live prices, news feed, and interactive features. Please enable JavaScript in your browser settings.</p>
+    </div>
+  </noscript>
 </body>
 </html>

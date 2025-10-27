@@ -5,5 +5,9 @@
   "scripts": {
     "audit:sitemap": "node tools/audit-sitemap.js",
     "i18n:scan": "node tools/i18n-scan.js"
+  },
+  "devDependencies": {
+    "cssnano": "^7.1.1",
+    "terser": "^5.44.0"
   }
 }

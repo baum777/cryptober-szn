@@ -68,7 +68,39 @@
   --rail-toggle-bg: rgba(255, 255, 255, 0.1);
   --rail-toggle-hover: var(--neon-green);
 
-  /* roadmap hybrid theme */
+  /* ========================================
+     CYBERPUNK NEON ROADMAP/QUESTMAP TOKENS
+     ======================================== */
+  
+  /* Core neon palette */
+  --neon: #39ff88;
+  --glow: 0 0 12px rgba(57,255,136,.35);
+  --frame: rgba(255,255,255,.08);
+  --glass: rgba(255,255,255,.03);
+  --radius: 18px;
+  --gap: 18px;
+  
+  /* Status colors */
+  --status-now-active: var(--neon);
+  --status-next: var(--neon);
+  --status-done: #14b8a6; /* teal */
+  --status-later: rgba(139, 92, 246, 0.6); /* violet, low opacity */
+  
+  /* Timeline section (top) */
+  --timeline-spine-width: 2px;
+  --timeline-spine-gap: 24px;
+  --timeline-card-max: 460px;
+  --timeline-glyph-size: 12px;
+  --timeline-glyph-halo: 18px;
+  
+  /* QuestMap section (below) */
+  --questmap-max-width: 1120px;
+  --questmap-card-max: 960px;
+  --questmap-vertical-gap: 48px;
+  --questmap-card-padding: 20px;
+  --questmap-header-glow: 0 0 18px rgba(57,255,136,.25);
+  
+  /* Legacy/fallback tokens */
   --rm-grid-gap: 1rem;
   --rm-card-radius: 16px;
   --rm-card-bg: rgba(255,255,255,0.04);
@@ -562,6 +594,322 @@ main#site-main {
 @media (max-width: 767px) {
   .questmap__details .checkpoint {
     text-align: left;
+  }
+}
+
+/* ========================================
+   CYBERPUNK NEON COMPONENT SYSTEM
+   ======================================== */
+
+/* ---------- StatusGlyph Component ---------- */
+.status-glyph {
+  position: relative;
+  display: inline-block;
+  width: var(--timeline-glyph-size);
+  height: var(--timeline-glyph-size);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.status-glyph::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.status-glyph::after {
+  content: "";
+  position: absolute;
+  inset: calc(var(--timeline-glyph-halo) / -2);
+  border-radius: 50%;
+  background: radial-gradient(circle, currentColor 0%, transparent 70%);
+  opacity: 0.35;
+  z-index: -1;
+}
+
+/* Status color mapping */
+.status-glyph[data-status="now"] {
+  color: var(--status-now-active);
+}
+
+.status-glyph[data-status="next"] {
+  color: var(--status-next);
+}
+
+.status-glyph[data-status="done"] {
+  color: var(--status-done);
+}
+
+.status-glyph[data-status="later"] {
+  color: var(--status-later);
+  opacity: 0.6;
+}
+
+/* Pulse animation ONLY for "now" status */
+.status-glyph[data-status="now"]::after {
+  animation: status-glyph-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes status-glyph-pulse {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0;
+    transform: scale(1.8);
+  }
+}
+
+/* Disable pulse on reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .status-glyph[data-status="now"]::after {
+    animation: none;
+  }
+}
+
+/* ---------- Timeline Section (Top) ---------- */
+.timeline-section {
+  padding-block: var(--questmap-vertical-gap);
+  max-width: var(--questmap-max-width);
+  margin-inline: auto;
+}
+
+.timeline-container {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: var(--timeline-spine-gap);
+  align-items: start;
+}
+
+.timeline-spine {
+  position: relative;
+  width: var(--timeline-spine-width);
+  min-height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(57, 255, 136, 0) 0%,
+    rgba(57, 255, 136, 0.4) 10%,
+    rgba(57, 255, 136, 0.6) 50%,
+    rgba(57, 255, 136, 0.4) 90%,
+    rgba(57, 255, 136, 0) 100%
+  );
+  border-radius: 999px;
+  filter: drop-shadow(var(--glow));
+  grid-column: 2;
+  grid-row: 1 / -1;
+  align-self: stretch;
+  justify-self: center;
+}
+
+/* RoadmapStepCard Component */
+.roadmap-step-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  border: 1px solid var(--frame);
+  background: var(--glass);
+  backdrop-filter: blur(6px);
+  border-radius: var(--radius);
+  max-width: var(--timeline-card-max);
+  transition: opacity 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.roadmap-step-card:hover,
+.roadmap-step-card:focus-within {
+  opacity: 1.02;
+  box-shadow: var(--glow);
+}
+
+.roadmap-step-card:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--neon);
+}
+
+.roadmap-step-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.roadmap-step-card__title {
+  margin: 0;
+  font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  color: var(--text);
+}
+
+/* Alternating layout */
+.roadmap-step-card--left {
+  grid-column: 1;
+  justify-self: end;
+}
+
+.roadmap-step-card--right {
+  grid-column: 3;
+  justify-self: start;
+}
+
+/* Tablet and mobile stacking */
+@media (max-width: 1023px) {
+  .timeline-container {
+    grid-template-columns: 1fr;
+    gap: var(--gap);
+  }
+  
+  .timeline-spine {
+    display: none;
+  }
+  
+  .roadmap-step-card--left,
+  .roadmap-step-card--right {
+    grid-column: 1;
+    justify-self: center;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 767px) {
+  .roadmap-step-card {
+    max-width: 100%;
+  }
+}
+
+/* ---------- QuestMap Section (Below) ---------- */
+.questmap-section {
+  padding-block: var(--questmap-vertical-gap);
+  max-width: var(--questmap-max-width);
+  margin-inline: auto;
+}
+
+.questmap-section[role="region"] {
+  scroll-margin-top: calc(var(--header-height) + 24px);
+}
+
+.questmap-container {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--gap) * 1.5);
+  max-width: var(--questmap-card-max);
+  margin-inline: auto;
+}
+
+/* QuestCard Component */
+.quest-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: var(--questmap-card-padding);
+  border: 1px solid var(--frame);
+  background: var(--glass);
+  backdrop-filter: blur(6px);
+  border-radius: var(--radius);
+  transition: opacity 180ms ease, box-shadow 180ms ease, transform 180ms ease, border-color 180ms ease;
+}
+
+.quest-card__header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(57, 255, 136, 0.15);
+  box-shadow: var(--questmap-header-glow);
+}
+
+.quest-card__title {
+  margin: 0;
+  font-size: clamp(1.15rem, 2.4vw, 1.45rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text);
+}
+
+.quest-card__body {
+  margin: 0;
+  line-height: 1.5;
+  max-width: 75ch;
+  color: var(--text);
+  opacity: 0.9;
+}
+
+.quest-card__meta {
+  margin-top: auto;
+  padding-top: 8px;
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.quest-card__progress-ribbon {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.quest-card__progress-chip {
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--frame);
+  background: rgba(0, 0, 0, 0.3);
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: var(--text);
+  opacity: 0.8;
+}
+
+.quest-card__progress-chip--active {
+  border-color: var(--neon);
+  color: var(--neon);
+  opacity: 1;
+}
+
+.quest-card:hover,
+.quest-card:focus-within {
+  opacity: 1.02;
+  box-shadow: 0 0 0 1px rgba(57, 255, 136, 0.2), var(--glow);
+}
+
+.quest-card:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--neon);
+}
+
+/* Status-based styling */
+.quest-card[data-status="done"] {
+  opacity: 0.85;
+  filter: saturate(0.9);
+}
+
+.quest-card[data-status="later"] {
+  opacity: 0.75;
+}
+
+.quest-card[data-status="now"] {
+  border-color: rgba(57, 255, 136, 0.3);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .roadmap-step-card,
+  .quest-card {
+    transition: none;
+  }
+  
+  .roadmap-step-card:hover,
+  .quest-card:hover {
+    transform: none;
   }
 }
 

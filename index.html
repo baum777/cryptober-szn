@@ -62,7 +62,8 @@
       <ul id="nav-list" class="rail-list">
         <li class="rail-item"><a href="#hero" data-target aria-controls="hero">Hero</a></li>
         <li class="rail-item"><a href="#intro" data-target aria-controls="intro">Intro</a></li>
-        <li class="rail-item"><a href="#questmap" data-target aria-controls="questmap">Roadmap</a></li>
+        <li class="rail-item"><a href="#timeline" data-target aria-controls="timeline">Timeline</a></li>
+        <li class="rail-item"><a href="#questmap" data-target aria-controls="questmap">Quest Map</a></li>
         <li class="rail-item"><a href="#tools" data-target aria-controls="tools">Tools</a></li>
         <li class="rail-item"><a href="#social-pyramid" data-target aria-controls="social-pyramid">Social</a></li>
       </ul>
@@ -70,7 +71,8 @@
         <ul id="nav-noscript" class="rail-list">
           <li class="rail-item"><a href="#hero">Hero</a></li>
           <li class="rail-item"><a href="#intro">Intro</a></li>
-          <li class="rail-item"><a href="#questmap">Roadmap</a></li>
+          <li class="rail-item"><a href="#timeline">Timeline</a></li>
+          <li class="rail-item"><a href="#questmap">Quest Map</a></li>
           <li class="rail-item"><a href="#tools">Tools</a></li>
           <li class="rail-item"><a href="#social-pyramid">Social</a></li>
         </ul>
@@ -148,116 +150,22 @@
               </p>
         </div>
       </div>
-      <div class="questmap__extended" aria-labelledby="questmap-details-title">
-        <h3 id="questmap-details-title" class="questmap__extended-title text-neon-orange">
-          Quest Map — Step Details
-        </h3>
+    </section>
 
-        <div class="questmap-progress" role="list" aria-label="Roadmap progress">
-          <span class="questmap-progress__chip checkpoint--done" role="listitem" tabindex="0">
-            <span class="questmap-progress__label">Website &amp; Community Takeover</span>
-            <span class="questmap-progress__sr sr-only">completed step</span>
-          </span>
-          <span class="questmap-progress__chip checkpoint--done" role="listitem" tabindex="0">
-            <span class="questmap-progress__label">DEX Vault → Community Barometer</span>
-            <span class="questmap-progress__sr sr-only">completed step</span>
-          </span>
-          <span class="questmap-progress__chip checkpoint--now" role="listitem" tabindex="0" aria-current="step">
-            <span class="questmap-progress__label">Schill Phase → Pulse over Push</span>
-            <span class="questmap-progress__sr sr-only">current step</span>
-          </span>
-          <span class="questmap-progress__chip checkpoint--later" role="listitem" tabindex="0">
-            <span class="questmap-progress__label">Creator Fee Distribution</span>
-            <span class="questmap-progress__sr sr-only">upcoming step</span>
-          </span>
-          <span class="questmap-progress__chip checkpoint--later" role="listitem" tabindex="0">
-            <span class="questmap-progress__label">Tool Development → Controlled Fire</span>
-            <span class="questmap-progress__sr sr-only">upcoming step</span>
-          </span>
-          <span class="questmap-progress__chip checkpoint--later" role="listitem" tabindex="0">
-            <span class="questmap-progress__label">Community-First Tool Vision</span>
-            <span class="questmap-progress__sr sr-only">upcoming step</span>
-          </span>
-        </div>
-
-        <div class="questmap-cards" role="list">
-          <article class="questmap-card checkpoint--done" role="listitem">
-            <h3 class="questmap-card__title">Website &amp; Community Takeover</h3>
-            <p class="questmap-card__desc muted">
-              Shared hub for lore, memes, coordination. Claim roles, co-create the movement.
-            </p>
-          </article>
-          <article class="questmap-card checkpoint--done" role="listitem">
-            <h3 class="questmap-card__title">DEX Vault → Community Barometer</h3>
-            <p class="questmap-card__desc muted">
-              Heartbeat over hype. On-chain signal for genuine support and activity.
-            </p>
-          </article>
-          <article class="questmap-card checkpoint--now" role="listitem" aria-current="step">
-            <h3 class="questmap-card__title">Schill Phase → Pulse over Push</h3>
-            <p class="questmap-card__desc muted">
-              Build quiet; vibe loud. No new drops yet to keep curiosity and incentives alive.
-            </p>
-          </article>
-          <article class="questmap-card checkpoint--later" role="listitem">
-            <h3 class="questmap-card__title">Creator Fee Distribution</h3>
-            <p class="questmap-card__desc muted">
-              50% Locks+Burn · 30–35% Growth/Market · 15–20% Dev Ops (staged locks; unlocks burn).
-            </p>
-          </article>
-          <article class="questmap-card checkpoint--later" role="listitem">
-            <h3 class="questmap-card__title">Tool Development → Controlled Fire</h3>
-            <p class="questmap-card__desc muted">
-              Spark releases: Pumpkin Patch first; Oracle &amp; Candle Carver follow.
-            </p>
-          </article>
-          <article class="questmap-card checkpoint--later" role="listitem">
-            <h3 class="questmap-card__title">Community-First Tool Vision</h3>
-            <p class="questmap-card__desc muted">
-              Co-create real utility + fun; iterate with real user feedback.
-            </p>
-          </article>
-        </div>
-      </div>
-    </div>
-  </section>
-
-      <!-- Roadmap -->
-      <section id="questmap" class="section" aria-labelledby="roadmap-title">
+      <!-- Timeline Section (Quick Scan) -->
+      <section id="timeline" class="section timeline-section" aria-labelledby="timeline-title">
         <header class="section__header">
-          <h2 id="roadmap-title" class="text-neon-orange">Roadmap</h2>
+          <h2 id="timeline-title" class="text-neon-orange">Roadmap Timeline</h2>
         </header>
+        <div id="neon-timeline"></div>
+      </section>
 
-        <div class="questmap" role="group" aria-describedby="roadmap-title">
-          <div id="quest-spine" aria-hidden="true"></div>
-
-          <div id="rm-details" class="questmap__details" role="list">
-            <article class="checkpoint checkpoint--now" role="listitem" aria-current="step">
-              <span class="checkpoint__dot" aria-hidden="true"></span>
-              <h3 class="checkpoint__title">Website &amp; Community Takeover</h3>
-            </article>
-            <article class="checkpoint checkpoint--later" role="listitem">
-              <span class="checkpoint__dot" aria-hidden="true"></span>
-              <h3 class="checkpoint__title">DEX Vault → Community Barometer</h3>
-            </article>
-            <article class="checkpoint checkpoint--later" role="listitem">
-              <span class="checkpoint__dot" aria-hidden="true"></span>
-              <h3 class="checkpoint__title">Schill Phase → Pulse over Push</h3>
-            </article>
-            <article class="checkpoint checkpoint--later" role="listitem">
-              <span class="checkpoint__dot" aria-hidden="true"></span>
-              <h3 class="checkpoint__title">Creator Fee Distribution</h3>
-            </article>
-            <article class="checkpoint checkpoint--later" role="listitem">
-              <span class="checkpoint__dot" aria-hidden="true"></span>
-              <h3 class="checkpoint__title">Tool Development → Controlled Fire</h3>
-            </article>
-            <article class="checkpoint checkpoint--later" role="listitem">
-              <span class="checkpoint__dot" aria-hidden="true"></span>
-              <h3 class="checkpoint__title">Community-First Tool Vision</h3>
-            </article>
-          </div>
-        </div>
+      <!-- QuestMap Section (Deep Read) -->
+      <section id="questmap" class="section questmap-section" role="region" aria-labelledby="questmap-title">
+        <header class="section__header">
+          <h2 id="questmap-title" class="text-neon-orange">Quest Map — Detailed View</h2>
+        </header>
+        <div id="neon-questmap"></div>
       </section>
 
       <!-- Tools -->

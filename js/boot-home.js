@@ -12,6 +12,7 @@ import {
   initStickyRail,
 } from "/js/main.js";
 import { initQuestmap } from "/js/questmap.js";
+import { initNeonRoadmap } from "/js/neon-roadmap.js";
 import { initSharedRail } from "/js/shared-rail.js";
 import { initMobileRails } from "/js/mobile-rail.js";
 
@@ -38,7 +39,11 @@ function initGalleryProgressBar() {
 initGalleryProgressBar();
 
 /* Roadmap → Questmap (bindet Inhalte der Index-Sections) */
-initQuestmap();
+// Legacy questmap for backward compatibility (if needed)
+// initQuestmap();
+
+/* New Cyberpunk Neon Roadmap/QuestMap System */
+initNeonRoadmap();
 
 /* Pyramid-Links kleines Feedback */
 ["pyramid-x", "pyramid-telegram", "pyramid-dexscreener"].forEach((ev) => {
@@ -85,7 +90,8 @@ initQuestmap();
   const sections = [
     { id: "main", label: "Hero" },
     { id: "intro", label: "Intro" },
-    { id: "questmap", label: "Roadmap" },
+    { id: "timeline", label: "Timeline" },
+    { id: "questmap", label: "Quest Map" },
     { id: "tools", label: "Tools" },
     { id: "social-pyramid", label: "Social" },
   ].filter((s) => document.getElementById(s.id));

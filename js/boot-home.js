@@ -40,6 +40,58 @@ initGalleryProgressBar();
 /* Roadmap → Questmap (bindet Inhalte der Index-Sections) */
 initQuestmap();
 
+/* ========== NEW: Modular Roadmap/QuestMap Foundation (Optional) ==========
+ *
+ * The new foundation components are available but not yet enabled by default.
+ * They run alongside the existing questmap.js implementation.
+ *
+ * To enable the new components:
+ * 1. Uncomment the imports below
+ * 2. Uncomment the initialization code
+ * 3. Add containers to your HTML with IDs: 'timeline-foundation', 'questmap-foundation'
+ * 4. Load roadmap data from /assets/roadmap.json
+ *
+ * Benefits of new components:
+ * - Strict architectural contracts (Timeline vs QuestMap separation)
+ * - Improved accessibility (ARIA regions, focus management)
+ * - Reduced motion support
+ * - Comprehensive test coverage
+ * - Modular, reusable components
+ *
+ * Example integration:
+ *
+ * import { initTimelineSection } from '/js/components/TimelineSection.js';
+ * import { initQuestMapSection } from '/js/components/QuestMapSection.js';
+ *
+ * async function initFoundationComponents() {
+ *   try {
+ *     const response = await fetch('/assets/roadmap.json', { cache: 'no-store' });
+ *     if (!response.ok) return;
+ *
+ *     const data = await response.json();
+ *     if (!Array.isArray(data) || data.length === 0) return;
+ *
+ *     // Initialize Timeline section (minimal cards for scanning)
+ *     const timelineContainer = document.getElementById('timeline-foundation');
+ *     if (timelineContainer) {
+ *       initTimelineSection(timelineContainer, data);
+ *     }
+ *
+ *     // Initialize QuestMap section (detailed cards for reading)
+ *     const questmapContainer = document.getElementById('questmap-foundation');
+ *     if (questmapContainer) {
+ *       initQuestMapSection(questmapContainer, data);
+ *     }
+ *   } catch (error) {
+ *     console.warn('[Foundation] Failed to initialize roadmap/questmap components', error);
+ *   }
+ * }
+ *
+ * // Call when ready to enable:
+ * // initFoundationComponents();
+ *
+ * ========================================================================== */
+
 /* Pyramid-Links kleines Feedback */
 ["pyramid-x", "pyramid-telegram", "pyramid-dexscreener"].forEach((ev) => {
   document.querySelectorAll(`[data-event="${ev}"]`).forEach((el) => {

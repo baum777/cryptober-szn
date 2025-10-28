@@ -1966,4 +1966,262 @@ body.landing .logo-frame__img:focus {
   animation: shimmerMove 2.4s linear infinite;
   background-size: 200% 100%;
 }
+
+/* ========== Roadmap/QuestMap Foundation UI ========== */
+
+/* ---------- StatusGlyph Component ---------- */
+.status-glyph {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  position: relative;
+  vertical-align: middle;
+}
+
+.status-glyph::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  opacity: 0.35;
+}
+
+/* Status color mapping */
+.status-glyph--now {
+  background: var(--neon-green);
+}
+
+.status-glyph--now::before {
+  background: var(--neon-green);
+}
+
+.status-glyph--next {
+  background: var(--neon-green);
+  opacity: 0.9;
+}
+
+.status-glyph--next::before {
+  background: var(--neon-green);
+}
+
+.status-glyph--done {
+  background: #60ffa6; /* teal tone */
+}
+
+.status-glyph--done::before {
+  background: #60ffa6;
+}
+
+.status-glyph--later {
+  background: #a78bfa; /* violet */
+  opacity: 0.5;
+}
+
+.status-glyph--later::before {
+  background: #a78bfa;
+}
+
+/* Pulse animation (only for "now" status) */
+@keyframes status-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.15);
+  }
+}
+
+.status-glyph--now {
+  animation: status-pulse 1.6s ease-in-out infinite;
+}
+
+/* Disable pulse for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .status-glyph--now {
+    animation: none;
+  }
+}
+
+/* ---------- Frosted Card Base Utility ---------- */
+.card-frosted {
+  border: 1px solid var(--frame, rgba(255,255,255,.08));
+  background: var(--glass, rgba(255,255,255,.03));
+  backdrop-filter: blur(6px);
+  border-radius: var(--radius, 18px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-frosted:hover {
+  background: rgba(255,255,255,.05);
+  box-shadow: var(--glow, 0 0 12px rgba(57,255,136,.35));
+}
+
+.card-frosted:focus-visible {
+  outline: 2px solid var(--neon-green);
+  outline-offset: 2px;
+}
+
+/* ---------- RoadmapStepCard Component ---------- */
+.roadmap-step-card {
+  /* inherits .card-frosted */
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.roadmap-step-card h3 {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  flex: 1;
+}
+
+/* ---------- QuestCard Component ---------- */
+.quest-card {
+  /* inherits .card-frosted */
+  max-width: 1120px;
+  margin-inline: auto;
+  overflow: hidden;
+}
+
+.quest-card__header {
+  padding: 1.5rem;
+  background: rgba(57,255,136,.08);
+  border-bottom: 1px solid var(--quest-card-border);
+  box-shadow: inset 0 0 24px rgba(57,255,136,.12);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.quest-card__header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  flex: 1;
+  min-width: fit-content;
+}
+
+.quest-card__ribbon {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.quest-card__ribbon-chip {
+  padding: 0.25rem 0.75rem;
+  border: 1px solid rgba(57,255,136,.3);
+  border-radius: 999px;
+  font-size: 0.875rem;
+  color: var(--neon-green);
+  background: rgba(57,255,136,.05);
+  pointer-events: none;
+}
+
+.quest-card__body {
+  padding: 1.5rem;
+  line-height: 1.5;
+  max-width: 75ch;
+  font-size: 1rem;
+}
+
+.quest-card__footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid rgba(255,255,255,.04);
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+/* ---------- TimelineSection Layout ---------- */
+.timeline-section {
+  width: 100%;
+  max-width: var(--rm-col-max, 1240px);
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.timeline-grid {
+  display: grid;
+  gap: var(--gap, 18px);
+  position: relative;
+}
+
+/* Mobile: single column stack */
+@media (max-width: 767px) {
+  .timeline-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .timeline-spine {
+    display: none; /* hide spine on mobile */
+  }
+}
+
+/* Tablet: compressed centered layout */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .timeline-grid {
+    grid-template-columns: 1fr;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .timeline-spine {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: rgba(57,255,136,.2);
+  }
+}
+
+/* Desktop: 3-column grid with central spine */
+@media (min-width: 1024px) {
+  .timeline-grid {
+    grid-template-columns: 1fr auto 1fr;
+    gap: var(--gap, 18px);
+  }
+
+  .timeline-spine {
+    grid-column: 2;
+    grid-row: 1 / -1;
+    width: 2px;
+    background: rgba(57,255,136,.2);
+    justify-self: center;
+  }
+
+  .timeline-card--left {
+    grid-column: 1;
+  }
+
+  .timeline-card--right {
+    grid-column: 3;
+  }
+}
+
+/* ---------- QuestMapSection Layout ---------- */
+.questmap-section {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.questmap-cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--quest-gap, clamp(1.6rem, 4vw, 2.6rem));
+}
+
+/* Ensure proper spacing and readability */
+.questmap-section[role="region"] {
+  scroll-margin-top: calc(var(--header-height, 72px) + 2rem);
+}
 

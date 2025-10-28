@@ -100,4 +100,63 @@ Dokumentation ist nicht optional — sie ist Teil der Lieferung.
 
 ---
 
+## Workflow State — 2025-10-28
+
+### Task: Roadmap/QuestMap UI Foundation Bootstrap
+
+**Context:**
+Established modular UI foundation for Sparkfined roadmap/questmap features. Created architectural separation between Timeline (minimal scanning) and QuestMap (detailed reading) as permanent design contracts. Components are available but opt-in, running alongside existing implementations for safety.
+
+**Implementation:**
+- **5 Core Components Created:**
+  - `StatusGlyph` — Visual status indicator with 4 states, pulse animation, reduced-motion support
+  - `RoadmapStepCard` — Minimal timeline card (H3 + StatusGlyph only)
+  - `QuestCard` — Detailed questmap card (H3 + body + meta)
+  - `TimelineSection` — Orchestrator for alternating grid layout with neon spine
+  - `QuestMapSection` — Orchestrator for centered single-column detailed view
+
+- **Test Infrastructure:**
+  - Vitest + jsdom environment configured
+  - 6 test files with 50+ test cases
+  - Smoke, props, accessibility, and motion tests for all components
+  - Mock utilities for `prefers-reduced-motion` testing
+
+- **Documentation:**
+  - `/docs/ui-spec.md` — Complete component specification (45+ sections)
+  - Component API contracts, props, and examples
+  - Design tokens, breakpoints, and motion policies
+  - Integration guide and maintenance procedures
+
+- **Code Quality:**
+  - ESLint configuration for ES6 modules
+  - TypeScript config for JSDoc type checking (no compilation)
+  - npm scripts for test, lint, typecheck workflows
+
+**Architectural Contracts (IMMUTABLE):**
+1. **Timeline Section:** Minimal cards (H3 + StatusGlyph) for fast visual scanning
+2. **QuestMap Section:** Detailed cards (H3 + body + meta) for deep reading
+3. **Separation Principle:** NEVER merge Timeline and QuestMap — they serve different user needs
+4. **Status States:** `now | next | done | later` (normalized from existing data schema)
+5. **Motion Policy:** Pulse animation only for "now" status, disabled when `prefers-reduced-motion: reduce`
+6. **Accessibility:** ARIA regions, focus-visible rings, screen reader announcements, semantic HTML
+
+**Tech Stack Clarification:**
+- Vanilla JavaScript ES6 modules (NOT React/TypeScript)
+- Plain CSS with custom properties (NOT Tailwind/SCSS)
+- No build step — direct HTML/CSS/JS serving
+- Progressive enhancement — JSON data + DOM fallback
+
+**Integration Status:**
+Components are **opt-in** and run alongside existing `questmap.js` implementation. Example integration code available in `boot-home.js` (lines 43-93). Future PRs can migrate to new components incrementally.
+
+**Branch:** `claude/session-011CUZFtvCvNrwbdd1TVZ3Pk`
+
+**Next Steps:**
+1. Install dependencies: `npm install`
+2. Run validation: `npm run test && npm run lint && npm run typecheck`
+3. Manual browser testing (keyboard nav, reduced motion, screen readers)
+4. When ready to adopt: uncomment integration code in `boot-home.js`
+
+---
+
 *Ende agents.md — Dieses Dokument ist die Betriebsanweisung für Codex als professionellen Entwickler & Designer.*

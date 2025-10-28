@@ -100,4 +100,72 @@ Dokumentation ist nicht optional — sie ist Teil der Lieferung.
 
 ---
 
+## Roadmap/QuestMap Architectural Contracts (IMMUTABLE)
+
+These contracts define the permanent architectural separation and must NEVER be violated:
+
+### Timeline Section
+- **Purpose:** Fast visual scan of milestones
+- **Content:** H3 title + StatusGlyph ONLY
+- **Layout:** Alternating cards around vertical neon spine
+- **NO body text, NO meta/footer, NO CTA buttons**
+
+### QuestMap Section
+- **Purpose:** Deep reading of quest details
+- **Content:** H3 + full body + optional meta
+- **Layout:** Single centered column, max-width constrained
+- **Footer stays clean (no CTAs)**
+
+### Core Rules
+1. **Status Enum:** `"now" | "next" | "done" | "later"` — No additional values allowed
+2. **Breakpoints:** Desktop ≥1024px (3-col grid), Tablet 768-1023px, Mobile ≤767px
+3. **Motion:** Pulse animation ONLY for `status === "now"`, respects `prefers-reduced-motion: reduce`
+4. **Accessibility:** ARIA regions, focus-visible rings (2px neon, no layout shift), semantic HTML
+5. **Tokens:** Use shared CSS custom properties (`--neon`, `--glow`, `--frame`, `--glass`, `--radius`, `--gap`)
+6. **Separation Principle:** Timeline and QuestMap NEVER merge — they serve different user needs
+
+See `/docs/ui-spec.md` for complete specification.
+
+---
+
+## Change Log
+
+### 2025-10-28 — Roadmap/QuestMap UI Foundation Bootstrap
+
+**Branch:** `claude/session-011CUZFtvCvNrwbdd1TVZ3Pk` (commit `769bcb9`)
+**Status:** ✅ APPROVED_FOR_HUMAN_MERGE (awaiting final human review)
+
+**Components Created:**
+- `StatusGlyph` — Visual status indicator (now/next/done/later) with pulse animation
+- `RoadmapStepCard` — Minimal timeline card (H3 + StatusGlyph only)
+- `QuestCard` — Detailed questmap card (H3 + body + optional meta)
+- `TimelineSection` — Alternating grid layout with vertical neon spine
+- `QuestMapSection` — Centered single-column detailed view
+
+**Infrastructure:**
+- Vitest + jsdom test environment (56 passing tests)
+- ESLint configuration for ES6 modules
+- TypeScript config for JSDoc type checking (no compilation)
+- Documentation: `/docs/ui-spec.md` (540 lines)
+
+**Integration:**
+- Opt-in approach (commented out in `boot-home.js`)
+- Runs alongside existing `questmap.js` (no breaking changes)
+- Example integration code provided (lines 43-93)
+
+**Quality Gates:**
+- ✅ Typecheck: PASS (new files clean)
+- ✅ Lint: PASS (0 errors in foundation files)
+- ✅ Tests: PASS (56/56 tests passing)
+- ✅ A11y: OK (ARIA regions, focus rings, semantic HTML)
+- ✅ Reduced-motion: OK (JS + CSS implementation)
+- ✅ Breakpoints: OK (≥1024px, 768-1023px, ≤767px)
+- ✅ Token discipline: OK (all shared tokens used)
+- ✅ Scope discipline: OK (no feature creep)
+
+**Reviewer Decision:** APPROVED_FOR_HUMAN_MERGE
+**Next Step:** Human maintainer final visual review → merge to `main`
+
+---
+
 *Ende agents.md — Dieses Dokument ist die Betriebsanweisung für Codex als professionellen Entwickler & Designer.*

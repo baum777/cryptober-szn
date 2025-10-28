@@ -100,62 +100,71 @@ Dokumentation ist nicht optional — sie ist Teil der Lieferung.
 
 ---
 
-## Workflow State — 2025-10-28
+## Roadmap/QuestMap Architectural Contracts (IMMUTABLE)
 
-### Task: Roadmap/QuestMap UI Foundation Bootstrap
+These contracts define the permanent architectural separation and must NEVER be violated:
 
-**Context:**
-Established modular UI foundation for Sparkfined roadmap/questmap features. Created architectural separation between Timeline (minimal scanning) and QuestMap (detailed reading) as permanent design contracts. Components are available but opt-in, running alongside existing implementations for safety.
+### Timeline Section
+- **Purpose:** Fast visual scan of milestones
+- **Content:** H3 title + StatusGlyph ONLY
+- **Layout:** Alternating cards around vertical neon spine
+- **NO body text, NO meta/footer, NO CTA buttons**
 
-**Implementation:**
-- **5 Core Components Created:**
-  - `StatusGlyph` — Visual status indicator with 4 states, pulse animation, reduced-motion support
-  - `RoadmapStepCard` — Minimal timeline card (H3 + StatusGlyph only)
-  - `QuestCard` — Detailed questmap card (H3 + body + meta)
-  - `TimelineSection` — Orchestrator for alternating grid layout with neon spine
-  - `QuestMapSection` — Orchestrator for centered single-column detailed view
+### QuestMap Section
+- **Purpose:** Deep reading of quest details
+- **Content:** H3 + full body + optional meta
+- **Layout:** Single centered column, max-width constrained
+- **Footer stays clean (no CTAs)**
 
-- **Test Infrastructure:**
-  - Vitest + jsdom environment configured
-  - 6 test files with 50+ test cases
-  - Smoke, props, accessibility, and motion tests for all components
-  - Mock utilities for `prefers-reduced-motion` testing
+### Core Rules
+1. **Status Enum:** `"now" | "next" | "done" | "later"` — No additional values allowed
+2. **Breakpoints:** Desktop ≥1024px (3-col grid), Tablet 768-1023px, Mobile ≤767px
+3. **Motion:** Pulse animation ONLY for `status === "now"`, respects `prefers-reduced-motion: reduce`
+4. **Accessibility:** ARIA regions, focus-visible rings (2px neon, no layout shift), semantic HTML
+5. **Tokens:** Use shared CSS custom properties (`--neon`, `--glow`, `--frame`, `--glass`, `--radius`, `--gap`)
+6. **Separation Principle:** Timeline and QuestMap NEVER merge — they serve different user needs
 
-- **Documentation:**
-  - `/docs/ui-spec.md` — Complete component specification (45+ sections)
-  - Component API contracts, props, and examples
-  - Design tokens, breakpoints, and motion policies
-  - Integration guide and maintenance procedures
+See `/docs/ui-spec.md` for complete specification.
 
-- **Code Quality:**
-  - ESLint configuration for ES6 modules
-  - TypeScript config for JSDoc type checking (no compilation)
-  - npm scripts for test, lint, typecheck workflows
+---
 
-**Architectural Contracts (IMMUTABLE):**
-1. **Timeline Section:** Minimal cards (H3 + StatusGlyph) for fast visual scanning
-2. **QuestMap Section:** Detailed cards (H3 + body + meta) for deep reading
-3. **Separation Principle:** NEVER merge Timeline and QuestMap — they serve different user needs
-4. **Status States:** `now | next | done | later` (normalized from existing data schema)
-5. **Motion Policy:** Pulse animation only for "now" status, disabled when `prefers-reduced-motion: reduce`
-6. **Accessibility:** ARIA regions, focus-visible rings, screen reader announcements, semantic HTML
+## Change Log
 
-**Tech Stack Clarification:**
-- Vanilla JavaScript ES6 modules (NOT React/TypeScript)
-- Plain CSS with custom properties (NOT Tailwind/SCSS)
-- No build step — direct HTML/CSS/JS serving
-- Progressive enhancement — JSON data + DOM fallback
+### 2025-10-28 — Roadmap/QuestMap UI Foundation Bootstrap
 
-**Integration Status:**
-Components are **opt-in** and run alongside existing `questmap.js` implementation. Example integration code available in `boot-home.js` (lines 43-93). Future PRs can migrate to new components incrementally.
+**Branch:** `claude/session-011CUZFtvCvNrwbdd1TVZ3Pk` (commit `769bcb9`)
+**Status:** ✅ APPROVED_FOR_HUMAN_MERGE (awaiting final human review)
 
-**Branch:** `claude/session-011CUZFtvCvNrwbdd1TVZ3Pk`
+**Components Created:**
+- `StatusGlyph` — Visual status indicator (now/next/done/later) with pulse animation
+- `RoadmapStepCard` — Minimal timeline card (H3 + StatusGlyph only)
+- `QuestCard` — Detailed questmap card (H3 + body + optional meta)
+- `TimelineSection` — Alternating grid layout with vertical neon spine
+- `QuestMapSection` — Centered single-column detailed view
 
-**Next Steps:**
-1. Install dependencies: `npm install`
-2. Run validation: `npm run test && npm run lint && npm run typecheck`
-3. Manual browser testing (keyboard nav, reduced motion, screen readers)
-4. When ready to adopt: uncomment integration code in `boot-home.js`
+**Infrastructure:**
+- Vitest + jsdom test environment (56 passing tests)
+- ESLint configuration for ES6 modules
+- TypeScript config for JSDoc type checking (no compilation)
+- Documentation: `/docs/ui-spec.md` (540 lines)
+
+**Integration:**
+- Opt-in approach (commented out in `boot-home.js`)
+- Runs alongside existing `questmap.js` (no breaking changes)
+- Example integration code provided (lines 43-93)
+
+**Quality Gates:**
+- ✅ Typecheck: PASS (new files clean)
+- ✅ Lint: PASS (0 errors in foundation files)
+- ✅ Tests: PASS (56/56 tests passing)
+- ✅ A11y: OK (ARIA regions, focus rings, semantic HTML)
+- ✅ Reduced-motion: OK (JS + CSS implementation)
+- ✅ Breakpoints: OK (≥1024px, 768-1023px, ≤767px)
+- ✅ Token discipline: OK (all shared tokens used)
+- ✅ Scope discipline: OK (no feature creep)
+
+**Reviewer Decision:** APPROVED_FOR_HUMAN_MERGE
+**Next Step:** Human maintainer final visual review → merge to `main`
 
 ---
 

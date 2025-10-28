@@ -570,6 +570,7 @@ main#site-main {
   .checkpoint {
     width: min(480px, calc(50% - var(--quest-spine-gap)));
   }
+}
 
 /* center main content & cards */
 main,

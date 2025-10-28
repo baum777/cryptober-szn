@@ -34,6 +34,15 @@ npm-debug.log*
 
 # Vitest
 .vitest/
+<<<<<<< HEAD
 >>>>>>> pr-9
 *.zip
 *.zip
+=======
+<<<<<<< HEAD
+>>>>>>> dcab100 (feat(ui): modular roadmap/questmap UI foundation)
+=======
+>>>>>>> pr-9
+*.zip
+>>>>>>> 92aab5f (Ignore ZIP archives)
+>>>>>>> favicons-work

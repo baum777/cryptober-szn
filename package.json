@@ -25,6 +25,10 @@
     "eslint": "^8.55.0",
     "eslint-plugin-import": "^2.29.0",
     "typescript": "^5.3.0"
+<<<<<<< HEAD
 >>>>>>> pr-9
+=======
+>>>>>>> dcab100 (feat(ui): modular roadmap/questmap UI foundation)
+>>>>>>> favicons-work
   }
 }

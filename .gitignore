@@ -35,3 +35,4 @@ npm-debug.log*
 # Vitest
 .vitest/
 >>>>>>> pr-9
+*.zip

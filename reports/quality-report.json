@@ -1,0 +1,88 @@
+{
+  "/": {
+    "functionality": 5,
+    "resiliency": 4,
+    "uxAccessibility": 4,
+    "performance": 4,
+    "codeQuality": 4,
+    "notes": {
+      "strengths": [
+        "Hero section with CA copy works flawlessly",
+        "Roadmap timeline visually impressive",
+        "Social links properly configured with rel attributes",
+        "Responsive grid layout adapts well"
+      ],
+      "issues": [
+        "Slight CLS on initial load due to webfont swap",
+        "Could improve lazy-loading strategy for below-fold images",
+        "Missing Clipboard API fallback for older browsers"
+      ],
+      "quickWins": [
+        "Add font-display: swap to reduce CLS (15min)",
+        "Implement intersection-based image loading (30min)",
+        "Add Clipboard API feature detection (20min)"
+      ]
+    },
+    "compositeScore": 4.35,
+    "rating": "Good",
+    "ratingEmoji": "🟢"
+  },
+  "/lore_index": {
+    "functionality": 5,
+    "resiliency": 4,
+    "uxAccessibility": 5,
+    "performance": 4,
+    "codeQuality": 4,
+    "notes": {
+      "strengths": [
+        "Catch-a-phrase rotator adds personality",
+        "FAQ accordion accessible with proper ARIA",
+        "Gallery lightbox keyboard-navigable",
+        "Glossary toggle progressive enhancement",
+        "Reduced motion fully respected"
+      ],
+      "issues": [
+        "Gallery could benefit from pagination for performance",
+        "Glossary rotator may be distracting for some users",
+        "Some lore text blocks quite long (readability)"
+      ],
+      "quickWins": [
+        "Add \"pause rotation\" button for a11y (20min)",
+        "Implement virtual scrolling for gallery (2hr)",
+        "Break long text into collapsible sections (1hr)"
+      ]
+    },
+    "compositeScore": 4.55,
+    "rating": "Excellent",
+    "ratingEmoji": "🟢"
+  },
+  "/lore_mascot": {
+    "functionality": 5,
+    "resiliency": 5,
+    "uxAccessibility": 4,
+    "performance": 5,
+    "codeQuality": 4,
+    "notes": {
+      "strengths": [
+        "Quest grid well-structured with locked state",
+        "Traits cards readable and scannable",
+        "Mini-gallery loads efficiently",
+        "Lock icon clearly indicates unavailable content",
+        "No layout shift issues"
+      ],
+      "issues": [
+        "Quest grid pagination not yet functional",
+        "Some placeholder images still in markup",
+        "Could improve semantic structure of traits cards"
+      ],
+      "quickWins": [
+        "Implement quest pagination controls (1hr)",
+        "Replace placeholder images with actual assets (30min)",
+        "Add <article> wrapper to traits cards (10min)"
+      ]
+    },
+    "compositeScore": 4.7,
+    "rating": "Excellent",
+    "ratingEmoji": "🟢"
+  }
+}

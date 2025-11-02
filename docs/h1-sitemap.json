@@ -1,0 +1,27 @@
+{
+  "/": {
+    "h1": "Ride the Pump - $Cryptober",
+    "sections": [
+      "Roadmap",
+      "Tools",
+      "Community & Tools – Social Pyramid"
+    ],
+    "file": "index.html"
+  },
+  "/lore_index": {
+    "h1": "Lore (The Story) 🌙",
+    "sections": [
+      "Gallery"
+    ],
+    "file": "lore_index.html"
+  },
+  "/lore_mascot": {
+    "h1": "Sparkfiend – The Flame Keeper",
+    "sections": [
+      "Origin & Traits",
+      "Mini-Gallery",
+      "Quest Grid Season 1"
+    ],
+    "file": "lore_mascot.html"
+  }
+}

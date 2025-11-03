@@ -993,6 +993,11 @@ section.visible {
     gap: 1rem;
   }
   
+  /* Improve readability on mobile */
+  .update-item small {
+    font-size: 0.875rem; /* 14px instead of 12px */
+  }
+  
   section {
     padding: 4rem 0;
   }

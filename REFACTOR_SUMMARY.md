@@ -143,7 +143,7 @@ e10950b chore(scaffold): add tool.html and asset folders
 │   │   └── cta.css            (✨ New: CTA component styles)
 │   └── js/
 │       └── tool.js            (✨ New: Tool page scripts)
-└── landing.html                (⚠️ Deprecated: Use tool.html instead)
+└── landing.html                (🗑️ REMOVED: Functionality merged into tool.html)
 ```
 
 ---
@@ -182,7 +182,7 @@ No new design tokens introduced ✅
 
 ## 📝 Notes
 
-1. **landing.html deprecated:** Consider removing or redirecting to tool.html in future cleanup
+1. **landing.html removed:** ✅ COMPLETED - File deleted, functionality is in tool.html
 2. **Quest Hook CTA:** Still present on index.html, now links to tool.html
 3. **Mobile experience:** Sticky CTA provides easy access on small screens
 4. **Analytics ready:** CTA has `data-analytics="cta_open_tool"` for tracking

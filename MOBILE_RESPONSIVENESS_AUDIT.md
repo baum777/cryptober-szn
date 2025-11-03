@@ -2,7 +2,7 @@
 
 **Datum:** 2025-11-03  
 **Branch:** cursor/check-html-pages-for-mobile-responsiveness-2032  
-**Geprüfte Seiten:** 5 HTML-Dateien
+**Geprüfte Seiten:** 4 HTML-Dateien (landing.html entfernt)
 
 ---
 

@@ -1,0 +1,87 @@
+/* ========== Sparkfined CTA Component ========== */
+
+.sf-cta-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  background: linear-gradient(135deg, #8B5CF6, #06B6D4);
+  color: #0A0E27;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.sf-cta-primary:focus,
+.sf-cta-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(6, 182, 212, 0.35);
+  outline: none;
+}
+
+.sf-cta-primary:focus-visible {
+  outline: 2px solid #06B6D4;
+  outline-offset: 2px;
+}
+
+/* Sticky CTA (mobile only) */
+@media (max-width: 768px) {
+  .sf-cta-sticky {
+    position: fixed;
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.9rem 1.2rem;
+    border-radius: 9999px;
+    font-weight: 800;
+    font-size: 0.95rem;
+    text-decoration: none;
+    background: #10B981;
+    color: #0A0E27;
+    border: 1px solid rgba(16, 185, 129, 0.5);
+    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.25);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .sf-cta-sticky:hover,
+  .sf-cta-sticky:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(16, 185, 129, 0.35);
+  }
+  
+  .sf-cta-sticky:focus-visible {
+    outline: 2px solid #10B981;
+    outline-offset: 2px;
+  }
+}
+
+/* Desktop: hide sticky CTA */
+@media (min-width: 769px) {
+  .sf-cta-sticky {
+    display: none;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .sf-cta-primary,
+  .sf-cta-sticky {
+    transition: none;
+  }
+  
+  .sf-cta-primary:hover,
+  .sf-cta-primary:focus,
+  .sf-cta-sticky:hover,
+  .sf-cta-sticky:focus {
+    transform: none;
+  }
+}

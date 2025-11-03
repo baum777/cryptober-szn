@@ -1227,6 +1227,15 @@ h6:hover {
   .gallery-item--glow:focus-within .img-box img {
     transform: scale(1.02);
   }
+  
+  /* GPU acceleration for smooth animations */
+  .gallery-item--glow {
+    will-change: transform;
+  }
+  
+  .gallery-item--glow .img-box img {
+    will-change: transform;
+  }
 }
 
 .gallery-item__caption {
@@ -1450,7 +1459,8 @@ h6:hover {
   width: 100%;
   background: transparent;
   border: none;
-  padding: 0.5rem 0;
+  padding: 0.75rem 0.5rem;
+  min-height: 48px;
   font-size: 1rem;
   text-align: center;
   text-decoration: underline;
@@ -1617,8 +1627,11 @@ h6:hover {
 }
 
 .tag-pill {
-  display: inline-block;
-  padding: 0.35rem 0.7rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  min-height: 44px;
   border-radius: 999px;
   background: rgba(0, 0, 0, 0.35);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -1831,6 +1844,12 @@ body.landing .logo-frame__img:focus {
   .header-left,
   .header-right {
     gap: 0.5rem;
+  }
+  
+  /* Touch-friendly targets (WCAG 2.1 AAA: min 44x44px) */
+  .nav-card {
+    padding: 0.75rem 1rem;
+    min-height: 48px;
   }
 
   .layout-grid {
@@ -2444,6 +2463,11 @@ body.landing .logo-frame__img:focus {
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
+  /* Add padding to body to prevent Quest Hook from overlapping footer */
+  body:has(.quest-hook-container) {
+    padding-bottom: 140px;
+  }
+  
   .quest-hook-container {
     bottom: 1rem;
     right: 1rem;
@@ -2454,8 +2478,13 @@ body.landing .logo-frame__img:focus {
     width: 100%;
   }
   
+  /* Improve readability on mobile (min 12px for accessibility) */
+  .quest-hook-label {
+    font-size: 0.75rem; /* 12px instead of 10px */
+  }
+  
   .quest-hook-status {
-    font-size: 0.5625rem;
+    font-size: 0.625rem; /* Keep at 10px, but ensure it's readable */
   }
 }
 

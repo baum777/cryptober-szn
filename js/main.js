@@ -13,6 +13,8 @@ let __toastTimer = null;
  * @param {number} [ms=1800]
  */
 export function toast(msg, ms = 1800) {
+  if (typeof document === 'undefined') return;
+  
   let t = document.getElementById("toast");
   if (!t) {
     t = document.createElement("div");
@@ -32,6 +34,8 @@ export function toast(msg, ms = 1800) {
  * Bindet Copy-to-Clipboard an alle Elemente mit [data-copy] oder #copy-ca.
  */
 export function bindClipboard() {
+  if (typeof document === 'undefined') return;
+  
   const nodes = [
     ...document.querySelectorAll("[data-copy]"),
     ...document.querySelectorAll("#copy-ca"),
@@ -43,7 +47,7 @@ export function bindClipboard() {
     if (!payload) return;
     el.addEventListener("click", async () => {
       try {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
+        if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
           await navigator.clipboard.writeText(payload);
           toast("Copied! ✅");
           if (navigator.vibrate) navigator.vibrate(50);
@@ -430,13 +434,18 @@ export async function fetchTokenStats() {
   const apiUrl = 'https://api.dexscreener.com/latest/dex/pairs/solana/8o4W7YWcQ26gQH7QjfMcLLGbSfjkbVD1nCoED8c7pump';
   try {
     const response = await fetch(apiUrl);
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
     const data = await response.json();
-    const pair = data.pair || {};
-    return {
-      mcap: (pair.marketCap / 1000).toFixed(1) + 'K',
-      liquidity: (pair.liquidity.usd / 1000).toFixed(1) + 'K',
-      price: pair.priceUsd
-    };
+    const pair = data?.pair || data?.pairs?.[0] || {};
+    
+    // Safe property access with fallbacks
+    const mcap = pair.marketCap ? (pair.marketCap / 1000).toFixed(1) + 'K' : 'N/A';
+    const liquidity = pair.liquidity?.usd ? (pair.liquidity.usd / 1000).toFixed(1) + 'K' : 'N/A';
+    const price = pair.priceUsd || 'N/A';
+    
+    return { mcap, liquidity, price };
   } catch (e) {
     console.error('DEX Fetch Error:', e);
     return { mcap: 'N/A', liquidity: 'N/A', price: 'N/A' };
@@ -446,8 +455,14 @@ export async function fetchTokenStats() {
 /* 🎯 AUTO-INIT BEIM DOM-LOAD */
 document.addEventListener("DOMContentLoaded", () => {
   initScrollSpy();
-  fetchTokenStats().then(stats => {
-    const el = document.getElementById('live-stats');
-    if (el) el.innerHTML = `MCAP: $${stats.mcap}<br>Liquidity: $${stats.liquidity}<br>Price: $${stats.price}`;
-  });
+  fetchTokenStats()
+    .then(stats => {
+      const el = document.getElementById('live-stats');
+      if (el) {
+        el.innerHTML = `MCAP: $${stats.mcap}<br>Liquidity: $${stats.liquidity}<br>Price: $${stats.price}`;
+      }
+    })
+    .catch(err => {
+      console.warn('[INIT] Token stats fetch failed (non-critical):', err);
+    });
 });

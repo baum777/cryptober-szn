@@ -41,7 +41,6 @@
   <link rel="preload" as="style" href="styles.css">
 
   <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="/assets/css/cta.css" />
   <link rel="canonical" href="https://yourdomain.example/" />
 </head>
 <body class="landing">
@@ -64,6 +63,7 @@
       <ul id="nav-list" class="rail-list">
         <li class="rail-item"><a href="#hero" data-target aria-controls="hero">Hero</a></li>
         <li class="rail-item"><a href="#intro" data-target aria-controls="intro">Intro</a></li>
+        <li class="rail-item"><a href="#questmap" data-target aria-controls="questmap">Roadmap</a></li>
         <li class="rail-item"><a href="#tools" data-target aria-controls="tools">Tools</a></li>
         <li class="rail-item"><a href="#social-pyramid" data-target aria-controls="social-pyramid">Social</a></li>
       </ul>
@@ -71,6 +71,7 @@
         <ul id="nav-noscript" class="rail-list">
           <li class="rail-item"><a href="#hero">Hero</a></li>
           <li class="rail-item"><a href="#intro">Intro</a></li>
+          <li class="rail-item"><a href="#questmap">Roadmap</a></li>
           <li class="rail-item"><a href="#tools">Tools</a></li>
           <li class="rail-item"><a href="#social-pyramid">Social</a></li>
         </ul>
@@ -81,21 +82,24 @@
     <main id="site-main" role="main" tabindex="-1">
       <!-- Hero -->
       <section id="hero" class="section" aria-label="Hero">
-        <div class="grid grid-2">
+        <div class="grid grid-2" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem;align-items:center">
           <div>
-            <h1 class="text-neon-orange">
+            <h1 class="text-neon-orange" style="font-size:clamp(2rem,3.6vw,3.2rem);font-weight:800;line-height:1.02">
               MANIFEST WAGMI.<br>
               BUILD TOGETHER.
             </h1>
 
-            <p class="muted">
+            <p class="muted" style="margin-top:.75rem;">
               Community > Jeets. Real Utility > Hype.<br>
               We Build Different.
             </p>
 
-            <div class="hero-cta-wrapper">
-              <a href="/tool.html" class="sf-cta-primary" data-analytics="cta_open_tool">
-                🚀 Open Trading Tool
+            <div style="margin-top:1.5rem;display:flex;gap:1rem;flex-wrap:wrap;">
+              <a href="/landing.html" class="btn" style="background:linear-gradient(135deg,var(--neon-purple,#8B5CF6),var(--neon-cyan,#06B6D4));color:white;text-decoration:none;padding:0.75rem 1.5rem;border-radius:8px;font-weight:600;">
+                🚀 Join the Quest
+              </a>
+              <a href="#roadmap" class="btn" style="border:1px solid var(--neon-purple,#8B5CF6);color:var(--text-primary,#F3F4F6);text-decoration:none;padding:0.75rem 1.5rem;border-radius:8px;font-weight:600;">
+                📖 Roadmap
               </a>
             </div>
           </div>
@@ -108,28 +112,28 @@
 
       <!-- Intro -->
       <section id="intro" class="section" aria-labelledby="intro-heading">
-        <div class="glass card intro-card">
+        <div class="glass card" style="padding:1.25rem;">
           <div class="intro-content inner-gap">
-            <div class="intro-part">
-              <h3 id="intro-heading" class="text-neon-orange intro-heading">
+            <div class="intro-part" style="margin-bottom:.75rem;">
+              <h3 id="intro-heading" class="text-neon-orange" style="font-weight:800; font-size:clamp(1.6rem, 3.2vw, 2rem); line-height:1.1; margin:0;">
                 Sparkfined: Where Community Becomes Currency
               </h3>
-              <p class="muted intro-subheading">
+              <p class="muted" style="margin-top:.5rem;">
                 A trading PWA built on three principles: Community > Jeets, Honesty Gets Rewarded, and WAGMI Together.
               </p>
             </div>
 
-            <div class="intro-part">
+            <div class="intro-part" style="margin-bottom:.5rem;">
               <p class="intro-text">
                 Lock tokens. Earn NFTs. Shape the roadmap. Share in creator fees. Every feature is community-driven, every update is transparent, every reward is earned.
               </p>
-              <p class="intro-text muted intro-tagline">
+              <p class="intro-text muted" style="margin-top:.5rem;">
                 We're manifesting a movement, not just building a tool.
               </p>
             </div>
 
             <div class="intro-part">
-              <p class="intro-text intro-emphasis">
+              <p class="intro-text" style="font-weight:600; margin-bottom:.5rem;">
                 Three Updates. Zero Hype. Real Utility.
               </p>
               <p class="intro-disclaimer muted">
@@ -140,10 +144,47 @@
         </div>
       </section>
 
+      <!-- Roadmap -->
+      <section id="questmap" class="section" aria-labelledby="roadmap-title">
+        <header class="section__header">
+          <h2 id="roadmap-title" class="text-neon-orange">Roadmap</h2>
+        </header>
+
+        <div class="questmap" role="group" aria-describedby="roadmap-title">
+          <div id="quest-spine" aria-hidden="true"></div>
+
+          <div id="rm-details" class="questmap__details" role="list">
+            <article class="checkpoint checkpoint--now" role="listitem" aria-current="step">
+              <span class="checkpoint__dot" aria-hidden="true"></span>
+              <h3 class="checkpoint__title">Website &amp; Community Takeover</h3>
+            </article>
+            <article class="checkpoint checkpoint--later" role="listitem">
+              <span class="checkpoint__dot" aria-hidden="true"></span>
+              <h3 class="checkpoint__title">DEX Vault → Community Barometer</h3>
+            </article>
+            <article class="checkpoint checkpoint--later" role="listitem">
+              <span class="checkpoint__dot" aria-hidden="true"></span>
+              <h3 class="checkpoint__title">Schill Phase → Pulse over Push</h3>
+            </article>
+            <article class="checkpoint checkpoint--later" role="listitem">
+              <span class="checkpoint__dot" aria-hidden="true"></span>
+              <h3 class="checkpoint__title">Creator Fee Distribution</h3>
+            </article>
+            <article class="checkpoint checkpoint--later" role="listitem">
+              <span class="checkpoint__dot" aria-hidden="true"></span>
+              <h3 class="checkpoint__title">Tool Development → Controlled Fire</h3>
+            </article>
+            <article class="checkpoint checkpoint--later" role="listitem">
+              <span class="checkpoint__dot" aria-hidden="true"></span>
+              <h3 class="checkpoint__title">Community-First Tool Vision</h3>
+            </article>
+          </div>
+        </div>
+      </section>
 
       <!-- Tools -->
       <section id="tools" class="section" aria-labelledby="tools-title">
-        <h2 id="tools-title" class="text-neon-orange section-title-main">Tools</h2>
+        <h2 id="tools-title" class="text-neon-orange" style="font-weight:800">Tools</h2>
         <div class="tools-grid">
           <article class="card card-glass tool-card tool-card--merged">
             <div class="tool-card__media" aria-hidden="true">
@@ -151,7 +192,7 @@
               <img class="tool-card__icon" src="/assets/oracle.svg" alt="SpecterScan icon" width="96" height="96" loading="lazy" decoding="async" />
             </div>
             <h3 class="tool-card__title text-neon-green">Signal Forge &amp; SpecterScan</h3>
-            <p class="muted">Where Grok’s data alchemy meets viral energy — transforming raw market intel into razor-sharp insights or explosive $Cryptober memes.</p>
+            <p class="muted">Where Grok's data alchemy meets viral energy — transforming raw market intel into razor-sharp insights or explosive $Cryptober memes.</p>
             <ul class="tool-card__list muted">
               <li>Built for speed, precision, and pure degen dominance.</li>
             </ul>
@@ -164,13 +205,13 @@
       <!-- Social Pyramid -->
       <section id="social-pyramid" class="section" aria-label="Social Pyramid">
         <h2 class="sr-only">Community &amp; Tools – Social Pyramid</h2>
-        <div class="container pyramid-grid">
+        <div class="container pyramid-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;">
           <figure class="pyramid-item card hover-glow">
             <a href="https://x.com/i/communities/1973298666317509005" target="_blank" rel="noopener noreferrer" data-event="pyramid-x" title="X – Community (opens in new tab)">
               <img src="/assets/socials/x-com-link.svg" alt="X Community" width="180" height="180" loading="lazy" decoding="async" />
             </a>
             <figcaption class="pyramid-label">
-              <div class="text-neon-green pyramid-title">X – Community</div>
+              <div class="text-neon-green" style="font-weight:700">X – Community</div>
               <div class="muted"></div>
             </figcaption>
           </figure>
@@ -179,7 +220,7 @@
               <img src="/assets/socials/tg-link.svg" alt="Telegram" width="160" height="160" loading="lazy" decoding="async" />
             </a>  
             <figcaption class="pyramid-label">
-              <div class="text-neon-green pyramid-title">Telegram</div>
+              <div class="text-neon-green" style="font-weight:700">Telegram</div>
               <div class="muted"></div>
             </figcaption>
           </figure>
@@ -188,7 +229,7 @@
               <img src="/assets/socials/dexscreener.svg" alt="Dexscreener" width="160" height="160" loading="lazy" decoding="async" />
             </a>
             <figcaption class="pyramid-label">
-              <div class="text-neon-green pyramid-title">Dexscreener</div>
+              <div class="text-neon-green" style="font-weight:700">Dexscreener</div>
               <div class="muted"></div>
             </figcaption>
           </figure>
@@ -198,8 +239,8 @@
 
       <!-- Footer -->
       <footer id="site-footer" class="section site-footer" role="contentinfo">
-    <div class="container card footer-card">
-      <div class="footer-logo-wrapper">
+    <div class="container card" style="text-align:center;padding:1rem;">
+      <div style="display:flex;justify-content:center;margin-bottom:.5rem">
             <img src="/assets/socials/web-logo.svg" alt="Cryptober logo" width="40" height="40" loading="lazy" decoding="async" />
           </div>
           <a href="lore_index.html" class="btn" data-event="footer-lore">Read the Lore</a>
@@ -215,15 +256,10 @@
   <!-- Toast -->
   <div id="toast" class="toast" aria-live="polite"></div>
 
-  <!-- Sticky Mobile CTA -->
-  <a href="/tool.html" class="sf-cta-sticky" aria-label="Open Trading Tool">
-    Open Tool
-  </a>
-
   <!-- Quest Hook CTA -->
   <div id="quest-hook" class="quest-hook-container">
     <div class="quest-hook-glow"></div>
-    <button class="quest-hook-btn" onclick="window.location.href='/tool.html'" aria-label="Join the Quest - First Update Live">
+    <button class="quest-hook-btn" onclick="window.location.href='/landing.html'" aria-label="Join the Quest - First Update Live">
       <div class="quest-hook-content">
         <span class="quest-hook-label">FIRST UPDATE LIVE</span>
         <span class="quest-hook-title">Join the Quest</span>

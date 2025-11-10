@@ -1,0 +1,174 @@
+{
+  "version": "1.0.0",
+  "generated": "2025-11-02",
+  "features": [
+    {
+      "id": "feat-001",
+      "route": "/",
+      "feature": "Hero Section with CA Copy",
+      "checks": {
+        "given": "User lands on homepage",
+        "when": "User clicks CA address",
+        "then": "Contract address is copied to clipboard and toast notification appears"
+      },
+      "tools": ["Playwright", "Clipboard API"],
+      "owner": "@cryptober-core",
+      "priority": "high",
+      "status": "implemented"
+    },
+    {
+      "id": "feat-002",
+      "route": "/",
+      "feature": "Roadmap Interactive Timeline",
+      "checks": {
+        "given": "User scrolls to roadmap section",
+        "when": "Timeline renders",
+        "then": "All checkpoints visible with proper status (done/now/later)"
+      },
+      "tools": ["Playwright", "Visual regression"],
+      "owner": "@cryptober-core",
+      "priority": "high",
+      "status": "implemented"
+    },
+    {
+      "id": "feat-003",
+      "route": "/",
+      "feature": "Social Links External Navigation",
+      "checks": {
+        "given": "User views social pyramid",
+        "when": "User clicks social link (X/Telegram/Dexscreener)",
+        "then": "Link opens in new tab with proper rel attributes"
+      },
+      "tools": ["Playwright"],
+      "owner": "@cryptober-core",
+      "priority": "medium",
+      "status": "implemented"
+    },
+    {
+      "id": "feat-004",
+      "route": "/",
+      "feature": "Left Rail Navigation Sync",
+      "checks": {
+        "given": "User scrolls through page sections",
+        "when": "Section enters viewport",
+        "then": "Corresponding rail link highlighted with aria-current"
+      },
+      "tools": ["Playwright", "IntersectionObserver mock"],
+      "owner": "@cryptober-core",
+      "priority": "medium",
+      "status": "implemented"
+    },
+    {
+      "id": "feat-005",
+      "route": "/lore_index",
+      "feature": "Catch-a-Phrase Rotator",
+      "checks": {
+        "given": "User views lore page",
+        "when": "Page loads",
+        "then": "Random phrase displays and rotates every N seconds"
+      },
+      "tools": ["Playwright", "Timer mock"],
+      "owner": "@cryptober-lore",
+      "priority": "low",
+      "status": "implemented"
+    },
+    {
+      "id": "feat-006",
+      "route": "/lore_index",
+      "feature": "FAQ Accordion",
+      "checks": {
+        "given": "User views FAQ section",
+        "when": "User clicks FAQ question",
+        "then": "Answer expands with proper aria-expanded toggle"
+      },
+      "tools": ["Playwright"],
+      "owner": "@cryptober-lore",
+      "priority": "medium",
+      "status": "implemented"
+    },
+    {
+      "id": "feat-007",
+      "route": "/lore_index",
+      "feature": "Gallery Lightbox",
+      "checks": {
+        "given": "User views gallery",
+        "when": "User clicks gallery image",
+        "then": "Lightbox opens with image, close button works, ESC key closes"
+      },
+      "tools": ["Playwright", "Keyboard navigation"],
+      "owner": "@cryptober-lore",
+      "priority": "high",
+      "status": "implemented"
+    },
+    {
+      "id": "feat-008",
+      "route": "/lore_index",
+      "feature": "Glossary Toggle",
+      "checks": {
+        "given": "User scrolls to glossary",
+        "when": "User clicks glossary toggle button",
+        "then": "Glossary panel expands/collapses with aria-expanded"
+      },
+      "tools": ["Playwright"],
+      "owner": "@cryptober-lore",
+      "priority": "low",
+      "status": "implemented"
+    },
+    {
+      "id": "feat-009",
+      "route": "/lore_mascot",
+      "feature": "Quest Grid Locked Items",
+      "checks": {
+        "given": "User views quest grid",
+        "when": "Quest items render",
+        "then": "Locked items show lock icon with 'Reveal soon' overlay"
+      },
+      "tools": ["Playwright"],
+      "owner": "@cryptober-mascot",
+      "priority": "medium",
+      "status": "implemented"
+    },
+    {
+      "id": "feat-010",
+      "route": "all",
+      "feature": "Reduced Motion Support",
+      "checks": {
+        "given": "User has prefers-reduced-motion enabled",
+        "when": "User navigates site",
+        "then": "All animations disabled/reduced"
+      },
+      "tools": ["Playwright", "Media query emulation"],
+      "owner": "@cryptober-core",
+      "priority": "high",
+      "status": "implemented"
+    },
+    {
+      "id": "feat-011",
+      "route": "all",
+      "feature": "Keyboard Navigation",
+      "checks": {
+        "given": "User navigates with keyboard only",
+        "when": "User tabs through page",
+        "then": "All interactive elements focusable with visible focus ring"
+      },
+      "tools": ["Playwright", "a11y audit"],
+      "owner": "@cryptober-core",
+      "priority": "high",
+      "status": "implemented"
+    },
+    {
+      "id": "feat-012",
+      "route": "all",
+      "feature": "Mobile Rail Offcanvas",
+      "checks": {
+        "given": "User on mobile viewport (<768px)",
+        "when": "User opens/closes rail menu",
+        "then": "Rail slides in/out with proper ARIA states"
+      },
+      "tools": ["Playwright", "Mobile viewport"],
+      "owner": "@cryptober-core",
+      "priority": "medium",
+      "status": "implemented"
+    }
+  ]
+}

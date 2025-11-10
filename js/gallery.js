@@ -235,9 +235,21 @@ class GalleryController {
     img.src = image.src;
     img.alt = image.alt || "";
     img.decoding = "async";
-    img.loading = localIndex < 4 || this.reduceMotion ? "eager" : "lazy";
-    if (typeof image.width === "number") img.width = image.width;
-    if (typeof image.height === "number") img.height = image.height;
+    // Load first page (8 images) eagerly to avoid lazy-loading above-fold content
+    const isFirstPage = globalIndex < this.pageSize;
+    img.loading = isFirstPage || this.reduceMotion ? "eager" : "lazy";
+    
+    // Set explicit dimensions to prevent layout shift (CLS)
+    if (typeof image.width === "number") {
+      img.width = image.width;
+    } else {
+      img.width = 640; // Default fallback
+    }
+    if (typeof image.height === "number") {
+      img.height = image.height;
+    } else {
+      img.height = 480; // Default fallback (4:3 aspect ratio)
+    }
 
     const errorHandler = () => this.handleImageError(img, button, image);
     img.addEventListener("error", errorHandler);
@@ -326,7 +338,7 @@ class GalleryController {
     prev.type = "button";
     prev.className = "gallery-pager__button btn btn-ghost";
     prev.setAttribute("aria-label", "Previous gallery page");
-    prev.textContent = "← Prev";
+    prev.textContent = "? Prev";
 
     const status = document.createElement("span");
     status.setAttribute("aria-live", "polite");
@@ -335,7 +347,7 @@ class GalleryController {
     next.type = "button";
     next.className = "gallery-pager__button btn btn-ghost";
     next.setAttribute("aria-label", "Next gallery page");
-    next.textContent = "Next →";
+    next.textContent = "Next ?";
 
     pager.append(prev, status, next);
     this.grid.insertAdjacentElement("afterend", pager);

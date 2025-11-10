@@ -17,8 +17,22 @@ export function initQuestmap() {
   if (!section) return null;
 
   const checkpoints = Array.from(section.querySelectorAll('#rm-details .checkpoint'));
-  const progressChips = Array.from(section.querySelectorAll('.questmap-progress__chip'));
-  const detailCards = Array.from(section.querySelectorAll('.questmap-card'));
+  const detailsRoot = document.querySelector('[data-questmap-details]');
+
+  let progressChips = [];
+  let detailCards = [];
+
+  if (detailsRoot) {
+    const progressContainer = detailsRoot.querySelector('[data-questmap-progress]');
+    if (progressContainer) {
+      progressChips = Array.from(progressContainer.querySelectorAll('.questmap-progress__chip'));
+    }
+
+    const cardsContainer = detailsRoot.querySelector('[data-questmap-cards]');
+    if (cardsContainer) {
+      detailCards = Array.from(cardsContainer.querySelectorAll('.questmap-card'));
+    }
+  }
   if (!checkpoints.length) return null;
 
   checkpoints.forEach((checkpoint, index) => {
